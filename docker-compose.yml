@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  db:
+    container_name: db
+    restart: always
+    image: postgres
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: pgpassword
+    ports:
+      - '5432:5432'
+    networks:
+      - network-api
+    volumes:
+      - ./dados:/var/lib/postgresql/data
+  api:
+    container_name: ensina_conecta_api
+    image: ensina_conecta_api
+    depends_on:
+      - db
+    command: bash -c "yarn start"
+    build: ./
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - '3333:3333'
+    networks:
+      - network-api
+networks:
+  network-api:
+    external:
+      name: network-api
