@@ -20,7 +20,7 @@ services:
     image: ensina_conecta_api
     depends_on:
       - db
-    command: bash -c "yarn start"
+    command: bash -c "yarn install && yarn start"
     build: ./
     volumes:
       - .:/app

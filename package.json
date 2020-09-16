@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/fga-eps-mds/2020.1-Conecta-Ensina-Backend#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "celebrate": "^12.1.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4",
