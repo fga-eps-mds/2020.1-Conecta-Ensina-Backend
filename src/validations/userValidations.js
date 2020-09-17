@@ -1,4 +1,7 @@
-import { Segments, Joi } from 'celebrate';
+const {
+  Segments,
+  Joi,
+} = require('celebrate');
 
 const loginValidation = {
     [Segments.BODY]: Joi.object().keys({

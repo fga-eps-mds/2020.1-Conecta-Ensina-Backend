@@ -1,21 +1,15 @@
-import express from 'express';
-import userRoutes from './routes/user';
+const express = require('express');
+const userRoutes = require('./routes/user');
 
-class App {
-  constructor() {
-    this.server = express();
+const application = express();
 
-    this.middlewares();
-    this.routes();
-  }
+// Static resources setup
+application.use(express.static('public'));
 
-  middlewares() {
-    this.server.use(express.json());
-  }
+// Content-Type will be application/json, (this MUST come before application routes)
+application.use(express.json());
 
-  routes() {
-    this.server.use('/api/users', userRoutes);
-  }
-}
+// Routes middleware configuration
+application.use('/api/users', userRoutes);
 
-export default new App().server;
+module.exports = application;

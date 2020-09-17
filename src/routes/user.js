@@ -1,18 +1,16 @@
-import { Router } from 'express';
-import { celebrate } from 'celebrate';
+const userRoutes = require('express').Router();
 
 // Importing Validations
-import {
-    loginValidation,
-} from '../validations/userValidations'
+const {
+    celebrate
+} = require('celebrate');
+const {
+    loginValidation
+} = require('../validations/userValidations')
 
 // Importing Controllers
-import {
-    login
-} from '../controllers/userControllers';
+const UserController = require('../controllers/userController');
 
-const userRoutes = new Router();
+userRoutes.get('/login', /*celebrate(loginValidation),*/ UserController.login);
 
-userRoutes.get('/login', /*celebrate(loginValidation),*/ login);
-
-export default userRoutes;
+module.exports = userRoutes;
