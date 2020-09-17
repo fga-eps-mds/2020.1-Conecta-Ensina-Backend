@@ -29,6 +29,17 @@ services:
       - '3333:3333'
     networks:
       - network-api
+  test:
+    container_name: ensina_conecta_test
+    image: ensina_conecta_test
+    depends_on:
+      - db
+    command: bash -c "yarn install && yarn test"
+    build: ./
+    ports:
+      - '5555:5555'
+    networks:
+      - network-api
 networks:
   network-api:
     external:
