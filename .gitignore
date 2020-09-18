@@ -108,3 +108,6 @@ dados/
 
 #datas test
 __tests__/database.sqlite
+
+#database
+database/
