@@ -4,13 +4,14 @@ const userRoutes = require('express').Router();
 const {
     celebrate
 } = require('celebrate');
+
 const {
     loginValidation
-} = require('../validations/userValidations')
+} = require('../validations/userValidations');
 
 // Importing Controllers
 const UserController = require('../controllers/userController');
 
-userRoutes.get('/login', /*celebrate(loginValidation),*/ UserController.login);
+userRoutes.get('/login', celebrate(loginValidation), UserController.login);
 
 module.exports = userRoutes;
