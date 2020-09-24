@@ -1,23 +1,41 @@
-// const { User } = require('../models/user');
+const User = require('../models/User');
 
 module.exports = {
     async login (request, response) {
-        // const user = await User.findAll({
-        //     where: {
-        //         email: 'pv.paulovictor.vp@gmail.com'
-        //     }
-        //   });
 
         const { email, password } = request.body
-       
-        return response.status(200).json(
-            {
-                data: {
+
+        try {
+            const user = await User.findOne({
+                where: {
                     email: email,
-                    password: password
-                },
-                message: 'Logado com sucesso',
-            }
-        );
+                    password: password,
+                }
+            });
+            if (!user) {
+                return response.status(200).json(
+                    {
+                        message: 'Usuário ou senha incorretos',
+                    }
+                );
+            } else {
+                return response.status(200).json(
+                    {
+                        data: {
+                            id: user.id
+                        },
+                        message: 'Logado com sucesso',
+                    }
+                );
+            };
+        } catch (error) {
+            console.log(error);
+            return response.status(200).json(
+                {
+                    message: error,
+                }
+            );
+        };
+
     }
 };

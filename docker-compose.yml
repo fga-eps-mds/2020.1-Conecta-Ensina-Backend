@@ -34,7 +34,7 @@ services:
     image: ensina_conecta_test
     depends_on:
       - db
-    command: bash -c "yarn install && yarn test"
+    command: bash -c "yarn test"
     build: ./
     ports:
       - '5555:5555'

@@ -1,7 +1,6 @@
 const express = require('express');
 const userRoutes = require('./routes/user');
 
-const { Sequelize } = require('sequelize');
 const application = express();
 
 // Static resources setup
