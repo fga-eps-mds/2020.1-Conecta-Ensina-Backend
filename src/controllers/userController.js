@@ -1,3 +1,4 @@
+const { update } = require('../models/User');
 const User = require('../models/User');
 
 module.exports = {
@@ -70,5 +71,49 @@ module.exports = {
             );
         };
 
+    },
+
+    async update (request, response){
+
+        const { id } = request.params
+        const {firstName, lastName, email, password} =  request.body
+
+        try{
+            const user = await User.update(
+                {firstName:firstName,
+                lastName:lastName,
+                email:email,
+                password:password},
+                {where: {id:id}}
+            ) 
+        } catch (error){
+            console.log(error);
+            return response.status(200).json(
+                {
+                    message: error,
+                }
+            );            
+        };
+
+    },
+
+    async delete (request, response){
+       
+        const { id } = request.params
+
+        try{
+            const user = await User.destroy({
+                where:{
+                    id:id
+                },
+            })
+        } catch (error){
+            console.log(error);
+            return response.status(200).json(
+                {
+                    message: error,
+                }
+            );            
+        };
     }
 };
