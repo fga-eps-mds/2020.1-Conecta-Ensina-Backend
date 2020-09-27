@@ -6,12 +6,17 @@ const {
 } = require('celebrate');
 
 const {
-    loginValidation
+    idValidation
+} = require('../validations/utilValidations');
+
+const {
+    createValidation
 } = require('../validations/userValidations');
 
 // Importing Controllers
 const UserController = require('../controllers/userController');
 
-userRoutes.get('/login', celebrate(loginValidation), UserController.login);
+userRoutes.post('/create', celebrate(createValidation), UserController.create);
+userRoutes.get('/:id', celebrate(idValidation), UserController.show);
 
 module.exports = userRoutes;

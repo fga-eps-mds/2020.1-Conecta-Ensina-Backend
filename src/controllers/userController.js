@@ -1,17 +1,50 @@
 const User = require('../models/User');
 
 module.exports = {
-    async login (request, response) {
+    async create (request, response) {
 
-        const { email, password } = request.body
+        const { firstName, lastName, email, password } = request.body
 
         try {
-            const user = await User.findOne({
-                where: {
-                    email: email,
-                    password: password,
-                }
+            const user = await User.create({
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                password: password,
             });
+
+            if (!user) {
+                return response.status(200).json(
+                    {
+                        message: 'Erro ao criar usuário!',
+                    }
+                );
+            } else {
+                return response.status(200).json(
+                    {
+                        data: {
+                            user: user
+                        },
+                        message: 'Usuário criado com sucesso!',
+                    }
+                );
+            };
+        } catch (error) {
+            console.log(error);
+            return response.status(200).json(
+                {
+                    message: error,
+                }
+            );
+        };
+    },
+
+    async show (request, response) {
+
+        const { id } = request.params
+
+        try {
+            const user = await User.findByPk( id );
             if (!user) {
                 return response.status(200).json(
                     {
@@ -22,7 +55,7 @@ module.exports = {
                 return response.status(200).json(
                     {
                         data: {
-                            id: user.id
+                            user: user
                         },
                         message: 'Logado com sucesso',
                     }
