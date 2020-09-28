@@ -15,10 +15,9 @@ const {
 
 // Importing Controllers
 const UserController = require('../controllers/userController');
-const User = require('../models/User');
 
 userRoutes.post('/create', celebrate(createValidation), UserController.create);
-userRoutes.get('/:id', celebrate(idValidation), UserController.show);
+userRoutes.get('/:id', celebrate(idValidation), UserController.read);
 userRoutes.put('/:id',celebrate(idValidation), UserController.update);
 userRoutes.delete('/:id', celebrate(idValidation), UserController.delete);
 
