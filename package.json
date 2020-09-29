@@ -4,7 +4,8 @@
   "description": "Backend do projeto Conecta Ensina",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/server.js"
+    "start": "nodemon src/server.js",
+    "test": "jest --detectOpenHandles --forceExit --silent --coverage"
   },
   "repository": {
     "type": "git",
@@ -17,10 +18,21 @@
   },
   "homepage": "https://github.com/fga-eps-mds/2020.1-Conecta-Ensina-Backend#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "celebrate": "^12.1.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "pg": "^8.3.3",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.3.5",
+    "sequelize-cli": "^6.2.0"
   },
   "devDependencies": {
+    "eslint": "^7.9.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "jest": "^26.4.2",
     "nodemon": "^2.0.4",
-    "sucrase": "^3.15.0"
+    "sucrase": "^3.15.0",
+    "supertest": "^4.0.2"
   }
 }
