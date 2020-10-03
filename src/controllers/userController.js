@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
 module.exports = {
     async create (request, response) {
@@ -6,11 +7,13 @@ module.exports = {
         const { firstName, lastName, email, password } = request.body;
 
         try {
+            const passwordCrypt = bcrypt.hashSync(password, 10);
+
             const user = await User.create({
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
-                password: password,
+                password: passwordCrypt,
             });
 
             if (!user) {
@@ -76,12 +79,14 @@ module.exports = {
         const { id } = request.params;
         const {firstName, lastName, email, password} =  request.body;
 
+        const passwordCrypt = bcrypt.hashSync(password, 10);
+
         try{
             const user = await User.update({
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
-                password: password
+                password: passwordCrypt
             }, {
                 where: {
                     id: id
