@@ -5,15 +5,17 @@ module.exports = {
     async create (request, response) {
 
         const { firstName, lastName, email, password } = request.body;
+        const saltRounds = 12;
 
         try {
-            const passwordCrypt = bcrypt.hashSync(password, 10);
+            const salt = bcrypt.genSaltSync(saltRounds);
+            const hash = bcrypt.hashSync(password, salt);
 
             const user = await User.create({
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
-                password: passwordCrypt,
+                password: hash,
             });
 
             if (!user) {
@@ -79,14 +81,17 @@ module.exports = {
         const { id } = request.params;
         const {firstName, lastName, email, password} =  request.body;
 
-        const passwordCrypt = bcrypt.hashSync(password, 10);
+        const saltRounds = 12;
+
+        const salt = bcrypt.genSaltSync(saltRounds);
+        const hash = bcrypt.hashSync(password, salt);
 
         try{
             const user = await User.update({
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
-                password: passwordCrypt
+                password: hash
             }, {
                 where: {
                     id: id
