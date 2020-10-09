@@ -1,43 +1,55 @@
-const Student = require('../models/Student');
+const Teacher = require('../models/Teacher');
 
 module.exports = {
     async create (request, response) {
         const { 
-            grade, 
-            institution, 
-            cpf, 
-            cep, 
-            number, 
-            details, 
-            description, 
-            adulthood, 
-            special,
+            institution,
+            cpf,
+            cep,
+            number,
+            details,
+            photo,
+            description,
+            video,
+            graduation,
+            graduationArea,
+            degree,
+            bank,
+            agency,
+            account,
+            status,
         } = request.body;
         try {
-            const student = await Student.create({
-                grade: grade, 
+            const teacher = await Teacher.create({
                 institution: institution, 
                 cpf: cpf, 
                 cep: cep, 
                 number: number, 
                 details: details, 
+                photo: photo,
                 description: description, 
-                adulthood: adulthood, 
-                special: special,
+                video: video, 
+                graduation: graduation,
+                graduationArea: graduationArea,
+                degree: degree,
+                bank: bank,
+                agency: agency,
+                account: account,
+                status: status,
             });
-            if (!student) {
+            if (!teacher) {
                 return response.status(200).json(
                     {
-                        message: 'Erro ao criar estudante!',
+                        message: 'Erro ao criar professor!',
                     }
                 );
             } else {
                 return response.status(200).json(
                     {
                         data: {
-                            student: student,
+                            teacher: teacher,
                         },
-                        message: 'Estudante criado com sucesso!',
+                        message: 'Professor criado com sucesso!',
                     }
                 );
             };
@@ -56,20 +68,20 @@ module.exports = {
         const { id } = request.params;
 
         try {
-            const student = await Student.findByPk( id );
-            if (!student) {
+            const teacher = await Teacher.findByPk( id );
+            if (!teacher) {
                 return response.status(200).json(
                     {
-                        message: 'Estudante não encontrado!',
+                        message: 'Professor não encontrado!',
                     }
                 );
             } else {
                 return response.status(200).json(
                     {
                         data: {
-                            student: student,
+                            teacher: teacher,
                         },
-                        message: 'Estudante encontrado com sucesso',
+                        message: 'Professor encontrado com sucesso',
                     }
                 );
             };
@@ -87,44 +99,56 @@ module.exports = {
 
         const { id } = request.params;
         const {
-            grade, 
-            institution, 
-            cpf, 
-            cep, 
-            number, 
-            details, 
-            description, 
-            adulthood, 
-            special,
+            institution,
+            cpf,
+            cep,
+            number,
+            details,
+            photo,
+            description,
+            video,
+            graduation,
+            graduationArea,
+            degree,
+            bank,
+            agency,
+            account,
+            status,
         } = request.body;
 
         try{
-            const student = await Student.update({
+            const teacher = await Teacher.update({
                 id: id,
-                grade: grade, 
                 institution: institution, 
                 cpf: cpf, 
                 cep: cep, 
                 number: number, 
                 details: details, 
+                photo: photo,
                 description: description, 
-                adulthood: adulthood, 
-                special: special,
+                video: video, 
+                graduation: graduation,
+                graduationArea: graduationArea,
+                degree: degree,
+                bank: bank,
+                agency: agency,
+                account: account,
+                status: status,
             }, {
                 where: {
                     id: id
                 }
             });
-            if (student == [0]) {
+            if (teacher == [0]) {
                 return response.status(200).json(
                     {
-                        message: 'Estudante não encontrado!',
+                        message: 'Professor não encontrado!',
                     }
                 );
             } else {
                 return response.status(200).json(
                     {
-                        data: student,
+                        data: teacher,
                         message: 'Atualizado com sucesso',
                     }
                 );
@@ -144,21 +168,21 @@ module.exports = {
         const { id } = request.params;
 
         try{
-            const student = await Student.destroy({
+            const teacher = await Teacher.destroy({
                 where: {
                     id: id
                 },
             });
-            if (!student) {
+            if (!teacher) {
                 return response.status(200).json(
                     {
-                        message: 'Estudante não encontrado!',
+                        message: 'Professor não encontrado!',
                     }
                 );
             } else {
                 return response.status(200).json(
                     {
-                        data: student,
+                        data: teacher,
                         message: 'Apagado com sucesso',
                     }
                 );

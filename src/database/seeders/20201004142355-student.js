@@ -5,8 +5,8 @@ module.exports = {
     await queryInterface.bulkInsert('Students', [{
       grade: 4,
       institution: 'catolica',
-      cpf: 75604854124,
-      cep: 73854647,
+      cpf: '75604854124',
+      cep: '73854647',
       number: 304,
       details: 'none',
       description: 'aluno normal',
