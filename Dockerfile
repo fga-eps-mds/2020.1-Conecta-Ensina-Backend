@@ -4,11 +4,11 @@ RUN mkdir /app
 
 WORKDIR /app
 
-COPY package.json /app
+COPY package.json ./
 
-RUN yarn install
+RUN yarn
 
-COPY . /app
+COPY . .
 
 EXPOSE 3000
 
