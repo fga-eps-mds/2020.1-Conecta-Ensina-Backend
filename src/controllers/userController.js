@@ -153,5 +153,40 @@ module.exports = {
                 }
             );            
         };
+    },
+
+    async login (request, response){
+        const { email, password } = request.body;
+
+        try{
+            const user = await User.findOne({ 
+                where: { 
+                    email: email
+                } 
+            }); 
+
+            if(!user){
+                return response.status(200).json(
+                    {
+                        message: 'Usuário não encontrado!',
+                    }
+                );
+            } else {
+                if(bcrypt.compareSync(password, user.password)){
+                    console.log('Login efetuado com sucesso!');
+                }
+                else{
+                    console.log('Senha errada.')
+                }
+            };
+        } catch (error){
+            console.log(error);
+            return response.status(200).json(
+                {
+                    message: error,
+                }
+            );
+        };
+        
     }
 };
