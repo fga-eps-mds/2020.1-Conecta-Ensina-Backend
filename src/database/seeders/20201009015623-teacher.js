@@ -16,7 +16,7 @@ module.exports = {
       bank: 'Banco do Brasil',
       agency: '1778-7',
       account: '50043-5',
-      status: '1',
+      status: '0',
       createdAt: new Date(),
       updatedAt: new Date(),
     }], {});

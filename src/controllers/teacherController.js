@@ -1,6 +1,41 @@
 const Teacher = require('../models/Teacher');
 
 module.exports = {
+    async status (request, response){
+        const {status} = request.params;
+        try {
+
+            const teacher = await Teacher.findAll({
+                where: {status: status}
+            });
+
+            if (!teacher) {
+                return response.status(200).json(
+                    {
+                        message: 'Nenhum professor pendente',
+                    }
+                );
+            } else {
+                return response.status(200).json(
+                    {
+                        data: {
+                            teacher: teacher,
+                        },
+                        message: 'Professor encontrado',
+                    }
+                );
+            };
+        } catch (error) {
+            console.log(error);
+            return response.status(200).json(
+                {
+                    message: error,
+                }
+            );
+        };
+
+    },
+
     async create (request, response) {
         const { 
             institution,

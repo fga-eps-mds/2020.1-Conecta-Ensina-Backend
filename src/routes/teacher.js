@@ -6,7 +6,7 @@ const {
 } = require('celebrate');
 
 const {
-    idValidation
+    idValidation, statusValidation
 } = require('../validations/utilValidations');
 
 const {
@@ -20,5 +20,6 @@ teacherRoutes.post('/create', celebrate(createValidation), TeacherController.cre
 teacherRoutes.get('/:id', celebrate(idValidation), TeacherController.read);
 teacherRoutes.put('/:id', celebrate(idValidation), TeacherController.update);
 teacherRoutes.delete('/:id', celebrate(idValidation), TeacherController.delete);
+teacherRoutes.get('/status/:status', celebrate(statusValidation), TeacherController.status);
 
 module.exports = teacherRoutes;

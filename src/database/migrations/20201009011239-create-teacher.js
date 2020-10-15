@@ -52,6 +52,12 @@ module.exports = {
       },
       status: {
         type: Sequelize.INTEGER
+        /*
+        0 - pending registration
+        1 - active teacher
+        2 - teacher in analysis
+        3 - blocked teacher
+        */
       },
       createdAt: {
         allowNull: false,
