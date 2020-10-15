@@ -21,5 +21,6 @@ teacherRoutes.get('/:id', celebrate(idValidation), TeacherController.read);
 teacherRoutes.put('/:id', celebrate(idValidation), TeacherController.update);
 teacherRoutes.delete('/:id', celebrate(idValidation), TeacherController.delete);
 teacherRoutes.get('/status/:status', celebrate(statusValidation), TeacherController.status);
+teacherRoutes.put('/status/:id', celebrate(idValidation), TeacherController.updateStatus);
 
 module.exports = teacherRoutes;

@@ -1,6 +1,43 @@
 const Teacher = require('../models/Teacher');
 
 module.exports = {
+    async updateStatus (request, response){
+
+        const { id } = request.params;
+        const { status } = request.body;
+
+        try{
+            const teacher = await Teacher.update({
+                status: status
+            }, {
+                where: {
+                    id: id
+                }
+            });
+            if (teacher == [0]) {
+                return response.status(200).json(
+                    {
+                        message: 'Professor não encontrado!',
+                    }
+                );
+            } else {
+                return response.status(200).json(
+                    {
+                        data: teacher,
+                        message: 'Atualizado com sucesso',
+                    }
+                );
+            };
+        } catch (error){
+            console.log(error);
+            return response.status(200).json(
+                {
+                    message: error,
+                }
+            );            
+        };
+    },
+
     async status (request, response){
         const {status} = request.params;
         try {
