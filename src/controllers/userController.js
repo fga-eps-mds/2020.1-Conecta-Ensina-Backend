@@ -1,20 +1,25 @@
 const { v4: uuidv4 } = require('uuid');
 
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
 module.exports = {
     async create (request, response) {
 
         const { firstName, lastName, email, password } = request.body;
         const id = uuidv4();
+        const saltRounds = 12;
 
         try {
+            const salt = bcrypt.genSaltSync(saltRounds);
+            const hash = bcrypt.hashSync(password, salt);
+
             const user = await User.create({
                 id: id,
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
-                password: password,
+                password: hash,
             });
 
             if (!user) {
@@ -80,12 +85,17 @@ module.exports = {
         const { id } = request.params;
         const {firstName, lastName, email, password} =  request.body;
 
+        const saltRounds = 12;
+
+        const salt = bcrypt.genSaltSync(saltRounds);
+        const hash = bcrypt.hashSync(password, salt);
+
         try{
             const changes = await User.update({
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
-                password: password
+                password: hash
             }, {
                 where: {
                     id: id
@@ -147,5 +157,40 @@ module.exports = {
                 }
             );            
         };
+    },
+
+    async login (request, response){
+        const { email, password } = request.body;
+
+        try{
+            const user = await User.findOne({ 
+                where: { 
+                    email: email
+                } 
+            }); 
+
+            if(!user){
+                return response.status(200).json(
+                    {
+                        message: 'Usuário não encontrado!',
+                    }
+                );
+            } else {
+                if(bcrypt.compareSync(password, user.password)){
+                    console.log('Login efetuado com sucesso!');
+                }
+                else{
+                    console.log('Senha errada.')
+                }
+            };
+        } catch (error){
+            console.log(error);
+            return response.status(200).json(
+                {
+                    message: error,
+                }
+            );
+        };
+        
     }
 };
