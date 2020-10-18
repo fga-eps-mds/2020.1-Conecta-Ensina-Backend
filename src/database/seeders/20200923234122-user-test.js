@@ -2,21 +2,22 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     
-    await queryInterface.bulkInsert('Users', [
+    await queryInterface.bulkInsert('users', [
       {
-        firstName: 'Paulão',
-        lastName: 'Administrador',
+        id: "79ce51ad-1e5a-43b9-b71f-56cfe18d2253",
+        first_name: 'Paulão',
+        last_name: 'Administrador',
         email: 'paulaoadmin@gmail.com',
         password: 'paulaoadmin123',
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
       }
     ], {});
   },
 
   down: async (queryInterface, Sequelize) => {
     
-    await queryInterface.bulkDelete('Users', null, {});
+    await queryInterface.bulkDelete('users', null, {});
     
   }
 };

@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require('uuid');
+
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
@@ -5,6 +7,7 @@ module.exports = {
     async create (request, response) {
 
         const { firstName, lastName, email, password } = request.body;
+        const id = uuidv4();
         const saltRounds = 12;
 
         try {
@@ -12,6 +15,7 @@ module.exports = {
             const hash = bcrypt.hashSync(password, salt);
 
             const user = await User.create({
+                id: id,
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
@@ -87,7 +91,7 @@ module.exports = {
         const hash = bcrypt.hashSync(password, salt);
 
         try{
-            const user = await User.update({
+            const changes = await User.update({
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
@@ -97,7 +101,7 @@ module.exports = {
                     id: id
                 }
             });
-            if (user == [0]) {
+            if (changes[0] == 0) {
                 return response.status(200).json(
                     {
                         message: 'Usuário não encontrado!',
@@ -106,7 +110,7 @@ module.exports = {
             } else {
                 return response.status(200).json(
                     {
-                        data: user,
+                        data: changes[0],
                         message: 'Atualizado com sucesso',
                     }
                 );
@@ -126,12 +130,12 @@ module.exports = {
         const { id } = request.params;
 
         try{
-            const user = await User.destroy({
+            const changes = await User.destroy({
                 where: {
                     id: id
                 },
             });
-            if (!user) {
+            if (changes == 0) {
                 return response.status(200).json(
                     {
                         message: 'Usuário não encontrado!',
@@ -140,7 +144,7 @@ module.exports = {
             } else {
                 return response.status(200).json(
                     {
-                        data: user,
+                        data: changes,
                         message: 'Apagado com sucesso',
                     }
                 );

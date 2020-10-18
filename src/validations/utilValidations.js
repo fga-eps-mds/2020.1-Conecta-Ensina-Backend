@@ -5,7 +5,7 @@ const {
   
   const idValidation = {
     [Segments.PARAMS]: Joi.object().keys({
-      id: Joi.number().required()
+      id: Joi.string().required()
     }),
 };
 
