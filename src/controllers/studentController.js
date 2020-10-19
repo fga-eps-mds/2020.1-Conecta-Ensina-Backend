@@ -4,28 +4,32 @@ module.exports = {
     async create (request, response) {
 
         const { id } = request.params; 
-        const { 
-            grade, 
-            institution, 
-            cep, 
-            number, 
-            details, 
-            description, 
-            birthdate, 
+        const {
+            cpf,
+            birthdate,
+            institution,
+            grade,
+            cep,
+            number,
+            details,
+            description,
             special,
         } = request.body;
+
         try {
             const student = await Student.create({
                 id: id,
-                grade: grade, 
+                cpf: cpf,
+                birthdate: birthdate,
                 institution: institution, 
-                cep: cep, 
-                number: number, 
-                details: details, 
-                description: description, 
-                birthdate: birthdate, 
+                grade: grade,
+                cep: cep,
+                number: number,
+                details: details,
+                description: description,
                 special: special,
             });
+
             if (!student) {
                 return response.status(200).json(
                     {
@@ -42,6 +46,7 @@ module.exports = {
                     }
                 );
             };
+
         } catch (error) {
             console.log(error);
             return response.status(200).json(
@@ -74,6 +79,7 @@ module.exports = {
                     }
                 );
             };
+
         } catch (error) {
             console.log(error);
             return response.status(200).json(
@@ -88,33 +94,35 @@ module.exports = {
 
         const { id } = request.params;
         const {
-            grade, 
-            institution, 
-            cep, 
-            number, 
-            details, 
-            description, 
-            birthdate, 
+            cpf,
+            birthdate,
+            institution,
+            grade,
+            cep,
+            number,
+            details,
+            description,
             special,
         } = request.body;
 
         try{
             const student = await Student.update({
-                id: id,
-                grade: grade, 
-                institution: institution, 
-                cep: cep, 
-                number: number, 
-                details: details, 
-                description: description, 
-                birthdate: birthdate, 
+                cpf: cpf,
+                birthdate: birthdate,
+                institution: institution,
+                grade: grade,
+                cep: cep,
+                number: number,
+                details: details,
+                description: description,
                 special: special,
             }, {
                 where: {
                     id: id
                 }
             });
-            if (student == [0]) {
+
+            if (student == 0) {
                 return response.status(200).json(
                     {
                         message: 'Estudante não encontrado!',
@@ -128,6 +136,7 @@ module.exports = {
                     }
                 );
             };
+
         } catch (error){
             console.log(error);
             return response.status(200).json(
@@ -148,7 +157,8 @@ module.exports = {
                     id: id
                 },
             });
-            if (!student) {
+
+            if (student == 0) {
                 return response.status(200).json(
                     {
                         message: 'Estudante não encontrado!',
@@ -162,6 +172,7 @@ module.exports = {
                     }
                 );
             };
+
         } catch (error){
             console.log(error);
             return response.status(200).json(

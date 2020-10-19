@@ -2,39 +2,30 @@ const Teacher = require('../models/Teacher');
 
 module.exports = {
     async create (request, response) {
-        const { 
-            institution,
-            cep,
-            number,
-            details,
+        const {
             photo,
-            description,
             video,
-            graduation,
             graduationArea,
             degree,
+            description,
             bank,
             agency,
-            account,
-            status,
+            account
         } = request.body;
+
         try {
             const teacher = await Teacher.create({
-                institution: institution, 
-                cep: cep, 
-                number: number, 
-                details: details, 
                 photo: photo,
-                description: description, 
-                video: video, 
-                graduation: graduation,
+                video: video,
                 graduationArea: graduationArea,
                 degree: degree,
+                description: description,
                 bank: bank,
                 agency: agency,
                 account: account,
-                status: status,
+                status: 0,
             });
+
             if (!teacher) {
                 return response.status(200).json(
                     {
@@ -51,6 +42,7 @@ module.exports = {
                     }
                 );
             };
+
         } catch (error) {
             console.log(error);
             return response.status(200).json(
@@ -97,35 +89,24 @@ module.exports = {
 
         const { id } = request.params;
         const {
-            institution,
-            cep,
-            number,
-            details,
             photo,
-            description,
             video,
-            graduation,
-            graduationArea,
+            graduation_area,
             degree,
+            description,
             bank,
             agency,
             account,
-            status,
+            status
         } = request.body;
 
         try{
             const teacher = await Teacher.update({
-                id: id,
-                institution: institution, 
-                cep: cep, 
-                number: number, 
-                details: details, 
                 photo: photo,
-                description: description, 
-                video: video, 
-                graduation: graduation,
-                graduationArea: graduationArea,
+                video: video,
+                graduation_area: graduation_area,
                 degree: degree,
+                description: description,
                 bank: bank,
                 agency: agency,
                 account: account,
@@ -135,6 +116,7 @@ module.exports = {
                     id: id
                 }
             });
+
             if (teacher == [0]) {
                 return response.status(200).json(
                     {
@@ -149,6 +131,7 @@ module.exports = {
                     }
                 );
             };
+
         } catch (error){
             console.log(error);
             return response.status(200).json(
@@ -169,7 +152,8 @@ module.exports = {
                     id: id
                 },
             });
-            if (!teacher) {
+
+            if (teacher == 0) {
                 return response.status(200).json(
                     {
                         message: 'Professor não encontrado!',
@@ -183,6 +167,7 @@ module.exports = {
                     }
                 );
             };
+
         } catch (error){
             console.log(error);
             return response.status(200).json(

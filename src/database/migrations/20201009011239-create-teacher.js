@@ -1,42 +1,33 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Teachers', {
+    await queryInterface.createTable('teachers', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      institution: {
-        type: Sequelize.STRING
-      },
-      cep: {
-        type: Sequelize.STRING
-      },
-      number: {
-        type: Sequelize.INTEGER
-      },
-      details: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        references: {
+          model: {
+            tableName: 'students'
+          },
+          key: 'id'
+        }
       },
       photo: {
-        type: Sequelize.BLOB
-      },
-      description: {
-        type: Sequelize.TEXT
+        allowNull: false,
+        type: Sequelize.BLOB,
       },
       video: {
         type: Sequelize.STRING
       },
-      graduation: {
-        type: Sequelize.STRING
-      },
-      graduationArea: {
+      graduation_area: {
         type: Sequelize.STRING
       },
       degree: {
         type: Sequelize.STRING
+      },
+      description: {
+        type: Sequelize.TEXT
       },
       bank: {
         type: Sequelize.STRING
@@ -47,20 +38,20 @@ module.exports = {
       account: {
         type: Sequelize.STRING
       },
-      status: {
-        type: Sequelize.INTEGER
-      },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
+        type: Sequelize.DATE
+      },
+      deleted_at: {
         type: Sequelize.DATE
       }
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Teachers');
+    await queryInterface.dropTable('teachers');
   }
 };

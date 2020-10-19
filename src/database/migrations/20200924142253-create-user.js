@@ -7,11 +7,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.STRING
       },
-      cpf: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        unique: true
-      },
       first_name: {
         allowNull: false,
         type: Sequelize.STRING
@@ -34,6 +29,11 @@ module.exports = {
         type: Sequelize.STRING
       },
       role: {
+        /* Roles:
+         * 1 - Admin
+         * 2 - Teacher
+         * 3 - Student
+         */
         allowNull: false,
         type: Sequelize.INTEGER
       },

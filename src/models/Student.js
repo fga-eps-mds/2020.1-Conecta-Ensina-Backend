@@ -3,18 +3,20 @@ const config = require('../config/database');
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 const Student = sequelize.define('Student', {
-    
-    grade: DataTypes.INTEGER,
+    cpf: DataTypes.STRING,
+    birthdate: DataTypes.DATE,
     institution: DataTypes.STRING,
+    grade: DataTypes.INTEGER,
     cep: DataTypes.STRING,
     number: DataTypes.INTEGER,
     details: DataTypes.STRING,
     description: DataTypes.TEXT,
-    birthdate: DataTypes.DATE,
-    special: DataTypes.STRING
-
+    special: DataTypes.BOOLEAN,
+    status: DataTypes.INTEGER
   }, {
     sequelize,
     paranoid: true,
-  });
-  module.exports = Student;
+  }
+);
+
+module.exports = Student;

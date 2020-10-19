@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 module.exports = {
     async create (request, response) {
 
-        const { cpf, firstName, lastName, email, password, cellphone, role } = request.body;
+        const { firstName, lastName, email, password, cellphone, role } = request.body;
         const id = uuidv4();
         const saltRounds = 12;
 
@@ -16,7 +16,6 @@ module.exports = {
 
             const user = await User.create({
                 id: id,
-                cpf: cpf,
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
@@ -86,7 +85,7 @@ module.exports = {
     async update (request, response){
 
         const { id } = request.params;
-        const {cpf, firstName, lastName, email, password, cellphone, role} =  request.body;
+        const { firstName, lastName, email, password, cellphone, role } =  request.body;
 
         const saltRounds = 12;
 
@@ -95,7 +94,6 @@ module.exports = {
 
         try{
             const changes = await User.update({
-                cpf: cpf,
                 firstName: firstName,
                 lastName: lastName,
                 email: email,

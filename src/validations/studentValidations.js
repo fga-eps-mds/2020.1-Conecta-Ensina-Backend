@@ -5,13 +5,14 @@ const {
 
 const createValidation = {
   [Segments.BODY]: Joi.object().keys({
-    grade: Joi.number().integer().required(),
+    cpf: Joi.string().required().min(11).max(11),
+    birthdate: Joi.date().required(),
     institution: Joi.string(),
+    grade: Joi.number().integer().required(),
     cep: Joi.string().required().min(8).max(8),
     number: Joi.number().integer().required(),
     details: Joi.string(),
     description: Joi.string(),
-    birthdate: Joi.date().required(),
     special: Joi.boolean(),
   }),
 };
