@@ -4,7 +4,6 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Teachers', [{
       institution: 'Universidade Catolica',
-      cpf: 12345678994,
       cep: 73854647,
       number: 304,
       details: 'none',

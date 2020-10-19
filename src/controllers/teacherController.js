@@ -4,7 +4,6 @@ module.exports = {
     async create (request, response) {
         const { 
             institution,
-            cpf,
             cep,
             number,
             details,
@@ -22,7 +21,6 @@ module.exports = {
         try {
             const teacher = await Teacher.create({
                 institution: institution, 
-                cpf: cpf, 
                 cep: cep, 
                 number: number, 
                 details: details, 
@@ -100,7 +98,6 @@ module.exports = {
         const { id } = request.params;
         const {
             institution,
-            cpf,
             cep,
             number,
             details,
@@ -120,7 +117,6 @@ module.exports = {
             const teacher = await Teacher.update({
                 id: id,
                 institution: institution, 
-                cpf: cpf, 
                 cep: cep, 
                 number: number, 
                 details: details, 

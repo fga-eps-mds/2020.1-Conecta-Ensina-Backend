@@ -11,9 +11,6 @@ module.exports = {
       institution: {
         type: Sequelize.STRING
       },
-      cpf: {
-        type: Sequelize.STRING
-      },
       cep: {
         type: Sequelize.STRING
       },

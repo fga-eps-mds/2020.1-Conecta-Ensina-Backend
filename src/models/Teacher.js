@@ -4,7 +4,6 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 
 const Teacher = sequelize.define('Teacher', {
     institution: DataTypes.STRING,
-    cpf: DataTypes.STRING,
     cep: DataTypes.STRING,
     number: DataTypes.INTEGER,
     details: DataTypes.STRING,

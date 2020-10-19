@@ -6,13 +6,15 @@ const Student = sequelize.define('Student', {
     
     grade: DataTypes.INTEGER,
     institution: DataTypes.STRING,
-    cpf: DataTypes.STRING,
     cep: DataTypes.STRING,
     number: DataTypes.INTEGER,
     details: DataTypes.STRING,
     description: DataTypes.TEXT,
-    adulthood: DataTypes.BOOLEAN,
+    birthdate: DataTypes.DATE,
     special: DataTypes.STRING
 
-  }, {});
+  }, {
+    sequelize,
+    paranoid: true,
+  });
   module.exports = Student;

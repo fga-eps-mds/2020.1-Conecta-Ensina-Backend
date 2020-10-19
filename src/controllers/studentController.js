@@ -2,27 +2,28 @@ const Student = require('../models/Student');
 
 module.exports = {
     async create (request, response) {
+
+        const { id } = request.params; 
         const { 
             grade, 
             institution, 
-            cpf, 
             cep, 
             number, 
             details, 
             description, 
-            adulthood, 
+            birthdate, 
             special,
         } = request.body;
         try {
             const student = await Student.create({
+                id: id,
                 grade: grade, 
                 institution: institution, 
-                cpf: cpf, 
                 cep: cep, 
                 number: number, 
                 details: details, 
                 description: description, 
-                adulthood: adulthood, 
+                birthdate: birthdate, 
                 special: special,
             });
             if (!student) {
@@ -89,12 +90,11 @@ module.exports = {
         const {
             grade, 
             institution, 
-            cpf, 
             cep, 
             number, 
             details, 
             description, 
-            adulthood, 
+            birthdate, 
             special,
         } = request.body;
 
@@ -103,12 +103,11 @@ module.exports = {
                 id: id,
                 grade: grade, 
                 institution: institution, 
-                cpf: cpf, 
                 cep: cep, 
                 number: number, 
                 details: details, 
                 description: description, 
-                adulthood: adulthood, 
+                birthdate: birthdate, 
                 special: special,
             }, {
                 where: {
