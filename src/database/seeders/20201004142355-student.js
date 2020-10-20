@@ -30,6 +30,21 @@ module.exports = {
         status: 1,
         created_at: new Date(),
         updated_at: new Date(),
+      },
+      {
+        id: 'c3cdc164-d3f3-4ba1-ae98-a2c28eab45ed',
+        cpf: '43215678910',
+        birthdate: new Date(),
+        institution: 'Universidade de Brasília',
+        grade: 14,
+        cep: '72865431',
+        number: 12,
+        details: 'Apartamento 1212',
+        description: 'Descrição de aluno',
+        special: false,
+        status: 1,
+        created_at: new Date(),
+        updated_at: new Date(),
       }
     ], {});
   },

@@ -2,6 +2,8 @@ const Teacher = require('../models/Teacher');
 
 module.exports = {
     async create (request, response) {
+        
+        const { id } = request.params;
         const {
             photo,
             video,
@@ -15,6 +17,7 @@ module.exports = {
 
         try {
             const teacher = await Teacher.create({
+                id: id,
                 photo: photo,
                 video: video,
                 graduationArea: graduationArea,
@@ -45,7 +48,7 @@ module.exports = {
 
         } catch (error) {
             console.log(error);
-            return response.status(200).json(
+            return response.status(400).json(
                 {
                     message: error,
                 }
@@ -117,7 +120,7 @@ module.exports = {
                 }
             });
 
-            if (teacher == [0]) {
+            if (teacher[0] == 0) {
                 return response.status(200).json(
                     {
                         message: 'Professor não encontrado!',
@@ -126,7 +129,7 @@ module.exports = {
             } else {
                 return response.status(200).json(
                     {
-                        data: teacher,
+                        data: teacher[0],
                         message: 'Atualizado com sucesso',
                     }
                 );
@@ -170,7 +173,7 @@ module.exports = {
 
         } catch (error){
             console.log(error);
-            return response.status(200).json(
+            return response.status(400).json(
                 {
                     message: error,
                 }

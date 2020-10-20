@@ -49,7 +49,7 @@ module.exports = {
 
         } catch (error) {
             console.log(error);
-            return response.status(200).json(
+            return response.status(400).json(
                 {
                     message: error,
                 }
@@ -122,7 +122,7 @@ module.exports = {
                 }
             });
 
-            if (student == 0) {
+            if (student[0] == 0) {
                 return response.status(200).json(
                     {
                         message: 'Estudante não encontrado!',
@@ -131,7 +131,7 @@ module.exports = {
             } else {
                 return response.status(200).json(
                     {
-                        data: student,
+                        data: student[0],
                         message: 'Atualizado com sucesso',
                     }
                 );

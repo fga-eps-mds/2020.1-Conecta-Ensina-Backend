@@ -1,7 +1,6 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    
     await queryInterface.bulkInsert('users', [
       {
         id: '79ce51ad-1e5a-43b9-b71f-56cfe18d2253',
@@ -35,13 +34,33 @@ module.exports = {
         role: 3,
         created_at: new Date(),
         updated_at: new Date(),
+      },
+      {
+        id: '98ff6e63-cfbe-4bbd-9789-2dcf023b8251',
+        first_name: 'Aluno',
+        last_name: 'Teste',
+        cellphone: '61999999999',
+        email: 'teste@aluno.com',
+        password: 'alunoteste',
+        role: 3,
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        id: 'c3cdc164-d3f3-4ba1-ae98-a2c28eab45ed',
+        first_name: 'Teacher',
+        last_name: 'Teste',
+        cellphone: '61999999999',
+        email: 'teste@teacher.com',
+        password: 'profteste',
+        role: 2,
+        created_at: new Date(),
+        updated_at: new Date(),
       }
     ], {});
   },
-
+  
   down: async (queryInterface, Sequelize) => {
-    
     await queryInterface.bulkDelete('users', null, {});
-    
   }
 };
