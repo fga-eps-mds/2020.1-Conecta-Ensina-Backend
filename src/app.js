@@ -1,7 +1,9 @@
 const express = require('express');
+
 const userRoutes = require('./routes/user');
 const studentRoutes = require('./routes/student');
 const teacherRoutes = require('./routes/teacher');
+const subjectRoutes = require('./routes/subject');
 
 const application = express();
 
@@ -15,6 +17,6 @@ application.use(express.json());
 application.use('/api/users', userRoutes);
 application.use('/api/students', studentRoutes);
 application.use('/api/teachers', teacherRoutes);
-
+application.use('/api/subject', subjectRoutes);
 
 module.exports = application;

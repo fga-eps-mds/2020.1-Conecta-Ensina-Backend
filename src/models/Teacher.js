@@ -14,7 +14,6 @@ const Teacher = sequelize.define('Teacher', {
   }, {
     sequelize,
     paranoid: true,
-  }
-);
+  });
 
 module.exports = Teacher;
