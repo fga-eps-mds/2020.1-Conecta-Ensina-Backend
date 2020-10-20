@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 module.exports = {
     async create (request, response) {
 
-        const { firstName, lastName, email, password } = request.body;
+        const { firstName, lastName, email, password, cellphone, role } = request.body;
         const id = uuidv4();
         const saltRounds = 12;
 
@@ -20,6 +20,8 @@ module.exports = {
                 lastName: lastName,
                 email: email,
                 password: hash,
+                cellphone: cellphone,
+                role: role,
             });
 
             if (!user) {
@@ -83,7 +85,7 @@ module.exports = {
     async update (request, response){
 
         const { id } = request.params;
-        const {firstName, lastName, email, password} =  request.body;
+        const { firstName, lastName, email, password, cellphone, role } =  request.body;
 
         const saltRounds = 12;
 
@@ -91,17 +93,19 @@ module.exports = {
         const hash = bcrypt.hashSync(password, salt);
 
         try{
-            const changes = await User.update({
+            const user = await User.update({
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
-                password: hash
+                password: hash,
+                cellphone: cellphone,
+                role: role
             }, {
                 where: {
                     id: id
                 }
             });
-            if (changes[0] == 0) {
+            if (user[0] == 0) {
                 return response.status(200).json(
                     {
                         message: 'Usuário não encontrado!',
@@ -110,7 +114,7 @@ module.exports = {
             } else {
                 return response.status(200).json(
                     {
-                        data: changes[0],
+                        data: user[0],
                         message: 'Atualizado com sucesso',
                     }
                 );
@@ -130,12 +134,12 @@ module.exports = {
         const { id } = request.params;
 
         try{
-            const changes = await User.destroy({
+            const user = await User.destroy({
                 where: {
                     id: id
                 },
             });
-            if (changes == 0) {
+            if (user == 0) {
                 return response.status(200).json(
                     {
                         message: 'Usuário não encontrado!',
@@ -144,7 +148,7 @@ module.exports = {
             } else {
                 return response.status(200).json(
                     {
-                        data: changes,
+                        data: user,
                         message: 'Apagado com sucesso',
                     }
                 );
