@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 const config = require('../config/database');
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
-const Class = sequelize.define('Class', {
+const Classroom = sequelize.define('Classroom', {
     teacher: DataTypes.STRING,
     student: DataTypes.STRING,
     grade: DataTypes.INTEGER,
@@ -19,4 +19,4 @@ const Class = sequelize.define('Class', {
     paranoid: true,
   });
 
-module.exports = Class;
+module.exports = Classroom;

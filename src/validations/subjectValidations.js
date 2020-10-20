@@ -11,5 +11,5 @@ const {
   };
   
 module.exports = {
-createValidation
+  createValidation
 };

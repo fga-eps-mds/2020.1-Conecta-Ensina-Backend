@@ -1,4 +1,4 @@
-const Subject = require('../models/Subject');
+const Classroom = require('../models/Classroom');
 
 module.exports = {
     async create (request, response) {
@@ -7,25 +7,25 @@ module.exports = {
 
         try {
 
-            const subject = await Subject.create({
+            const classroom = await Classroom.create({
                 id: id,
                 grade: grade,
                 name: name
             });
 
-            if (!subject) {
+            if (!classroom) {
                 return response.status(200).json(
                     {
-                        message: 'Erro ao criar matéria!',
+                        message: 'Erro ao criar aula!',
                     }
                 );
             } else {
                 return response.status(200).json(
                     {
                         data: {
-                            subject: subject,
+                            classroom: classroom,
                         },
-                        message: 'Matéria criada com sucesso!',
+                        message: 'Aula criada com sucesso!',
                     }
                 );
             };
@@ -44,20 +44,20 @@ module.exports = {
         const { id } = request.params;
 
         try {
-            const subject = await Subject.findByPk( id );
-            if (!subject) {
+            const classroom = await Classroom.findByPk( id );
+            if (!classroom) {
                 return response.status(200).json(
                     {
-                        message: 'Matéria não encontrada!',
+                        message: 'Aula não encontrada!',
                     }
                 );
             } else {
                 return response.status(200).json(
                     {
                         data: {
-                            subject: subject,
+                            classroom: classroom,
                         },
-                        message: 'Matéria encontrada com sucesso',
+                        message: 'Aula encontrada com sucesso',
                     }
                 );
             };
@@ -77,7 +77,7 @@ module.exports = {
         const { grade, name } =  request.body;
 
         try{
-            const subject = await Subject.update({
+            const classroom = await Classroom.update({
                 grade: grade,
                 name: name,
             }, {
@@ -85,16 +85,16 @@ module.exports = {
                     id: id
                 }
             });
-            if (subject[0] == 0) {
+            if (classroom[0] == 0) {
                 return response.status(200).json(
                     {
-                        message: 'Matéria não encontrada!',
+                        message: 'Aula não encontrada!',
                     }
                 );
             } else {
                 return response.status(200).json(
                     {
-                        data: subject[0],
+                        data: classroom[0],
                         message: 'Atualizado com sucesso',
                     }
                 );
@@ -114,21 +114,21 @@ module.exports = {
         const { id } = request.params;
 
         try{
-            const subject = await Subject.destroy({
+            const classroom = await Classroom.destroy({
                 where: {
                     id: id
                 },
             });
-            if (subject == 0) {
+            if (classroom == 0) {
                 return response.status(200).json(
                     {
-                        message: 'Matéria não encontrada!',
+                        message: 'Aula não encontrada!',
                     }
                 );
             } else {
                 return response.status(200).json(
                     {
-                        data: subject,
+                        data: classroom,
                         message: 'Apagado com sucesso',
                     }
                 );

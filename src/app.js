@@ -4,6 +4,7 @@ const userRoutes = require('./routes/user');
 const studentRoutes = require('./routes/student');
 const teacherRoutes = require('./routes/teacher');
 const subjectRoutes = require('./routes/subject');
+const classroomRoutes = require('./routes/classroom');
 
 const application = express();
 
@@ -18,5 +19,6 @@ application.use('/api/users', userRoutes);
 application.use('/api/students', studentRoutes);
 application.use('/api/teachers', teacherRoutes);
 application.use('/api/subject', subjectRoutes);
+application.use('/api/classroom', classroomRoutes);
 
 module.exports = application;
