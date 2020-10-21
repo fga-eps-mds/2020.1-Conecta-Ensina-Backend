@@ -31,7 +31,7 @@ module.exports = {
             };
         } catch (error) {
             console.log(error);
-            return response.status(200).json(
+            return response.status(400).json(
                 {
                     message: error,
                 }

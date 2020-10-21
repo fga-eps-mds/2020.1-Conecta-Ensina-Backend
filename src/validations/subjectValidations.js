@@ -5,6 +5,7 @@ const {
   
   const createValidation = {
     [Segments.BODY]: Joi.object().keys({
+      id: Joi.number().integer().required(),
       grade: Joi.number().integer().required(),
       name: Joi.string().required(),
     }),
