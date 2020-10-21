@@ -18,7 +18,7 @@ Exemplo do fluxo de branches:
 
 # Nomenclatura
 
-Toda branch criada deve estar relacionada a uma funcionalidade ou correção, logo necessariamente deverá estar atrelada a uma Issue. O nome da branch deve ser em PORTUGUES e deve seguir o padrão:
+Toda branch criada deve estar relacionada a uma funcionalidade ou correção, logo necessariamente deverá estar atrelada a uma Issue. O nome da branch deve ser em INGLES e deve seguir o padrão:
 
 - doc/IssueID-descrição-curta: para documentações
 
