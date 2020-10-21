@@ -56,6 +56,17 @@ module.exports = {
         role: 2,
         created_at: new Date(),
         updated_at: new Date(),
+      },
+      {
+        id: 'dfd29066-cd25-485c-8722-b429291d0ea3',
+        first_name: 'Teacher',
+        last_name: 'Classroom',
+        cellphone: '61988787878',
+        email: 'teste@classroom.com',
+        password: 'proftesteclassroom',
+        role: 2,
+        created_at: new Date(),
+        updated_at: new Date(),
       }
     ], {});
   },

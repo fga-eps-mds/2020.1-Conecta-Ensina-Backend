@@ -13,7 +13,7 @@ const createValidation = {
         duration: Joi.number().integer().required(),
         cep: Joi.string().required(),
         number: Joi.number().integer().required(),
-        details: Joi.string().required(),
+        details: Joi.string(),
     }),
 };
   

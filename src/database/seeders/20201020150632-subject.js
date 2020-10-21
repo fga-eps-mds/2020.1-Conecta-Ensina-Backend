@@ -5,7 +5,7 @@ module.exports = {
     await queryInterface.bulkInsert('subjects', [
       {
         id: 1,
-        grade: 13,
+        grade: 3,
         name: 'Álgebra',
         created_at: new Date(),
         updated_at: new Date(),

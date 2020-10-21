@@ -8,7 +8,7 @@ module.exports = {
         cpf: '12345678910',
         birthdate: new Date(),
         institution: 'Católica',
-        grade: 8,
+        grade: 13,
         cep: '73854647',
         number: 304,
         status: 1,
@@ -45,7 +45,23 @@ module.exports = {
         status: 1,
         created_at: new Date(),
         updated_at: new Date(),
+      },
+      {
+        id: 'dfd29066-cd25-485c-8722-b429291d0ea3',
+        cpf: '45556776577',
+        birthdate: new Date(),
+        institution: 'Universidade de Brasília',
+        grade: 15,
+        cep: '72865431',
+        number: 12,
+        details: 'Apartamento 1212',
+        description: 'Descrição de aluno',
+        special: false,
+        status: 1,
+        created_at: new Date(),
+        updated_at: new Date(),
       }
+      
     ], {});
   },
 

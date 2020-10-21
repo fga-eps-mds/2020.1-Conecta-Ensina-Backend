@@ -1,16 +1,37 @@
+const { v4: uuidv4 } = require('uuid');
 const Classroom = require('../models/Classroom');
 
 module.exports = {
     async create (request, response) {
-
-        const { id, grade, name } = request.body;
+    
+        const id = uuidv4();
+        const { 
+            teacher, 
+            student, 
+            grade, 
+            subject, 
+            dtclass, 
+            duration, 
+            cep, 
+            number, 
+            details, 
+        } = request.body;
+        const status = 0;
 
         try {
 
             const classroom = await Classroom.create({
                 id: id,
-                grade: grade,
-                name: name
+                teacher: teacher, 
+                student: student, 
+                grade: grade, 
+                subject: subject, 
+                dtclass: dtclass, 
+                duration: duration, 
+                cep: cep, 
+                number: number, 
+                details: details,
+                status: status, 
             });
 
             if (!classroom) {
@@ -31,7 +52,7 @@ module.exports = {
             };
         } catch (error) {
             console.log(error);
-            return response.status(200).json(
+            return response.status(400).json(
                 {
                     message: error,
                 }
