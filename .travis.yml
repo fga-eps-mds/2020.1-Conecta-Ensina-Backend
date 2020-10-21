@@ -10,6 +10,7 @@ services:
   - docker
 
 stages:
+  - Lint
   - Tests
 
 before_install:
@@ -17,9 +18,12 @@ before_install:
 
 jobs:
   include:
+    - stage: "Lint"
+      name: "Lint"
+      script:
+        - yarn lint
     - stage: "Tests"
       name: "Tests"
       script:
-        # run tests
         - yarn test --coverage
         - ./node_modules/.bin/codecov -t ${CODECOV_TOKEN}

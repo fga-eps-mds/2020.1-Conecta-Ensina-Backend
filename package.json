@@ -7,7 +7,8 @@
     "start": "nodemon src/server.js",
     "pretest": "DB_DIALECT=sqlite sequelize db:migrate && DB_DIALECT=sqlite sequelize db:seed:all",
     "test": "DB_DIALECT=sqlite jest --detectOpenHandles --forceExit --silent --coverage",
-    "posttest": "DB_DIALECT=sqlite sequelize db:migrate:undo:all"
+    "posttest": "DB_DIALECT=sqlite sequelize db:migrate:undo:all",
+    "lint": "eslint --ext .js --ext .jsx --fix src/"
   },
   "repository": {
     "type": "git",
@@ -29,7 +30,8 @@
     "express": "^4.17.1",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "uuid": "^8.3.1"
   },
   "devDependencies": {
     "eslint": "^7.9.0",
@@ -38,8 +40,8 @@
     "jest": "^26.4.2",
     "nodemon": "^2.0.4",
     "sequelize-cli": "^6.2.0",
+    "sqlite3": "^5.0.0",
     "sucrase": "^3.15.0",
-    "supertest": "^4.0.2",
-    "sqlite3": "^5.0.0"
+    "supertest": "^4.0.2"
   }
 }
