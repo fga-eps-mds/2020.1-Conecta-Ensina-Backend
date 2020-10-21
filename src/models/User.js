@@ -6,14 +6,12 @@ const User = sequelize.define('User', {
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     email: DataTypes.STRING,
-    password: DataTypes.STRING
-  }, {});
-  // Users.associate = function(models) {
-  //   // associations can be defined here
-  //   // User.hasMany(models.Comment, {
-  //   //   foreignKey: 'userId',
-  //   //   as: 'comments',
-  //   //   onDelete: 'CASCADE',
-  //   // });
-  // };
+    password: DataTypes.STRING,
+    cellphone: DataTypes.STRING,
+    role: DataTypes.INTEGER
+  }, {
+    sequelize,
+    paranoid: true,
+  });
+
 module.exports = User;

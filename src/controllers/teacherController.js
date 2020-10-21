@@ -2,41 +2,33 @@ const Teacher = require('../models/Teacher');
 
 module.exports = {
     async create (request, response) {
-        const { 
-            institution,
-            cpf,
-            cep,
-            number,
-            details,
+        
+        const { id } = request.params;
+        const {
             photo,
-            description,
             video,
-            graduation,
             graduationArea,
             degree,
+            description,
             bank,
             agency,
-            account,
-            status,
+            account
         } = request.body;
+
         try {
             const teacher = await Teacher.create({
-                institution: institution, 
-                cpf: cpf, 
-                cep: cep, 
-                number: number, 
-                details: details, 
+                id: id,
                 photo: photo,
-                description: description, 
-                video: video, 
-                graduation: graduation,
+                video: video,
                 graduationArea: graduationArea,
                 degree: degree,
+                description: description,
                 bank: bank,
                 agency: agency,
                 account: account,
-                status: status,
+                status: 0,
             });
+
             if (!teacher) {
                 return response.status(200).json(
                     {
@@ -53,9 +45,10 @@ module.exports = {
                     }
                 );
             };
+
         } catch (error) {
             console.log(error);
-            return response.status(200).json(
+            return response.status(400).json(
                 {
                     message: error,
                 }
@@ -99,37 +92,24 @@ module.exports = {
 
         const { id } = request.params;
         const {
-            institution,
-            cpf,
-            cep,
-            number,
-            details,
             photo,
-            description,
             video,
-            graduation,
-            graduationArea,
+            graduation_area,
             degree,
+            description,
             bank,
             agency,
             account,
-            status,
+            status
         } = request.body;
 
         try{
             const teacher = await Teacher.update({
-                id: id,
-                institution: institution, 
-                cpf: cpf, 
-                cep: cep, 
-                number: number, 
-                details: details, 
                 photo: photo,
-                description: description, 
-                video: video, 
-                graduation: graduation,
-                graduationArea: graduationArea,
+                video: video,
+                graduation_area: graduation_area,
                 degree: degree,
+                description: description,
                 bank: bank,
                 agency: agency,
                 account: account,
@@ -139,7 +119,8 @@ module.exports = {
                     id: id
                 }
             });
-            if (teacher == [0]) {
+
+            if (teacher[0] == 0) {
                 return response.status(200).json(
                     {
                         message: 'Professor não encontrado!',
@@ -148,11 +129,12 @@ module.exports = {
             } else {
                 return response.status(200).json(
                     {
-                        data: teacher,
+                        data: teacher[0],
                         message: 'Atualizado com sucesso',
                     }
                 );
             };
+
         } catch (error){
             console.log(error);
             return response.status(200).json(
@@ -173,7 +155,8 @@ module.exports = {
                     id: id
                 },
             });
-            if (!teacher) {
+
+            if (teacher == 0) {
                 return response.status(200).json(
                     {
                         message: 'Professor não encontrado!',
@@ -187,9 +170,10 @@ module.exports = {
                     }
                 );
             };
+
         } catch (error){
             console.log(error);
-            return response.status(200).json(
+            return response.status(400).json(
                 {
                     message: error,
                 }

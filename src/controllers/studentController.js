@@ -2,29 +2,34 @@ const Student = require('../models/Student');
 
 module.exports = {
     async create (request, response) {
-        const { 
-            grade, 
-            institution, 
-            cpf, 
-            cep, 
-            number, 
-            details, 
-            description, 
-            adulthood, 
+
+        const { id } = request.params; 
+        const {
+            cpf,
+            birthdate,
+            institution,
+            grade,
+            cep,
+            number,
+            details,
+            description,
             special,
         } = request.body;
+
         try {
             const student = await Student.create({
-                grade: grade, 
+                id: id,
+                cpf: cpf,
+                birthdate: birthdate,
                 institution: institution, 
-                cpf: cpf, 
-                cep: cep, 
-                number: number, 
-                details: details, 
-                description: description, 
-                adulthood: adulthood, 
+                grade: grade,
+                cep: cep,
+                number: number,
+                details: details,
+                description: description,
                 special: special,
             });
+
             if (!student) {
                 return response.status(200).json(
                     {
@@ -41,9 +46,10 @@ module.exports = {
                     }
                 );
             };
+
         } catch (error) {
             console.log(error);
-            return response.status(200).json(
+            return response.status(400).json(
                 {
                     message: error,
                 }
@@ -73,6 +79,7 @@ module.exports = {
                     }
                 );
             };
+
         } catch (error) {
             console.log(error);
             return response.status(200).json(
@@ -87,35 +94,35 @@ module.exports = {
 
         const { id } = request.params;
         const {
-            grade, 
-            institution, 
-            cpf, 
-            cep, 
-            number, 
-            details, 
-            description, 
-            adulthood, 
+            cpf,
+            birthdate,
+            institution,
+            grade,
+            cep,
+            number,
+            details,
+            description,
             special,
         } = request.body;
 
         try{
             const student = await Student.update({
-                id: id,
-                grade: grade, 
-                institution: institution, 
-                cpf: cpf, 
-                cep: cep, 
-                number: number, 
-                details: details, 
-                description: description, 
-                adulthood: adulthood, 
+                cpf: cpf,
+                birthdate: birthdate,
+                institution: institution,
+                grade: grade,
+                cep: cep,
+                number: number,
+                details: details,
+                description: description,
                 special: special,
             }, {
                 where: {
                     id: id
                 }
             });
-            if (student == [0]) {
+
+            if (student[0] == 0) {
                 return response.status(200).json(
                     {
                         message: 'Estudante não encontrado!',
@@ -124,11 +131,12 @@ module.exports = {
             } else {
                 return response.status(200).json(
                     {
-                        data: student,
+                        data: student[0],
                         message: 'Atualizado com sucesso',
                     }
                 );
             };
+
         } catch (error){
             console.log(error);
             return response.status(200).json(
@@ -149,7 +157,8 @@ module.exports = {
                     id: id
                 },
             });
-            if (!student) {
+
+            if (student == 0) {
                 return response.status(200).json(
                     {
                         message: 'Estudante não encontrado!',
@@ -163,6 +172,7 @@ module.exports = {
                     }
                 );
             };
+
         } catch (error){
             console.log(error);
             return response.status(200).json(
