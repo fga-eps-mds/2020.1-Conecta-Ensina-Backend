@@ -1,10 +1,18 @@
-# 2020.1-Conecta-Ensina-Backend
-Backend do projeto Conecta Ensina
 
-## Pré Requisitos do Sistema
+![conectalogo](.github/img/conecta-logo.png)
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/67cbc9d136bf5fe45984/maintainability)](https://codeclimate.com/github/fga-eps-mds/2020.1-Conecta-Ensina-Backend/maintainability)
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+[![Build Status](https://travis-ci.com/fga-eps-mds/2020.1-Conecta-Ensina-Backend.svg?branch=master)](https://travis-ci.com/fga-eps-mds/2020.1-Conecta-Ensina-Backend)
+
+[![codecov](https://codecov.io/gh/fga-eps-mds/2020.1-Conecta-Ensina-Backend/branch/master/graph/badge.svg?token=XI7IB0NUIO)](undefined)
 
 O Conecta Ensina ultiliza a plataforma [Docker](https://www.docker.com/what-docker) para a configuração de ambiente, afim de evitar problemas de compatibilidade de sistema. Os passos abaixo podem ser seguidos para executar a aplicação usando a plataforma:
 
+
+## Pré Requisitos do Sistema
  1. Instalação do [Docker](https://docs.docker.com/engine/installation/)
  2. Instalação do [Docker Compose](https://docs.docker.com/compose/install/)
  3. Clone o repositório usando o comando:
