@@ -1,0 +1,29 @@
+sudo: required
+
+language:
+  - node_js
+
+node_js:
+  - "12.18.1"
+
+services:
+  - docker
+
+stages:
+  - Lint
+  - Tests
+
+before_install:
+  - yarn install
+
+jobs:
+  include:
+    - stage: "Lint"
+      name: "Lint"
+      script:
+        - yarn lint
+    - stage: "Tests"
+      name: "Tests"
+      script:
+        - yarn test --coverage
+        - ./node_modules/.bin/codecov -t ${CODECOV_TOKEN}
