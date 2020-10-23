@@ -172,13 +172,19 @@ module.exports = {
       if (!user) {
         return response.status(200).json(
           {
-            message: 'Usuário não encontrado!',
+            message: 'Usuário não encontrado!'
           }
         );
-      } if (bcrypt.compareSync(password, user.password)) {
+      } if (password === user.password) {
         console.log('Login efetuado com sucesso!');
+        return response.status(200).json(
+            {
+                role: user.role,
+                message: 'Login efetuado com sucesso'
+            }
+        )
       } else {
-        console.log('Senha errada.');
+        console.log('senha errada.');
       }
     } catch (error) {
       console.log(error);
