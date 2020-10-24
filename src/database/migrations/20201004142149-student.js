@@ -35,16 +35,17 @@ module.exports = {
          * 7 fundamental 2
          * 8 fundamental 2
          * 9 fundamental 2
-         * 10 highschool 1
-         * 11 highschool 2
-         * 12 highschool 3
-         * 13 highschool complete
-         * 14 in graduation
-         * 15 graduate
-         * 16 in postgradutaion
-         * 17 postgraduate
-         * 18 in masters
-         * 19 master
+         * 10 fundamental complete
+         * 11 highschool 1
+         * 12 highschool 2
+         * 13 highschool 3
+         * 14 highschool complete
+         * 15 in graduation
+         * 16 graduate
+         * 17 in postgradutaion
+         * 18 postgraduate
+         * 19 in masters
+         * 20 master
          */
         allowNull: false,
         type: Sequelize.INTEGER
