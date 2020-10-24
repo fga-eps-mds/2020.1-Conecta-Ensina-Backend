@@ -2,16 +2,16 @@ const teacherRoutes = require('express').Router();
 
 // Importing Validations
 const {
-    celebrate
+  celebrate
 } = require('celebrate');
 
 const {
-    idValidation
+  idValidation
 } = require('../validations/utilValidations');
 
 const {
-    createTeacherValidation,
-    teacherValidation
+  createTeacherValidation,
+  teacherValidation
 } = require('../validations/teacherValidations');
 
 // Importing Controllers

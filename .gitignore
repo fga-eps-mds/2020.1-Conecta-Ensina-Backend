@@ -107,4 +107,4 @@ dist
 dados/
 
 #datas test
-__tests__/database.sqlite
+tests/database.sqlite

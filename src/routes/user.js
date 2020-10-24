@@ -2,15 +2,15 @@ const userRoutes = require('express').Router();
 
 // Importing Validations
 const {
-    celebrate
+  celebrate
 } = require('celebrate');
 
 const {
-    idValidation
+  idValidation
 } = require('../validations/utilValidations');
 
 const {
-    userValidation
+  userValidation
 } = require('../validations/userValidations');
 
 // Importing Controllers
