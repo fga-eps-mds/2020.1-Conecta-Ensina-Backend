@@ -90,24 +90,24 @@ describe('User tests', () => {
 
   it('Teste login correto', async (done) => {
     const response = await request(app)
-      .post('/api/users/login')
+      .post('/api/user/login')
       .send({
         email: 'teacher@fixo.com',
-        password: 'teacherfixo123',
+        password: 'teacherfixo123'
       });
     expect(response.status).toBe(200);
-    expect(response.body.message).toBe('Login efetuado com sucesso');
+    expect(response.body.message).toBe('Login efetuado com sucesso!');
     done();
   });
 
   it('Teste login incorreto', async (done) => {
     const response = await request(app)
-      .post('/api/users/login')
+      .post('/api/user/login')
       .send({
         email: 'teacher@fixo.com',
         password: 'teacherfixo123errada',
       });
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(400);
     expect(response.body.message).toBe('Usuário e/ou senha incorreto!');
     done();
   });

@@ -1,3 +1,8 @@
+const bcrypt = require('bcrypt');
+
+const saltRounds = Number(process.env.SALT_ROUNDS);
+const salt = bcrypt.genSaltSync(saltRounds);
+
 module.exports = {
   up: async (queryInterface) => {
     await queryInterface.bulkInsert('users', [
@@ -7,7 +12,7 @@ module.exports = {
         last_name: 'Fixo',
         cellphone: '61999999999',
         email: 'admin@fixo.com',
-        password: 'adminfixo123',
+        password: bcrypt.hashSync('adminfixo123', salt),
         role: 1,
         created_at: new Date(),
         updated_at: new Date(),
@@ -18,7 +23,7 @@ module.exports = {
         last_name: 'Fixo',
         cellphone: '61999999999',
         email: 'teacher@fixo.com',
-        password: 'teacherfixo123',
+        password: bcrypt.hashSync('teacherfixo123', salt),
         role: 2,
         created_at: new Date(),
         updated_at: new Date(),
@@ -29,7 +34,7 @@ module.exports = {
         last_name: 'Fixo',
         cellphone: '61999999999',
         email: 'aluno@fixo.com',
-        password: 'alunofixo123',
+        password: bcrypt.hashSync('alunofixo123', salt),
         role: 3,
         created_at: new Date(),
         updated_at: new Date(),
@@ -40,7 +45,7 @@ module.exports = {
         last_name: 'Teste',
         cellphone: '61999999999',
         email: 'usuario@teste.com',
-        password: 'usuarioteste123',
+        password: bcrypt.hashSync('usuarioteste123', salt),
         role: 1,
         created_at: new Date(),
         updated_at: new Date(),
@@ -51,7 +56,7 @@ module.exports = {
         last_name: 'Teste',
         cellphone: '61999999999',
         email: 'teacher@teste.com',
-        password: 'teacherteste123',
+        password: bcrypt.hashSync('teacherteste123', salt),
         role: 2,
         created_at: new Date(),
         updated_at: new Date(),
@@ -62,7 +67,7 @@ module.exports = {
         last_name: 'Teste',
         cellphone: '61999999999',
         email: 'aluno@teste.com',
-        password: 'alunoteste123',
+        password: bcrypt.hashSync('alunoteste123', salt),
         role: 3,
         created_at: new Date(),
         updated_at: new Date(),
