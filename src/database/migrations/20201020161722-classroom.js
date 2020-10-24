@@ -84,9 +84,13 @@ module.exports = {
         },
         status: {
             /* Status:
-             * -1 - canceled
+             * -2 - canceled
+             * -1 - declined
              * 0 - pending
              * 1 - acepted
+             * 2 - pending started
+             * 3 - started
+             * 4 - finished
              */
           allowNull: false,
           type: Sequelize.INTEGER

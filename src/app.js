@@ -15,9 +15,9 @@ application.use(express.static('public'));
 application.use(express.json());
 
 // Routes middleware configuration
-application.use('/api/users', userRoutes);
-application.use('/api/students', studentRoutes);
-application.use('/api/teachers', teacherRoutes);
+application.use('/api/user', userRoutes);
+application.use('/api/student', studentRoutes);
+application.use('/api/teacher', teacherRoutes);
 application.use('/api/subject', subjectRoutes);
 application.use('/api/classroom', classroomRoutes);
 

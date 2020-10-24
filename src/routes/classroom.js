@@ -18,7 +18,7 @@ const ClassroomController = require('../controllers/classroomController');
 
 classroomRoutes.post('/create', celebrate(createValidation), ClassroomController.create);
 classroomRoutes.get('/:id', celebrate(idValidation), ClassroomController.read);
-classroomRoutes.put('/:id', celebrate(idValidation), ClassroomController.update);
+classroomRoutes.put('/:id', celebrate(createValidation), celebrate(idValidation), ClassroomController.update);
 classroomRoutes.delete('/:id', celebrate(idValidation), ClassroomController.delete);
 
 module.exports = classroomRoutes;

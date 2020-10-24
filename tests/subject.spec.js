@@ -52,9 +52,8 @@ describe(('Subject tests'), ()=>{
 
   it(('should update subject'), async (done)=>{
     const response = await request(app)
-    .put('/api/subject/3')
+    .put('/api/subject/2')
     .send({
-      id: 3,
       grade: 2,
       name: 'Matematica'
     });
@@ -66,9 +65,8 @@ describe(('Subject tests'), ()=>{
 
   it(('should failed in update subject'), async (done)=>{
     const response = await request(app)
-    .put('/api/subject/1452452')
+    .put('/api/subject/341234')
     .send({
-      id: 3,
       grade: 2,
       name: 'Matematica'
     });

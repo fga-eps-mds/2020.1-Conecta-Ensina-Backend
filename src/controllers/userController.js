@@ -1,18 +1,24 @@
+require('dotenv/config');
+
 const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcrypt');
 
 const User = require('../models/User');
-const bcrypt = require('bcrypt');
 
 module.exports = {
     async create (request, response) {
 
-        const { firstName, lastName, email, password, cellphone, role } = request.body;
+        const saltRounds = Number(process.env.SALT_ROUNDS);
+
         const id = uuidv4();
-        const saltRounds = 12;
+        const role = 1;
+
+        const { firstName, lastName, email, password, cellphone } = request.body;
+
+        const salt = bcrypt.genSaltSync(saltRounds);
+        const hash = bcrypt.hashSync(password, salt);
 
         try {
-            const salt = bcrypt.genSaltSync(saltRounds);
-            const hash = bcrypt.hashSync(password, salt);
 
             const user = await User.create({
                 id: id,
@@ -21,32 +27,33 @@ module.exports = {
                 email: email,
                 password: hash,
                 cellphone: cellphone,
-                role: role,
+                role: role
             });
 
             if (!user) {
-                return response.status(200).json(
-                    {
-                        message: 'Erro ao criar usuário!',
-                    }
-                );
+                return response.status(200).json({
+                    message: 'Erro ao criar usuário!'
+                });
             } else {
-                return response.status(200).json(
-                    {
-                        data: {
-                            user: user,
-                        },
-                        message: 'Usuário criado com sucesso!',
-                    }
-                );
+                return response.status(200).json({
+                    data: {
+                        user: {
+                            id: user.id,
+                            firstName: user.firstName,
+                            lastName: user.lastName,
+                            email: user.email,
+                            cellphone: user.cellphone,
+                            role: user.role
+                        }
+                    },
+                    message: 'Usuário criado com sucesso!'
+                });
             };
         } catch (error) {
             console.log(error);
-            return response.status(200).json(
-                {
-                    message: error,
-                }
-            );
+            return response.status(200).json({
+                message: error
+            });
         };
     },
 
@@ -57,28 +64,29 @@ module.exports = {
         try {
             const user = await User.findByPk( id );
             if (!user) {
-                return response.status(200).json(
-                    {
-                        message: 'Usuário não encontrado!',
-                    }
-                );
+                return response.status(200).json({
+                    message: 'Usuário não encontrado!'
+                });
             } else {
-                return response.status(200).json(
-                    {
-                        data: {
-                            user: user,
-                        },
-                        message: 'Usuário encontrado com sucesso',
-                    }
-                );
+                return response.status(200).json({
+                    data: {
+                        user: {
+                            id: user.id,
+                            firstName: user.firstName,
+                            lastName: user.lastName,
+                            email: user.email,
+                            cellphone: user.cellphone,
+                            role: user.role
+                        }
+                    },
+                    message: 'Usuário encontrado com sucesso'
+                });
             };
         } catch (error) {
             console.log(error);
-            return response.status(200).json(
-                {
-                    message: error,
-                }
-            );
+            return response.status(200).json({
+                message: error
+            });
         };
     },
 
@@ -87,7 +95,7 @@ module.exports = {
         const { id } = request.params;
         const { firstName, lastName, email, password, cellphone, role } =  request.body;
 
-        const saltRounds = 12;
+        const saltRounds = Number(process.env.SALT_ROUNDS);
 
         const salt = bcrypt.genSaltSync(saltRounds);
         const hash = bcrypt.hashSync(password, salt);
@@ -106,26 +114,20 @@ module.exports = {
                 }
             });
             if (user[0] == 0) {
-                return response.status(200).json(
-                    {
-                        message: 'Usuário não encontrado!',
-                    }
-                );
+                return response.status(200).json({
+                    message: 'Usuário não encontrado!'
+                });
             } else {
-                return response.status(200).json(
-                    {
-                        data: user[0],
-                        message: 'Atualizado com sucesso',
-                    }
-                );
+                return response.status(200).json({
+                    data: user[0],
+                    message: 'Atualizado com sucesso'
+                });
             };
         } catch (error){
             console.log(error);
-            return response.status(200).json(
-                {
-                    message: error,
-                }
-            );            
+            return response.status(200).json({
+                message: error
+            });            
         };
     },
 
@@ -140,26 +142,20 @@ module.exports = {
                 },
             });
             if (user == 0) {
-                return response.status(200).json(
-                    {
-                        message: 'Usuário não encontrado!',
-                    }
-                );
+                return response.status(200).json({
+                    message: 'Usuário não encontrado!'
+                });
             } else {
-                return response.status(200).json(
-                    {
-                        data: user,
-                        message: 'Apagado com sucesso',
-                    }
-                );
+                return response.status(200).json({
+                    data: user,
+                    message: 'Apagado com sucesso'
+                });
             };
         } catch (error){
             console.log(error);
-            return response.status(200).json(
-                {
-                    message: error,
-                }
-            );            
+            return response.status(200).json({
+                message: error
+            });            
         };
     },
 
@@ -173,28 +169,20 @@ module.exports = {
                 } 
             }); 
 
-            if(!user){
-                return response.status(200).json(
-                    {
-                        message: 'Usuário não encontrado!',
-                    }
-                );
+            if(user && bcrypt.compareSync(password, user.password)){
+                return response.status(200).json({
+                    message: 'Login efetuado com sucesso!'
+                });
             } else {
-                if(bcrypt.compareSync(password, user.password)){
-                    console.log('Login efetuado com sucesso!');
-                }
-                else{
-                    console.log('Senha errada.')
-                }
+                return response.status(400).json({
+                    message: 'Usuário e/ou senha incorreto!'
+                });
             };
         } catch (error){
-            console.log(error);
-            return response.status(200).json(
-                {
-                    message: error,
-                }
-            );
+            return response.status(400).json({
+                message: error
+            });
         };
-        
+    
     }
 };

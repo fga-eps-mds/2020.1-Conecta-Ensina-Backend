@@ -7,13 +7,12 @@ const Teacher = sequelize.define('Teacher', {
     video: DataTypes.STRING,
     graduation_area: DataTypes.STRING,
     degree: DataTypes.STRING,
-    description: DataTypes.TEXT,
     bank: DataTypes.STRING,
     agency: DataTypes.STRING,
     account: DataTypes.STRING
-  }, {
+}, {
     sequelize,
     paranoid: true,
-  });
+});
 
 module.exports = Teacher;

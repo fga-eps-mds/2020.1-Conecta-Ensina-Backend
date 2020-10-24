@@ -1,7 +1,7 @@
 const {
     Segments,
     Joi,
-  } = require('celebrate');
+} = require('celebrate');
   
 const createValidation = {
     [Segments.BODY]: Joi.object().keys({

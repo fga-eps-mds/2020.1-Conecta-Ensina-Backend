@@ -14,28 +14,22 @@ module.exports = {
             });
 
             if (!subject) {
-                return response.status(200).json(
-                    {
-                        message: 'Erro ao criar matéria!',
-                    }
-                );
+                return response.status(200).json({
+                    message: 'Erro ao criar matéria!'
+                });
             } else {
-                return response.status(200).json(
-                    {
-                        data: {
-                            subject: subject,
-                        },
-                        message: 'Matéria criada com sucesso!',
-                    }
-                );
+                return response.status(200).json({
+                    data: {
+                        subject: subject
+                    },
+                    message: 'Matéria criada com sucesso!'
+                });
             };
         } catch (error) {
             console.log(error);
-            return response.status(400).json(
-                {
-                    message: error,
-                }
-            );
+            return response.status(400).json({
+                message: error
+            });
         };
     },
 
@@ -46,28 +40,22 @@ module.exports = {
         try {
             const subject = await Subject.findByPk( id );
             if (!subject) {
-                return response.status(200).json(
-                    {
-                        message: 'Matéria não encontrada!',
-                    }
-                );
+                return response.status(200).json({
+                    message: 'Matéria não encontrada!'
+                });
             } else {
-                return response.status(200).json(
-                    {
-                        data: {
-                            subject: subject,
-                        },
-                        message: 'Matéria encontrada com sucesso',
-                    }
-                );
+                return response.status(200).json({
+                    data: {
+                        subject: subject
+                    },
+                    message: 'Matéria encontrada com sucesso'
+                });
             };
         } catch (error) {
             console.log(error);
-            return response.status(200).json(
-                {
-                    message: error,
-                }
-            );
+            return response.status(200).json({
+                message: error
+            });
         };
     },
 
@@ -79,33 +67,27 @@ module.exports = {
         try{
             const subject = await Subject.update({
                 grade: grade,
-                name: name,
+                name: name
             }, {
                 where: {
                     id: id
                 }
             });
             if (subject[0] == 0) {
-                return response.status(200).json(
-                    {
-                        message: 'Matéria não encontrada!',
-                    }
-                );
+                return response.status(200).json({
+                    message: 'Matéria não encontrada!'
+                });
             } else {
-                return response.status(200).json(
-                    {
-                        data: subject[0],
-                        message: 'Atualizado com sucesso',
-                    }
-                );
+                return response.status(200).json({
+                    data: subject[0],
+                    message: 'Atualizado com sucesso'
+                });
             };
         } catch (error){
             console.log(error);
-            return response.status(200).json(
-                {
-                    message: error,
-                }
-            );            
+            return response.status(200).json({
+                message: error
+            });            
         };
     },
 
@@ -120,26 +102,20 @@ module.exports = {
                 },
             });
             if (subject == 0) {
-                return response.status(200).json(
-                    {
-                        message: 'Matéria não encontrada!',
-                    }
-                );
+                return response.status(200).json({
+                    message: 'Matéria não encontrada!'
+                });
             } else {
-                return response.status(200).json(
-                    {
-                        data: subject,
-                        message: 'Apagado com sucesso',
-                    }
-                );
+                return response.status(200).json({
+                    data: subject,
+                    message: 'Apagado com sucesso'
+                });
             };
         } catch (error){
             console.log(error);
-            return response.status(200).json(
-                {
-                    message: error,
-                }
-            );            
+            return response.status(200).json({
+                message: error
+            });            
         };
     }
 };
