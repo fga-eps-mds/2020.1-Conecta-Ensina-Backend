@@ -5,31 +5,41 @@ const app = require('../src/app');
 describe('Student tests', () => {
   it('Teste create correto', async (done) => {
     const response = await request(app)
-      .post('/api/students/98ff6e63-cfbe-4bbd-9789-2dcf023b8251')
+      .post('/api/student/create')
       .send({
-        cpf: "10123456789",
-        birthdate: "2020-10-20T01:18:10.161Z",
-        institution: "Catolica",
+        firstName: 'Aluno',
+        lastName: 'Qualquer',
+        cellphone: '61987654321',
+        email: 'aluno@qualquer.com',
+        password: 'alunoqualquer123',
+        cpf: '12345678999',
+        birthdate: '2020-10-20T01:18:10.161Z',
+        institution: 'Católica',
         grade: 7,
-        cep: "12345678",
+        cep: '72123123',
         number: 4,
         special: false,
       });
 
     expect(response.status).toBe(200);
-    expect(response.body.data.student).toHaveProperty("id");
+    expect(response.body.data.student).toHaveProperty('id');
     done();
   });
 
   it('Teste create incorreto', async (done) => {
     const response = await request(app)
-      .post('/api/students/98ff6e63-cfbe-4bbd-9789-2dcf023b8251')
+      .post('/api/student/create')
       .send({
-        cpf: "12345678910",
-        birthdate: "2020-10-20T01:18:10.161Z",
-        institution: "Catolica",
+        firstName: 'Aluno2',
+        lastName: 'Qualquer',
+        cellphone: '61987654321',
+        email: 'aluno2@qualquer.com',
+        password: 'aluno2qualquer123',
+        cpf: '10987654321',
+        birthdate: '2020-10-20T01:18:10.161Z',
+        institution: 'Catolica',
         grade: 7,
-        cep: "12345678",
+        cep: '72123123',
         number: 4,
         special: false,
       });
@@ -40,16 +50,16 @@ describe('Student tests', () => {
 
   it('Teste read correto', async (done) => {
     const response = await request(app)
-      .get('/api/students/3bd7c190-ce64-4827-8c0c-58cfef45ad9f');
+      .get('/api/student/3bd7c190-ce64-4827-8c0c-58cfef45ad9f');
 
     expect(response.status).toBe(200);
-    expect(response.body.data).toHaveProperty("student");
+    expect(response.body.data).toHaveProperty('student');
     done();
   });
 
   it('Teste read incorreto', async (done) => {
     const response = await request(app)
-      .get('/api/students/3bd7c190-ce64-4827-8c0c-58cfef45ad9fwrong');
+      .get('/api/student/3bd7c190-ce64-4827-8c0c-58cfef45ad9fwrong');
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Estudante não encontrado!');
@@ -58,16 +68,15 @@ describe('Student tests', () => {
 
   it('Teste edit correto', async (done) => {
     const response = await request(app)
-      .put('/api/students/3bd7c190-ce64-4827-8c0c-58cfef45ad9f')
+      .put('/api/student/dfd29066-cd25-485c-8722-b429291d0ea3')
       .send({
-        cpf: "12345678911",
-        birthdate: "2018-10-20T01:18:10.161Z",
-        institution: "Catolica",
-        grade: 8,
-        cep: "12345678",
+        cpf: '12345678989',
+        birthdate: '2020-10-20T01:18:10.161Z',
+        institution: 'Católica',
+        grade: 7,
+        cep: '12345678',
         number: 4,
-        special: false,
-        status: 1,
+        special: false
       });
 
     expect(response.status).toBe(200);
@@ -77,26 +86,25 @@ describe('Student tests', () => {
 
   it('Teste edit incorreto', async (done) => {
     const response = await request(app)
-      .put('/api/students/3bd7c190-ce64-4827-8c0c-58cfef45ad9fwrong')
+      .put('/api/student/dfd29066-cd25-485c-8722-b429291d0ea3wrong')
       .send({
-        cpf: "12345678911",
-        birthdate: "2018-10-20T01:18:10.161Z",
-        institution: "Catolica",
-        grade: 8,
-        cep: "12345678",
+        cpf: '10123456789',
+        birthdate: '2020-10-20T01:18:10.161Z',
+        institution: 'Catolica',
+        grade: 7,
+        cep: '12345678',
         number: 4,
-        special: false,
-        status: 1,
+        special: false
       });
 
-    expect(response.status).toBe(200);
-    expect(response.body.message).toBe("Estudante não encontrado!");
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('Estudante não encontrado!');
     done();
   });
 
   it('Teste delete correto', async (done) => {
     const response = await request(app)
-      .delete('/api/students/3bd7c190-ce64-4827-8c0c-58cfef45ad9f');
+      .delete('/api/student/dfd29066-cd25-485c-8722-b429291d0ea3');
 
     expect(response.status).toBe(200);
     expect(response.body.data).toBe(1);
@@ -104,11 +112,10 @@ describe('Student tests', () => {
   });
   it('Teste delete incorreto', async (done) => {
     const response = await request(app)
-      .delete('/api/students/3bd7c190-ce64-4827-8c0c-58cfef45ad9fwrong');
+      .delete('/api/student/dfd29066-cd25-485c-8722-b429291d0ea3wrong');
 
     expect(response.status).toBe(200);
-    expect(response.body.message).toBe("Estudante não encontrado!");
+    expect(response.body.message).toBe('Estudante não encontrado!');
     done();
   });
-
 });

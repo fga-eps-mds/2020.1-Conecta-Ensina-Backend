@@ -5,14 +5,13 @@ const app = require('../src/app');
 describe('User tests', () => {
   it('Teste create correto', async (done) => {
     const response = await request(app)
-      .post('/api/users/create')
+      .post('/api/user/create')
       .send({
         firstName: "Usuário",
-        lastName: "Teste",
+        lastName: "Qualquer",
         cellphone: "61987654321",
-        email: "user@teste.com",
-        password: "senhadopaulotestes",
-        role: 1,
+        email: "usuario@qualquer.com",
+        password: "usuarioqualquer123"
       });
 
     expect(response.status).toBe(200);
@@ -22,7 +21,7 @@ describe('User tests', () => {
 
   it('Teste read correto', async (done) => {
     const response = await request(app)
-      .get('/api/users/79ce51ad-1e5a-43b9-b71f-56cfe18d2253');
+      .get('/api/user/79ce51ad-1e5a-43b9-b71f-56cfe18d2253');
 
     expect(response.status).toBe(200);
     expect(response.body.data.user).toHaveProperty("id");
@@ -31,7 +30,7 @@ describe('User tests', () => {
 
   it('Teste read incorreto', async (done) => {
     const response = await request(app)
-      .get('/api/users/79ce51ad-1e5a-43b9-b71f-56cfe18d2253wrong');
+      .get('/api/user/79ce51ad-1e5a-43b9-b71f-56cfe18d2253wrong');
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Usuário não encontrado!');
@@ -40,14 +39,13 @@ describe('User tests', () => {
 
   it('Teste edit correto', async (done) => {
     const response = await request(app)
-      .put('/api/users/79ce51ad-1e5a-43b9-b71f-56cfe18d2253')
+      .put('/api/user/98ff6e63-cfbe-4bbd-9789-2dcf023b8251')
       .send({
-        firstName: "Administrador",
+        firstName: "Usuario",
         lastName: "Atualizado",
         cellphone: "61912345678",
-        email: "atualizado@atualizado.com",
-        password: "senhaatualizada",
-        role: 1,
+        email: "usuario@atualizado.com",
+        password: "usuarioatualizado123"
       });
 
     expect(response.status).toBe(200);
@@ -57,14 +55,13 @@ describe('User tests', () => {
 
   it('Teste edit incorreto', async (done) => {
     const response = await request(app)
-      .put('/api/users/79ce51ad-1e5a-43b9-b71f-56cfe18d2253wrong')
+      .put('/api/user/98ff6e63-cfbe-4bbd-9789-2dcf023b8251wrong')
       .send({
-        firstName: "Administrador",
+        firstName: "Usuario",
         lastName: "Atualizado",
         cellphone: "61912345678",
-        email: "atualizado@atualizado.com",
-        password: "senhaatualizada",
-        role: 1,
+        email: "usuario@atualizado.com",
+        password: "usuarioatualizado123"
       });
 
     expect(response.status).toBe(200);
@@ -74,7 +71,7 @@ describe('User tests', () => {
 
   it('Teste delete correto', async (done) => {
     const response = await request(app)
-      .delete('/api/users/79ce51ad-1e5a-43b9-b71f-56cfe18d2253');
+      .delete('/api/user/98ff6e63-cfbe-4bbd-9789-2dcf023b8251');
 
     expect(response.status).toBe(200);
     expect(response.body.data).toBe(1);
@@ -83,7 +80,7 @@ describe('User tests', () => {
 
   it('Teste delete incorreto', async (done) => {
     const response = await request(app)
-      .delete('/api/users/79ce51ad-1e5a-43b9-b71f-56cfe18d2253wrong');
+      .delete('/api/user/98ff6e63-cfbe-4bbd-9789-2dcf023b8251wrong');
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Usuário não encontrado!');

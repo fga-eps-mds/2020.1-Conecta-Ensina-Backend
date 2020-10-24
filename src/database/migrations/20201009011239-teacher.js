@@ -25,9 +25,6 @@ module.exports = {
       degree: {
         type: Sequelize.STRING
       },
-      description: {
-        type: Sequelize.TEXT
-      },
       bank: {
         type: Sequelize.STRING
       },
