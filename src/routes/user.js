@@ -10,7 +10,7 @@ const {
 } = require('../validations/utilValidations');
 
 const {
-  userValidation,loginValidation
+  userValidation, loginValidation
 } = require('../validations/userValidations');
 
 // Importing Controllers
