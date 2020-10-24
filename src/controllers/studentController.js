@@ -19,8 +19,8 @@ module.exports = {
           id
         }
       });
-      if (student === [0]) {
-        return response.status(200).json(
+      if (student[0] === 0) {
+        return response.status(400).json(
           {
             message: 'Professor não encontrado!',
           }
@@ -28,13 +28,13 @@ module.exports = {
       }
       return response.status(200).json(
         {
-          data: student,
+          data: student[0],
           message: 'Atualizado com sucesso',
         }
       );
     } catch (error) {
       console.log(error);
-      return response.status(200).json(
+      return response.status(400).json(
         {
           message: error,
         }
@@ -49,7 +49,7 @@ module.exports = {
         where: { status }
       });
 
-      if (!student) {
+      if (student.length === 0) {
         return response.status(200).json(
           {
             message: 'Nenhum professor pendente',
@@ -66,7 +66,7 @@ module.exports = {
       );
     } catch (error) {
       console.log(error);
-      return response.status(200).json(
+      return response.status(400).json(
         {
           message: error,
         }
