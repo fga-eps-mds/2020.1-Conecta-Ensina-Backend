@@ -16,5 +16,4 @@ application.use('/api/users', userRoutes);
 application.use('/api/students', studentRoutes);
 application.use('/api/teachers', teacherRoutes);
 
-
 module.exports = application;

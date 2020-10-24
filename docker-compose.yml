@@ -20,24 +20,13 @@ services:
     image: ensina_conecta_api
     depends_on:
       - db
-    command: bash -c "yarn install && yarn start"
+    command: bash -c "yarn sequelize db:migrate && yarn sequelize db:seed:undo:all && yarn sequelize db:seed:all && yarn start"
     build: ./
     volumes:
       - .:/app
       - /app/node_modules
     ports:
       - '3333:3333'
-    networks:
-      - network-api
-  test:
-    container_name: ensina_conecta_test
-    image: ensina_conecta_test
-    depends_on:
-      - db
-    command: bash -c "yarn test"
-    build: ./
-    ports:
-      - '5555:5555'
     networks:
       - network-api
 networks:

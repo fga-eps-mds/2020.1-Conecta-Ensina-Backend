@@ -1,3 +1,4 @@
+require('dotenv/config');
 const application = require('./app');
 
-application.listen(3333);
+application.listen(process.env.APP_PORT);

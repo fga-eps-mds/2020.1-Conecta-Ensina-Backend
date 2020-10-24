@@ -1,21 +1,14 @@
 const {
-    Segments,
-    Joi,
-  } = require('celebrate');
-  
-  const idValidation = {
-    [Segments.PARAMS]: Joi.object().keys({
-      id: Joi.number().required()
-    }),
-};
+  Segments,
+  Joi,
+} = require('celebrate');
 
-const statusValidation = {
+const idValidation = {
   [Segments.PARAMS]: Joi.object().keys({
-    status: Joi.number().integer().required()
+    id: Joi.string().required()
   }),
 };
 
 module.exports = {
-    idValidation, statusValidation,
+  idValidation,
 };
-  
