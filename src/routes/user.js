@@ -10,7 +10,7 @@ const {
 } = require('../validations/utilValidations');
 
 const {
-  userValidation
+  userValidation, loginValidation
 } = require('../validations/userValidations');
 
 // Importing Controllers
@@ -20,5 +20,6 @@ userRoutes.post('/create', celebrate(userValidation), UserController.create);
 userRoutes.get('/:id', celebrate(idValidation), UserController.read);
 userRoutes.put('/:id', celebrate(userValidation), celebrate(idValidation), UserController.update);
 userRoutes.delete('/:id', celebrate(idValidation), UserController.delete);
+userRoutes.post('/login', celebrate(loginValidation), UserController.login);
 
 module.exports = userRoutes;
