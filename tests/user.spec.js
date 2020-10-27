@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const request = require('supertest');
 const app = require('../src/app');
 
@@ -7,15 +8,15 @@ describe('User tests', () => {
     const response = await request(app)
       .post('/api/user/create')
       .send({
-        firstName: "Usuário",
-        lastName: "Qualquer",
-        cellphone: "61987654321",
-        email: "usuario@qualquer.com",
-        password: "usuarioqualquer123"
+        firstName: 'Usuário',
+        lastName: 'Qualquer',
+        cellphone: '61987654321',
+        email: 'usuario@qualquer.com',
+        password: 'usuarioqualquer123'
       });
 
     expect(response.status).toBe(200);
-    expect(response.body.data.user).toHaveProperty("id");
+    expect(response.body.data.user).toHaveProperty('id');
     done();
   });
 
@@ -24,7 +25,7 @@ describe('User tests', () => {
       .get('/api/user/79ce51ad-1e5a-43b9-b71f-56cfe18d2253');
 
     expect(response.status).toBe(200);
-    expect(response.body.data.user).toHaveProperty("id");
+    expect(response.body.data.user).toHaveProperty('id');
     done();
   });
 
@@ -41,11 +42,11 @@ describe('User tests', () => {
     const response = await request(app)
       .put('/api/user/98ff6e63-cfbe-4bbd-9789-2dcf023b8251')
       .send({
-        firstName: "Usuario",
-        lastName: "Atualizado",
-        cellphone: "61912345678",
-        email: "usuario@atualizado.com",
-        password: "usuarioatualizado123"
+        firstName: 'Usuario',
+        lastName: 'Atualizado',
+        cellphone: '61912345678',
+        email: 'usuario@atualizado.com',
+        password: 'usuarioatualizado123'
       });
 
     expect(response.status).toBe(200);
@@ -57,11 +58,11 @@ describe('User tests', () => {
     const response = await request(app)
       .put('/api/user/98ff6e63-cfbe-4bbd-9789-2dcf023b8251wrong')
       .send({
-        firstName: "Usuario",
-        lastName: "Atualizado",
-        cellphone: "61912345678",
-        email: "usuario@atualizado.com",
-        password: "usuarioatualizado123"
+        firstName: 'Usuario',
+        lastName: 'Atualizado',
+        cellphone: '61912345678',
+        email: 'usuario@atualizado.com',
+        password: 'usuarioatualizado123'
       });
 
     expect(response.status).toBe(200);
@@ -87,4 +88,27 @@ describe('User tests', () => {
     done();
   });
 
+  it('Teste login correto', async (done) => {
+    const response = await request(app)
+      .post('/api/user/login')
+      .send({
+        email: 'teacher@fixo.com',
+        password: 'teacherfixo123'
+      });
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Login efetuado com sucesso!');
+    done();
+  });
+
+  it('Teste login incorreto', async (done) => {
+    const response = await request(app)
+      .post('/api/user/login')
+      .send({
+        email: 'teacher@fixo.com',
+        password: 'teacherfixo123errada',
+      });
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('Usuário e/ou senha incorreto!');
+    done();
+  });
 });
