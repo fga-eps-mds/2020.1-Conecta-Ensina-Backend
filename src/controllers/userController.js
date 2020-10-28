@@ -166,7 +166,10 @@ module.exports = {
 
       if (user && bcrypt.compareSync(password, user.password)) {
         return response.status(200).json({
-          message: 'Login efetuado com sucesso!'
+          message: 'Login efetuado com sucesso!',
+          id: user.id,
+          role: user.role,
+          firstName: user.firstName
         });
       }
       return response.status(400).json({

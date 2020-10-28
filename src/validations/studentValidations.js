@@ -36,7 +36,14 @@ const studentValidation = {
   })
 };
 
+const statusValidation = {
+  [Segments.PARAMS]: Joi.object().keys({
+    status: Joi.number().integer().required()
+  }),
+};
+
 module.exports = {
   createStudentValidation,
-  studentValidation
+  studentValidation,
+  statusValidation
 };

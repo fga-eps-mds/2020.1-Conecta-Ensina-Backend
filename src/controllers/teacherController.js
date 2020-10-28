@@ -8,6 +8,7 @@ const Student = require('../models/Student');
 const Teacher = require('../models/Teacher');
 
 module.exports = {
+
   async create(request, response) {
     const saltRounds = Number(process.env.SALT_ROUNDS);
     const role = 2;
