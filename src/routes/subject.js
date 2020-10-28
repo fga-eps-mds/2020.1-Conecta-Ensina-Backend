@@ -17,6 +17,7 @@ const {
 // Importing Controllers
 const SubjectController = require('../controllers/subjectController');
 
+subjectRoutes.get('/', celebrate(editValidation), SubjectController.index);
 subjectRoutes.post('/create', celebrate(createValidation), SubjectController.create);
 subjectRoutes.get('/:id', celebrate(idValidation), SubjectController.read);
 subjectRoutes.put('/:id', celebrate(editValidation), celebrate(idValidation), SubjectController.update);
