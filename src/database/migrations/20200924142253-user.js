@@ -1,4 +1,3 @@
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('users', {
@@ -24,6 +23,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      cellphone: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      role: {
+        /* Roles:
+         * 1 - Admin
+         * 2 - Teacher
+         * 3 - Student
+         */
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE
@@ -31,10 +43,15 @@ module.exports = {
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      deleted_at: {
+        type: Sequelize.DATE
       }
     });
   },
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('users');
+  down: async (queryInterface) => {
+    await queryInterface.dropTable('users', {
+      cascade: true,
+    });
   }
 };
