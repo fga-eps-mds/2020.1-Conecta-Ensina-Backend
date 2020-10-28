@@ -11,7 +11,8 @@ const {
 
 const {
   createStudentValidation,
-  studentValidation
+  studentValidation,
+  statusValidation
 } = require('../validations/studentValidations');
 
 // Importing Controllers
@@ -21,5 +22,7 @@ studentRoutes.post('/create', celebrate(createStudentValidation), StudentControl
 studentRoutes.get('/:id', celebrate(idValidation), StudentController.read);
 studentRoutes.put('/:id', celebrate(idValidation), celebrate(studentValidation), StudentController.update);
 studentRoutes.delete('/:id', celebrate(idValidation), StudentController.delete);
+studentRoutes.get('/status/:status', celebrate(statusValidation), StudentController.status);
+studentRoutes.put('/status/:id', celebrate(idValidation), StudentController.updateStatus);
 
 module.exports = studentRoutes;
