@@ -9,6 +9,22 @@ const Teacher = require('../models/Teacher');
 
 module.exports = {
 
+  async index(request, response) {
+    try {
+      const teacher = await Teacher.findAll();
+      return response.status(200).json({
+        data: {
+          teacher
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      return response.status(400).json({
+        message: error
+      });
+    }
+  },
+
   async create(request, response) {
     const saltRounds = Number(process.env.SALT_ROUNDS);
     const role = 2;

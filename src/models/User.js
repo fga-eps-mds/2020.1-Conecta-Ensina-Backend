@@ -15,4 +15,11 @@ const User = sequelize.define('User', {
   paranoid: true,
 });
 
+User.associate = (models) => {
+  User.hasOne(models.Student,{
+    as: 'user',
+    foreignKey: 'id'
+    });
+};
+
 module.exports = User;

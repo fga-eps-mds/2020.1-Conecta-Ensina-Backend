@@ -15,5 +15,10 @@ const Teacher = sequelize.define('Teacher', {
   sequelize,
   paranoid: true,
 });
-
+Teacher.associate = (models) => {
+  Teacher.belongsTo(models.Student,{
+    as: 'student',
+    foreignKey: 'id'
+  });
+};
 module.exports = Teacher;
