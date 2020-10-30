@@ -117,6 +117,45 @@ describe(('Classroom tests'), ()=>{
     expect(response.status).toBe(200);
     expect(response.body.message).toBe("Aula não encontrada!");
     done();
-  })
+  });
+
+  it(('should read all classrooms'), async (done)=>{
+    const response = await request(app)
+    .get('/api/classroom/')
+    .send({
+      teacher: '12c06dd6-187a-4a50-927f-5d08b367ee89',
+      status: 0
+    });
+    
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe("Aula encontrada com sucesso");
+    done();
+  });
+
+  it(('should update classroom status'), async (done)=>{
+    const response = await request(app)
+    .put('/api/classroom/status/227b9e87-d080-4f80-af48-a0b9b6cd4d5a')
+    .send({
+      teacher: '12c06dd6-187a-4a50-927f-5d08b367ee89',
+      status: 1
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body.data).toBe(1);
+    done();
+  });
+
+  it(('should failed in update classroom status'), async (done)=>{
+    const response = await request(app)
+    .put('/api/classroom/status/227b9e87-d080-4f80-af48-a0b9b6cd4d5awrong')
+    .send({
+      teacher: '12c06dd6-187a-4a50-927f-5d08b367ee89',
+      status: 1
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Aula não encontrada!');
+    done();
+  });
   
 })

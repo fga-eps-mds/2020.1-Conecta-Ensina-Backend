@@ -154,31 +154,23 @@ module.exports = {
   },
 
   async index(request, response) {
-    const { id,
-    teacher,
-    student,
-    grade,
-    subject,
-    dtclass,
-    duration,
-    cep,
-    number,
-    status,  } = request.body;
+    const {
+      teacher,
+      status,
+    } = request.body;
 
     try {
-      const classroom = await Classroom.findAll({where:{
-        teacher:teacher,
-      },});
-
-      if (!classroom) {
-        return response.status(200).json({
-          message: 'Não tem aula'
-        });
-      }
+      const classroom = await Classroom.findAll({
+        where: {
+          teacher,
+          status,
+        },
+      });
       return response.status(200).json({
         data: {
           classroom
         },
+        classrooms: classroom.length,
         message: 'Aula encontrada com sucesso'
       });
     } catch (error) {
