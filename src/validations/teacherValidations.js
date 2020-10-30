@@ -31,6 +31,7 @@ const createTeacherValidation = {
 
 const teacherValidation = {
   [Segments.BODY]: Joi.object().keys({
+    agentRole: Joi.number().integer().required(),
     photo: Joi.binary(),
     video: Joi.string(),
     graduation_area: Joi.string().required(),

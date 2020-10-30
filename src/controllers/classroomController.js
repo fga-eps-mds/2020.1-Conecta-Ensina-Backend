@@ -5,6 +5,7 @@ module.exports = {
   async create(request, response) {
     const id = uuidv4();
     const {
+      agentRole,
       teacher,
       student,
       grade,
@@ -18,31 +19,39 @@ module.exports = {
     const status = 0;
 
     try {
-      const classroom = await Classroom.create({
-        id,
-        teacher,
-        student,
-        grade,
-        subject,
-        dtclass,
-        duration,
-        cep,
-        number,
-        details,
-        status
-      });
+      if(agentRole === 3){
+        const classroom = await Classroom.create({
+          id,
+          teacher,
+          student,
+          grade,
+          subject,
+          dtclass,
+          duration,
+          cep,
+          number,
+          details,
+          status
+        });
 
-      if (!classroom) {
+        if (!classroom) {
+          return response.status(400).json({
+            message: 'Erro ao criar aula!'
+          });
+        }
+
         return response.status(200).json({
-          message: 'Erro ao criar aula!'
+          data: {
+            classroom
+          },
+          message: 'Aula criada com sucesso!'
         });
       }
-      return response.status(200).json({
-        data: {
-          classroom
-        },
-        message: 'Aula criada com sucesso!'
-      });
+      else{
+        return response.status(401).json({
+          message: 'O usuário não possui permissão para a ação'
+        });
+      }
     } catch (error) {
       console.log(error);
       return response.status(400).json({
@@ -53,21 +62,28 @@ module.exports = {
 
   async read(request, response) {
     const { id } = request.params;
-
+    const { agentRole } = request.body;
     try {
-      const classroom = await Classroom.findByPk(id);
+      if(agentRole === 2){
+        const classroom = await Classroom.findByPk(id);
 
-      if (!classroom) {
+        if (!classroom) {
+          return response.status(200).json({
+            message: 'Aula não encontrada!'
+          });
+        }
         return response.status(200).json({
-          message: 'Aula não encontrada!'
+          data: {
+            classroom
+          },
+          message: 'Aula encontrada com sucesso'
         });
       }
-      return response.status(200).json({
-        data: {
-          classroom
-        },
-        message: 'Aula encontrada com sucesso'
-      });
+      else{
+        return response.status(401).json({
+          message: 'O usuário não possui permissão para a ação'
+        });
+      }
     } catch (error) {
       console.log(error);
       return response.status(200).json({
@@ -79,6 +95,7 @@ module.exports = {
   async update(request, response) {
     const { id } = request.params;
     const {
+      agentRole,
       teacher,
       student,
       grade,
@@ -92,32 +109,39 @@ module.exports = {
     } = request.body;
 
     try {
-      const classroom = await Classroom.update({
-        teacher,
-        student,
-        grade,
-        subject,
-        dtclass,
-        duration,
-        cep,
-        number,
-        details,
-        status
-      }, {
-        where: {
-          id
-        }
-      });
+      if(agentRole === 2 || agentRole === 3){
+        const classroom = await Classroom.update({
+          teacher,
+          student,
+          grade,
+          subject,
+          dtclass,
+          duration,
+          cep,
+          number,
+          details,
+          status
+        }, {
+          where: {
+            id
+          }
+        });
 
-      if (classroom[0] === 0) {
+        if (classroom[0] === 0) {
+          return response.status(200).json({
+            message: 'Aula não encontrada!'
+          });
+        }
         return response.status(200).json({
-          message: 'Aula não encontrada!'
+          data: classroom[0],
+          message: 'Atualizado com sucesso'
         });
       }
-      return response.status(200).json({
-        data: classroom[0],
-        message: 'Atualizado com sucesso'
-      });
+      else{
+        return response.status(401).json({
+          message: 'O usuário não possui permissão para a ação'
+        });
+      }
     } catch (error) {
       console.log(error);
       return response.status(200).json({
@@ -128,23 +152,31 @@ module.exports = {
 
   async delete(request, response) {
     const { id } = request.params;
+    const { agentRole } = request.body;
 
     try {
-      const classroom = await Classroom.destroy({
-        where: {
-          id
-        },
-      });
+      if(agentRole === 2 || agentRole === 3){
+        const classroom = await Classroom.destroy({
+          where: {
+            id
+          },
+        });
 
-      if (classroom === 0) {
+        if (classroom === 0) {
+          return response.status(200).json({
+            message: 'Aula não encontrada!'
+          });
+        }
         return response.status(200).json({
-          message: 'Aula não encontrada!'
+          data: classroom,
+          message: 'Apagado com sucesso'
         });
       }
-      return response.status(200).json({
-        data: classroom,
-        message: 'Apagado com sucesso'
-      });
+      else{
+        return response.status(401).json({
+          message: 'O usuário não possui permissão para a ação'
+        });
+      }
     } catch (error) {
       console.log(error);
       return response.status(200).json({

@@ -154,21 +154,28 @@ module.exports = {
 
   async read(request, response) {
     const { id } = request.params;
+    const { agentRole } = request.body;
 
     try {
-      const student = await Student.findByPk(id);
+      if(agentRole === 2 ||agentRole === 3){
+        const student = await Student.findByPk(id);
 
-      if (!student) {
+        if (!student) {
+          return response.status(200).json({
+            message: 'Estudante não encontrado!'
+          });
+        }
         return response.status(200).json({
-          message: 'Estudante não encontrado!'
+          data: {
+            student
+          },
+          message: 'Estudante encontrado com sucesso'
+        });
+      }else{
+        return response.status(401).json({
+          message: 'O usuário não possui permissão para a ação'
         });
       }
-      return response.status(200).json({
-        data: {
-          student
-        },
-        message: 'Estudante encontrado com sucesso'
-      });
     } catch (error) {
       console.log(error);
       return response.status(200).json({
@@ -180,6 +187,7 @@ module.exports = {
   async update(request, response) {
     const { id } = request.params;
     const {
+      agentRole,
       cpf,
       birthdate,
       institution,
@@ -193,32 +201,38 @@ module.exports = {
     } = request.body;
 
     try {
-      const student = await Student.update({
-        cpf,
-        birthdate,
-        institution,
-        grade,
-        cep,
-        number,
-        details,
-        description,
-        special,
-        status
-      }, {
-        where: {
-          id
-        }
-      });
+      if(agentRole === 3){
+        const student = await Student.update({
+          cpf,
+          birthdate,
+          institution,
+          grade,
+          cep,
+          number,
+          details,
+          description,
+          special,
+          status
+        }, {
+          where: {
+            id
+          }
+        });
 
-      if (student[0] === 0) {
-        return response.status(400).json({
-          message: 'Estudante não encontrado!'
+        if (student[0] === 0) {
+          return response.status(400).json({
+            message: 'Estudante não encontrado!'
+          });
+        }
+        return response.status(200).json({
+          data: student[0],
+          message: 'Atualizado com sucesso'
+        });
+      }else{
+        return response.status(401).json({
+          message: 'O usuário não possui permissão para a ação'
         });
       }
-      return response.status(200).json({
-        data: student[0],
-        message: 'Atualizado com sucesso'
-      });
     } catch (error) {
       return response.status(404).json({
         message: error
