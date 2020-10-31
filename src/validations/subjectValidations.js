@@ -8,6 +8,7 @@ const createValidation = {
     id: Joi.number().integer().required(),
     grade: Joi.number().integer().required(),
     name: Joi.string().required(),
+    agentRole: Joi.number().integer().required()
   })
 };
 
@@ -15,6 +16,7 @@ const editValidation = {
   [Segments.BODY]: Joi.object().keys({
     grade: Joi.number().integer().required(),
     name: Joi.string().required(),
+    agentRole: Joi.number().integer().required()
   })
 };
 
