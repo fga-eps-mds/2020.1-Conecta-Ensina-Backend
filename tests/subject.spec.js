@@ -9,11 +9,27 @@ describe(('Subject tests'), ()=>{
     .send({
       id: 3,
       grade: 3,
-      name: 'Matematica'
+      name: 'Matematica',
+      agentRole: 1
     });
 
     expect(response.status).toBe(200);
     expect(response.body.data.subject).toHaveProperty("id");
+    done();
+  });
+
+  it(('should denied create subject'), async (done)=>{
+    const response = await request(app)
+    .post('/api/subject/create')
+    .send({
+      id: 3,
+      grade: 3,
+      name: 'Matematica',
+      agentRole: 2
+    });
+
+    expect(response.status).toBe(401);
+    expect(response.body.message).toBe("O usuário não possui permissão para a ação");
     done();
   });
 
@@ -23,7 +39,8 @@ describe(('Subject tests'), ()=>{
     .send({
       id: 1,
       grade: 3,
-      name: 'Matematica'
+      name: 'Matematica',
+      agentRole: 1
     });
 
     expect(response.status).toBe(400);
@@ -55,11 +72,26 @@ describe(('Subject tests'), ()=>{
     .put('/api/subject/2')
     .send({
       grade: 2,
-      name: 'Matematica'
+      name: 'Matematica',
+      agentRole: 1
     });
     
     expect(response.status).toBe(200);
     expect(response.body.data).toBe(1);
+    done();
+  });
+
+  it(('should denied update subject'), async (done)=>{
+    const response = await request(app)
+    .put('/api/subject/2')
+    .send({
+      grade: 2,
+      name: 'Matematica',
+      agentRole: 2
+    });
+    
+    expect(response.status).toBe(401);
+    expect(response.body.message).toBe('O usuário não possui permissão para a ação');
     done();
   });
 
@@ -68,7 +100,8 @@ describe(('Subject tests'), ()=>{
     .put('/api/subject/341234')
     .send({
       grade: 2,
-      name: 'Matematica'
+      name: 'Matematica',
+      agentRole: 1
     });
     
     expect(response.status).toBe(200);
@@ -79,15 +112,27 @@ describe(('Subject tests'), ()=>{
   it(('should delete subject'), async (done)=>{
     const response = await request(app)
     .delete('/api/subject/3')
+    .send({agentRole:1})
     
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Apagado com sucesso');
     done();
   });
 
+  it(('should denied delete subject'), async (done)=>{
+    const response = await request(app)
+    .delete('/api/subject/3')
+    .send({agentRole:2})
+    
+    expect(response.status).toBe(401);
+    expect(response.body.message).toBe('O usuário não possui permissão para a ação');
+    done();
+  });
+
   it(('should failed in delete subject'), async (done)=>{
     const response = await request(app)
     .delete('/api/subject/142452')
+    .send({agentRole:1})
     
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Matéria não encontrada!');
