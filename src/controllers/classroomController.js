@@ -61,26 +61,19 @@ module.exports = {
 
   async read(request, response) {
     const { id } = request.params;
-    const { agentRole } = request.body;
     try {
-      if (agentRole === 2 || agentRole === 3) {
-        const classroom = await Classroom.findByPk(id);
+      const classroom = await Classroom.findByPk(id);
 
-        if (!classroom) {
-          return response.status(200).json({
-            message: 'Aula não encontrada!'
-          });
-        }
+      if (!classroom) {
         return response.status(200).json({
-          data: {
-            classroom
-          },
-          message: 'Aula encontrada com sucesso'
+          message: 'Aula não encontrada!'
         });
       }
-
-      return response.status(401).json({
-        message: 'O usuário não possui permissão para a ação'
+      return response.status(200).json({
+        data: {
+          classroom
+        },
+        message: 'Aula encontrada com sucesso'
       });
     } catch (error) {
       console.log(error);
@@ -149,29 +142,22 @@ module.exports = {
 
   async delete(request, response) {
     const { id } = request.params;
-    const { agentRole } = request.body;
 
     try {
-      if (agentRole === 2 || agentRole === 3) {
-        const classroom = await Classroom.destroy({
-          where: {
-            id
-          },
-        });
+      const classroom = await Classroom.destroy({
+        where: {
+          id
+        },
+      });
 
-        if (classroom === 0) {
-          return response.status(200).json({
-            message: 'Aula não encontrada!'
-          });
-        }
+      if (classroom === 0) {
         return response.status(200).json({
-          data: classroom,
-          message: 'Apagado com sucesso'
+          message: 'Aula não encontrada!'
         });
       }
-
-      return response.status(401).json({
-        message: 'O usuário não possui permissão para a ação'
+      return response.status(200).json({
+        data: classroom,
+        message: 'Apagado com sucesso'
       });
     } catch (error) {
       console.log(error);

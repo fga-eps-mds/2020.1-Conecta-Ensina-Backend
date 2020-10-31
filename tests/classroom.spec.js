@@ -64,27 +64,10 @@ describe(('Classroom tests'), ()=>{
     done();
   });
 
-  it(('should read classroom has teacher'), async (done)=>{
+  it(('should read classroom'), async (done)=>{
     const response = await request(app)
     .get('/api/classroom/f00c1ee9-078b-4b61-8e3f-a23d68da4312')
-    .send({
-      agentRole: 2
-    });
-    
-
-    expect(response.status).toBe(200);
-    expect(response.body.data).toHaveProperty("classroom");
-    done();
-  });
-
-  it(('should read classroom has student'), async (done)=>{
-    const response = await request(app)
-    .get('/api/classroom/f00c1ee9-078b-4b61-8e3f-a23d68da4312')
-    .send({
-      agentRole: 2
-    });
-    
-
+  
     expect(response.status).toBe(200);
     expect(response.body.data).toHaveProperty("classroom");
     done();
@@ -93,10 +76,6 @@ describe(('Classroom tests'), ()=>{
   it(('should failed in read classroom'), async (done)=>{
     const response = await request(app)
     .get('/api/classroom/f00c1ee9-078b-4b61-8e3f-a23d68da4312wrong')
-    .send({
-      agentRole: 2
-    });
-    
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Aula não encontrada!');
@@ -187,20 +166,9 @@ describe(('Classroom tests'), ()=>{
     done();
   });
 
-  it(('should delete classroom has professor'), async (done)=>{
+  it(('should delete classroom'), async (done)=>{
     const response = await request(app)
-    .delete('/api/classroom/a30d2c7c-042d-40bd-96ab-0712ee33b5c1')
-    .send({ agentRole: 2});
-
-    expect(response.status).toBe(200);
-    expect(response.body.message).toBe("Apagado com sucesso");
-    done();
-  });
-
-  it(('should delete classroom has student'), async (done)=>{
-    const response = await request(app)
-    .delete('/api/classroom/81be8201-4ea5-4c0a-b1e0-302787ed5f25')
-    .send({ agentRole: 3});
+    .delete('/api/classroom/81be8201-4ea5-4c0a-b1e0-302787ed5f25');
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe("Apagado com sucesso");
@@ -217,13 +185,4 @@ describe(('Classroom tests'), ()=>{
     done();
   });
   
-  it(('should denied delete classroom'), async (done)=>{
-    const response = await request(app)
-    .delete('/api/classroom/a30d2c7c-042d-40bd-96ab-0712ee33b5c1wrong')
-    .send({ agentRole: 1});
-
-    expect(response.status).toBe(401);
-    expect(response.body.message).toBe("O usuário não possui permissão para a ação");
-    done();
-  });
 })

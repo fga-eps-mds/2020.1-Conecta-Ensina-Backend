@@ -8,10 +8,24 @@ describe('Student tests', () => {
       .put('/api/student/status/dfd29066-cd25-485c-8722-b429291d0ea3')
       .send({
         status: '1',
+        agentRole: 1
       });
 
     expect(response.status).toBe(200);
     expect(response.body.data).toBe(1);
+    done();
+  });
+
+  it('should denied updateStatus student', async (done) => {
+    const response = await request(app)
+      .put('/api/student/status/dfd29066-cd25-485c-8722-b429291d0ea3')
+      .send({
+        status: '1',
+        agentRole: 2
+      });
+
+    expect(response.status).toBe(401);
+    expect(response.body.message).toBe('O usuário não possui permissão para a ação');
     done();
   });
 
@@ -20,6 +34,7 @@ describe('Student tests', () => {
       .put('/api/student/status/dfd29066-cd25-485c-8722-b429291d0ea3wrong')
       .send({
         status: '1',
+        agentRole: 1
       });
 
     expect(response.status).toBe(400);
@@ -29,7 +44,8 @@ describe('Student tests', () => {
 
   it('Teste status correto', async (done) => {
     const response = await request(app)
-      .get('/api/student/status/1');
+      .get('/api/student/status/1')
+      .send({ agentRole: 1});
 
     expect(response.status).toBe(200);
     expect(response.body.data).toHaveProperty('student');
@@ -38,10 +54,21 @@ describe('Student tests', () => {
 
   it('Teste status sem pendencia', async (done) => {
     const response = await request(app)
-      .get('/api/student/status/4567');
+      .get('/api/student/status/4567')
+      .send({ agentRole: 1});
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Nenhum professor pendente');
+    done();
+  });
+
+  it('should denied status student', async (done) => {
+    const response = await request(app)
+      .get('/api/student/status/4567')
+      .send({ agentRole: 2});
+
+    expect(response.status).toBe(401);
+    expect(response.body.message).toBe('O usuário não possui permissão para a ação');
     done();
   });
 
@@ -167,7 +194,8 @@ describe('Student tests', () => {
 
   it('Teste delete correto', async (done) => {
     const response = await request(app)
-      .delete('/api/student/dfd29066-cd25-485c-8722-b429291d0ea3');
+      .delete('/api/student/dfd29066-cd25-485c-8722-b429291d0ea3')
+      .send({agentRole: 1});
 
     expect(response.status).toBe(200);
     expect(response.body.data).toBe(1);
@@ -175,7 +203,8 @@ describe('Student tests', () => {
   });
   it('Teste delete incorreto', async (done) => {
     const response = await request(app)
-      .delete('/api/student/dfd29066-cd25-485c-8722-b429291d0ea3wrong');
+      .delete('/api/student/dfd29066-cd25-485c-8722-b429291d0ea3wrong')
+      .send({agentRole: 1});
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Estudante não encontrado!');

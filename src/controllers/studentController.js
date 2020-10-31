@@ -9,29 +9,35 @@ const Student = require('../models/Student');
 module.exports = {
   async updateStatus(request, response) {
     const { id } = request.params;
-    const { status } = request.body;
+    const { status, agentRole } = request.body;
 
     try {
-      const student = await Student.update({
-        status
-      }, {
-        where: {
-          id
+      if (agentRole === 1) {
+        const student = await Student.update({
+          status
+        }, {
+          where: {
+            id
+          }
+        });
+        if (student[0] === 0) {
+          return response.status(400).json(
+            {
+              message: 'Professor não encontrado!',
+            }
+          );
         }
-      });
-      if (student[0] === 0) {
-        return response.status(400).json(
+        return response.status(200).json(
           {
-            message: 'Professor não encontrado!',
+            data: student[0],
+            message: 'Atualizado com sucesso',
           }
         );
       }
-      return response.status(200).json(
-        {
-          data: student[0],
-          message: 'Atualizado com sucesso',
-        }
-      );
+
+      return response.status(401).json({
+        message: 'O usuário não possui permissão para a ação'
+      });
     } catch (error) {
       console.log(error);
       return response.status(400).json(
@@ -44,26 +50,33 @@ module.exports = {
 
   async status(request, response) {
     const { status } = request.params;
+    const { agentRole } = request.body;
     try {
-      const student = await Student.findAll({
-        where: { status }
-      });
+      if (agentRole === 1) {
+        const student = await Student.findAll({
+          where: { status }
+        });
 
-      if (student.length === 0) {
+        if (student.length === 0) {
+          return response.status(200).json(
+            {
+              message: 'Nenhum professor pendente',
+            }
+          );
+        }
         return response.status(200).json(
           {
-            message: 'Nenhum professor pendente',
+            data: {
+              student,
+            },
+            message: 'Professor encontrado',
           }
         );
       }
-      return response.status(200).json(
-        {
-          data: {
-            student,
-          },
-          message: 'Professor encontrado',
-        }
-      );
+
+      return response.status(401).json({
+        message: 'O usuário não possui permissão para a ação'
+      });
     } catch (error) {
       console.log(error);
       return response.status(400).json(
@@ -194,7 +207,7 @@ module.exports = {
     } = request.body;
 
     try {
-      if (agentRole === 3) {
+      if (agentRole === 1 || agentRole === 3) {
         const student = await Student.update({
           cpf,
           birthdate,
@@ -222,6 +235,7 @@ module.exports = {
           message: 'Atualizado com sucesso'
         });
       }
+
       return response.status(401).json({
         message: 'O usuário não possui permissão para a ação'
       });
@@ -234,22 +248,28 @@ module.exports = {
 
   async delete(request, response) {
     const { id } = request.params;
-
+    const { agentRole } = request.body;
     try {
-      const student = await Student.destroy({
-        where: {
-          id
-        },
-      });
+      if (agentRole === 1 || agentRole === 3) {
+        const student = await Student.destroy({
+          where: {
+            id
+          },
+        });
 
-      if (student === 0) {
+        if (student === 0) {
+          return response.status(200).json({
+            message: 'Estudante não encontrado!'
+          });
+        }
         return response.status(200).json({
-          message: 'Estudante não encontrado!'
+          data: student,
+          message: 'Apagado com sucesso'
         });
       }
-      return response.status(200).json({
-        data: student,
-        message: 'Apagado com sucesso'
+
+      return response.status(401).json({
+        message: 'O usuário não possui permissão para a ação'
       });
     } catch (error) {
       console.log(error);
