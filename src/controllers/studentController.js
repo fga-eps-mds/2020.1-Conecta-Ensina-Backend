@@ -34,10 +34,12 @@ module.exports = {
           }
         );
       }
+      else{
+        return response.status(401).json({
+          message: 'O usuário não possui permissão para a ação'
+        }); 
+      }
 
-      return response.status(401).json({
-        message: 'O usuário não possui permissão para a ação'
-      });
     } catch (error) {
       console.log(error);
       return response.status(400).json(
@@ -50,9 +52,7 @@ module.exports = {
 
   async status(request, response) {
     const { status } = request.params;
-    const { agentRole } = request.body;
     try {
-      if (agentRole === 1) {
         const student = await Student.findAll({
           where: { status }
         });
@@ -72,11 +72,6 @@ module.exports = {
             message: 'Professor encontrado',
           }
         );
-      }
-
-      return response.status(401).json({
-        message: 'O usuário não possui permissão para a ação'
-      });
     } catch (error) {
       console.log(error);
       return response.status(400).json(

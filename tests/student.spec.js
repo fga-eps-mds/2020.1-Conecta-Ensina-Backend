@@ -44,8 +44,7 @@ describe('Student tests', () => {
 
   it('Teste status correto', async (done) => {
     const response = await request(app)
-      .get('/api/student/status/1')
-      .send({ agentRole: 1});
+      .get('/api/student/status/1');
 
     expect(response.status).toBe(200);
     expect(response.body.data).toHaveProperty('student');
@@ -54,21 +53,10 @@ describe('Student tests', () => {
 
   it('Teste status sem pendencia', async (done) => {
     const response = await request(app)
-      .get('/api/student/status/4567')
-      .send({ agentRole: 1});
+      .get('/api/student/status/4567');
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Nenhum professor pendente');
-    done();
-  });
-
-  it('should denied status student', async (done) => {
-    const response = await request(app)
-      .get('/api/student/status/4567')
-      .send({ agentRole: 2});
-
-    expect(response.status).toBe(401);
-    expect(response.body.message).toBe('O usuário não possui permissão para a ação');
     done();
   });
 
