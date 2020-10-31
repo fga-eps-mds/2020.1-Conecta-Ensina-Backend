@@ -108,27 +108,20 @@ module.exports = {
 
   async read(request, response) {
     const { id } = request.params;
-    const { agentRole } = request.body;
 
     try {
-      if(agentRole === 3 || agentRole === 2){
-        const teacher = await Teacher.findByPk(id);
-        if (!teacher) {
-          return response.status(200).json({
-            message: 'Professor não encontrado!'
-          });
-        }
+      const teacher = await Teacher.findByPk(id);
+      if (!teacher) {
         return response.status(200).json({
-          data: {
-            teacher
-          },
-          message: 'Professor encontrado com sucesso'
-        });
-      }else{
-        return response.status(401).json({
-          message: 'O usuário não possui permissão para a ação'
+          message: 'Professor não encontrado!'
         });
       }
+      return response.status(200).json({
+        data: {
+          teacher
+        },
+        message: 'Professor encontrado com sucesso'
+      });
     } catch (error) {
       console.log(error);
       return response.status(200).json({
@@ -151,7 +144,7 @@ module.exports = {
     } = request.body;
 
     try {
-      if(agentRole === 2){
+      if (agentRole === 2) {
         const teacher = await Teacher.update({
           photo,
           video,
@@ -175,14 +168,13 @@ module.exports = {
           data: teacher[0],
           message: 'Atualizado com sucesso'
         });
-      }else{
-        return response.status(401).json({
-          message: 'O usuário não possui permissão para a ação'
-        });
       }
+      return response.status(401).json({
+        message: 'O usuário não possui permissão para a ação'
+      });
     } catch (error) {
-      console.log(error);
-      return response.status(200).json({
+      // console.log(error);
+      return response.status(404).json({
         message: error
       });
     }

@@ -19,7 +19,7 @@ module.exports = {
     const status = 0;
 
     try {
-      if(agentRole === 3){
+      if (agentRole === 3) {
         const classroom = await Classroom.create({
           id,
           teacher,
@@ -47,11 +47,10 @@ module.exports = {
           message: 'Aula criada com sucesso!'
         });
       }
-      else{
-        return response.status(401).json({
-          message: 'O usuário não possui permissão para a ação'
-        });
-      }
+
+      return response.status(401).json({
+        message: 'O usuário não possui permissão para a ação'
+      });
     } catch (error) {
       console.log(error);
       return response.status(400).json({
@@ -64,7 +63,7 @@ module.exports = {
     const { id } = request.params;
     const { agentRole } = request.body;
     try {
-      if(agentRole === 2){
+      if (agentRole === 2 || agentRole === 3) {
         const classroom = await Classroom.findByPk(id);
 
         if (!classroom) {
@@ -79,11 +78,10 @@ module.exports = {
           message: 'Aula encontrada com sucesso'
         });
       }
-      else{
-        return response.status(401).json({
-          message: 'O usuário não possui permissão para a ação'
-        });
-      }
+
+      return response.status(401).json({
+        message: 'O usuário não possui permissão para a ação'
+      });
     } catch (error) {
       console.log(error);
       return response.status(200).json({
@@ -109,7 +107,7 @@ module.exports = {
     } = request.body;
 
     try {
-      if(agentRole === 2 || agentRole === 3){
+      if (agentRole === 2 || agentRole === 3) {
         const classroom = await Classroom.update({
           teacher,
           student,
@@ -137,11 +135,10 @@ module.exports = {
           message: 'Atualizado com sucesso'
         });
       }
-      else{
-        return response.status(401).json({
-          message: 'O usuário não possui permissão para a ação'
-        });
-      }
+
+      return response.status(401).json({
+        message: 'O usuário não possui permissão para a ação'
+      });
     } catch (error) {
       console.log(error);
       return response.status(200).json({
@@ -155,7 +152,7 @@ module.exports = {
     const { agentRole } = request.body;
 
     try {
-      if(agentRole === 2 || agentRole === 3){
+      if (agentRole === 2 || agentRole === 3) {
         const classroom = await Classroom.destroy({
           where: {
             id
@@ -172,11 +169,10 @@ module.exports = {
           message: 'Apagado com sucesso'
         });
       }
-      else{
-        return response.status(401).json({
-          message: 'O usuário não possui permissão para a ação'
-        });
-      }
+
+      return response.status(401).json({
+        message: 'O usuário não possui permissão para a ação'
+      });
     } catch (error) {
       console.log(error);
       return response.status(200).json({
