@@ -11,10 +11,12 @@ module.exports = {
 
   async index(request, response) {
     try {
-      const teacher = await Teacher.findAll();
+      const user = await User.findAll({
+        where: {role: 2}
+      });
       return response.status(200).json({
         data: {
-          teacher
+          user
         }
       });
     } catch (error) {
