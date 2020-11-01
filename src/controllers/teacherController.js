@@ -12,7 +12,7 @@ module.exports = {
   async index(request, response) {
     try {
       const user = await User.findAll({
-        where: {role: 2}
+        where: { role: 2 }
       });
       return response.status(200).json({
         data: {
@@ -162,7 +162,7 @@ module.exports = {
     } = request.body;
 
     try {
-      if (agentRole === 2||agentRole === 1) {
+      if (agentRole === 2 || agentRole === 1) {
         const teacher = await Teacher.update({
           photo,
           video,

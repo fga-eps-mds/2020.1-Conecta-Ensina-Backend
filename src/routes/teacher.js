@@ -23,5 +23,4 @@ teacherRoutes.get('/:id', celebrate(idValidation), TeacherController.read);
 teacherRoutes.put('/:id', celebrate(idValidation), celebrate(teacherValidation), TeacherController.update);
 teacherRoutes.delete('/:id', celebrate(idValidation), TeacherController.delete);
 
-
 module.exports = teacherRoutes;

@@ -1,17 +1,18 @@
 const { v4: uuidv4 } = require('uuid');
+// const { Op } = require('sequelize');
 const Classroom = require('../models/Classroom');
-const { Op } = require("sequelize");
 
 module.exports = {
 
   async nextClass(request, response) {
     const { student } = request.params;
-    const {sysDate} = new Date();
+    //    const { sysDate } = new Date();
     try {
       const classroom = await Classroom.findOne({
-        where: {student: student/*,
+        where: {
+          student/* ,
         [Op.gte]: [{dtclass : sysDate}]
-        */}
+        */ }
       });
       if (!classroom) {
         return response.status(200).json({
