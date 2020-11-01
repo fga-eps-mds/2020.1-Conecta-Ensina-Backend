@@ -133,6 +133,7 @@ module.exports = {
   async update(request, response) {
     const { id } = request.params;
     const {
+      agentRole,
       photo,
       video,
       graduationArea,
@@ -143,32 +144,37 @@ module.exports = {
     } = request.body;
 
     try {
-      const teacher = await Teacher.update({
-        photo,
-        video,
-        graduationArea,
-        degree,
-        bank,
-        agency,
-        account
-      }, {
-        where: {
-          id
-        }
-      });
+      if (agentRole === 2||agentRole === 1) {
+        const teacher = await Teacher.update({
+          photo,
+          video,
+          graduationArea,
+          degree,
+          bank,
+          agency,
+          account
+        }, {
+          where: {
+            id
+          }
+        });
 
-      if (teacher[0] === 0) {
+        if (teacher[0] === 0) {
+          return response.status(200).json({
+            message: 'Professor não encontrado!'
+          });
+        }
         return response.status(200).json({
-          message: 'Professor não encontrado!'
+          data: teacher[0],
+          message: 'Atualizado com sucesso'
         });
       }
-      return response.status(200).json({
-        data: teacher[0],
-        message: 'Atualizado com sucesso'
+      return response.status(401).json({
+        message: 'O usuário não possui permissão para a ação'
       });
     } catch (error) {
-      console.log(error);
-      return response.status(200).json({
+      // console.log(error);
+      return response.status(404).json({
         message: error
       });
     }

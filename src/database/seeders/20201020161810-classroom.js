@@ -30,6 +30,20 @@ module.exports = {
         status: 1,
         created_at: new Date(),
         updated_at: new Date(),
+      },
+      {
+        id: '81be8201-4ea5-4c0a-b1e0-302787ed5f25',
+        teacher: '12c06dd6-187a-4a50-927f-5d08b367ee89',
+        student: '3bd7c190-ce64-4827-8c0c-58cfef45ad9f',
+        grade: 13,
+        subject: 1,
+        dtclass: new Date(),
+        duration: 2,
+        cep: '72654321',
+        number: 304,
+        status: 1,
+        created_at: new Date(),
+        updated_at: new Date(),
       }
     ], {});
   },

@@ -24,6 +24,7 @@ const createStudentValidation = {
 
 const studentValidation = {
   [Segments.BODY]: Joi.object().keys({
+    agentRole: Joi.number().integer().required(),
     cpf: Joi.string().required().min(11).max(11),
     birthdate: Joi.date().required(),
     institution: Joi.string(),
