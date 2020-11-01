@@ -80,10 +80,11 @@ describe('Teacher tests', () => {
     done();
   });
 
-  it('Teste edit correto', async (done) => {
+  it('should update teacher', async (done) => {
     const response = await request(app)
       .put('/api/teacher/c3cdc164-d3f3-4ba1-ae98-a2c28eab45ed')
       .send({
+        agentRole: 2,
         photo: 'photo.jpg',
         video: 'https://www.youtube.com/watch?v=xntQdZmCm-I',
         graduation_area: 'Português',
@@ -98,10 +99,30 @@ describe('Teacher tests', () => {
     done();
   });
 
-  it('Teste edit incorreto', async (done) => {
+  it('should denied update teacher', async (done) => {
     const response = await request(app)
-      .put('/api/teacher/c3cdc164-d3f3-4ba1-ae98-a2c28eab45edwrong')
+      .put('/api/teacher/c3cdc164-d3f3-4ba1-ae98-a2c28eab45ed')
       .send({
+        agentRole: 3,
+        photo: 'photo.jpg',
+        video: 'https://www.youtube.com/watch?v=xntQdZmCm-I',
+        graduation_area: 'Português',
+        degree: 'diploma.pdf',
+        bank: 'BRB',
+        agency: '1778-7',
+        account: '50043-5'
+      });
+
+    expect(response.status).toBe(401);
+    expect(response.body.message).toBe('O usuário não possui permissão para a ação');
+    done();
+  });
+
+  it('should failed in update teacher', async (done) => {
+    const response = await request(app)
+      .put('/api/teacher/12c06dd6-187a-4a50-927f-5d08b367ee89wrong')
+      .send({
+        agentRole: 2,
         photo: 'photo.jpg',
         video: 'https://www.youtube.com/watch?v=xntQdZmCm-I',
         graduation_area: 'Português',
