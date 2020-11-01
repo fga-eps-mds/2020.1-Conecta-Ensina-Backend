@@ -5,7 +5,7 @@ const app = require('../src/app');
 describe('Student tests', () => {
   it('Teste updateStatus correto', async (done) => {
     const response = await request(app)
-      .put('/api/student/status/dfd29066-cd25-485c-8722-b429291d0ea3')
+      .put('/api/student/status/c3cdc164-d3f3-4ba1-ae98-a2c28eab45ed')
       .send({
         status: '1',
         agentRole: 1

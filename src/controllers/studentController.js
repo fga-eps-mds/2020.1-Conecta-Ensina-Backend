@@ -9,7 +9,7 @@ const Student = require('../models/Student');
 module.exports = {
   async updateStatus(request, response) {
     const { id } = request.params;
-    const { status, agentRole } = request.body;
+    const { status, agentRole} = request.body;
 
     try {
       if (agentRole === 1) {

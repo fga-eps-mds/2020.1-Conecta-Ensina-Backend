@@ -144,7 +144,7 @@ module.exports = {
     } = request.body;
 
     try {
-      if (agentRole === 2) {
+      if (agentRole === 2||agentRole === 1) {
         const teacher = await Teacher.update({
           photo,
           video,
