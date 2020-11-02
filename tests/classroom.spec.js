@@ -184,5 +184,21 @@ describe(('Classroom tests'), ()=>{
     expect(response.body.message).toBe("Aula não encontrada!");
     done();
   });
+
+  it(('should return next classroom'), async (done)=>{
+    const response = await request(app)
+    .get('/api/classroom/nextClass/3bd7c190-ce64-4827-8c0c-58cfef45ad9f')  
+    expect(response.status).toBe(200);
+    expect(response.body.data).toHaveProperty("classroom");
+    done();
+  });
+
+  it(('should failed return next classroom'), async (done)=>{
+    const response = await request(app)
+    .get('/api/classroom/nextClass/3bd7c190-ce64-4827-8c0c-58cfef45ad9fwrong')  
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe("Aula não encontrada!");
+    done();
+  });
   
 })

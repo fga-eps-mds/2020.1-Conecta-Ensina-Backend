@@ -139,5 +139,12 @@ describe(('Subject tests'), ()=>{
     done();
   });
 
+  it(('should return all subjects'), async (done)=>{
+    const response = await request(app)
+    .get('/api/subject')
+    expect(response.status).toBe(200);
+    expect(response.body.data).toHaveProperty("subject");
+    done();
+  });
   
 });
