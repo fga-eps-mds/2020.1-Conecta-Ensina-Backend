@@ -121,7 +121,7 @@ describe(('Classroom tests'), ()=>{
 
   it(('should read all classrooms'), async (done)=>{
     const response = await request(app)
-    .get('/api/classroom/')
+    .post('/api/classroom/')
     .send({
       teacher: '12c06dd6-187a-4a50-927f-5d08b367ee89',
       status: 0
