@@ -9,6 +9,24 @@ const Teacher = require('../models/Teacher');
 
 module.exports = {
 
+  async index(request, response) {
+    try {
+      const user = await User.findAll({
+        where: { role: 2 }
+      });
+      return response.status(200).json({
+        data: {
+          user
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      return response.status(400).json({
+        message: error
+      });
+    }
+  },
+
   async create(request, response) {
     const saltRounds = Number(process.env.SALT_ROUNDS);
     const role = 2;
@@ -144,7 +162,7 @@ module.exports = {
     } = request.body;
 
     try {
-      if (agentRole === 2||agentRole === 1) {
+      if (agentRole === 2 || agentRole === 1) {
         const teacher = await Teacher.update({
           photo,
           video,

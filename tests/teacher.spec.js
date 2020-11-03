@@ -154,4 +154,13 @@ describe('Teacher tests', () => {
     expect(response.body.message).toBe('Professor não encontrado!');
     done();
   });
+
+  it('Should return all teachers', async (done) => {
+    const response = await request(app)
+      .get('/api/teacher');
+    expect(response.status).toBe(200);
+    expect(response.body.data).toHaveProperty('user');
+    done();
+  });
+
 });

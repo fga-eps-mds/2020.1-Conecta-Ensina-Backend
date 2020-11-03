@@ -1,6 +1,22 @@
 const Subject = require('../models/Subject');
 
 module.exports = {
+  async index(request, response) {
+    try {
+      const subject = await Subject.findAll({});
+      return response.status(200).json({
+        data: {
+          subject
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      return response.status(400).json({
+        message: error
+      });
+    }
+  },
+
   async create(request, response) {
     const {
       id, grade, name, agentRole

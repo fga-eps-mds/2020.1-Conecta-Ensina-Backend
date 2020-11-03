@@ -9,7 +9,7 @@ const Student = require('../models/Student');
 module.exports = {
   async updateStatus(request, response) {
     const { id } = request.params;
-    const { status, agentRole} = request.body;
+    const { status, agentRole } = request.body;
 
     try {
       if (agentRole === 1) {
@@ -34,12 +34,10 @@ module.exports = {
           }
         );
       }
-      else{
-        return response.status(401).json({
-          message: 'O usuário não possui permissão para a ação'
-        }); 
-      }
 
+      return response.status(401).json({
+        message: 'O usuário não possui permissão para a ação'
+      });
     } catch (error) {
       console.log(error);
       return response.status(400).json(
@@ -53,25 +51,25 @@ module.exports = {
   async status(request, response) {
     const { status } = request.params;
     try {
-        const student = await Student.findAll({
-          where: { status }
-        });
+      const student = await Student.findAll({
+        where: { status }
+      });
 
-        if (student.length === 0) {
-          return response.status(200).json(
-            {
-              message: 'Nenhum professor pendente',
-            }
-          );
-        }
+      if (student.length === 0) {
         return response.status(200).json(
           {
-            data: {
-              student,
-            },
-            message: 'Professor encontrado',
+            message: 'Nenhum professor pendente',
           }
         );
+      }
+      return response.status(200).json(
+        {
+          data: {
+            student,
+          },
+          message: 'Professor encontrado',
+        }
+      );
     } catch (error) {
       console.log(error);
       return response.status(400).json(

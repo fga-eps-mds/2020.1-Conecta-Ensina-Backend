@@ -18,5 +18,4 @@ const Student = sequelize.define('Student', {
   sequelize,
   paranoid: true,
 });
-
 module.exports = Student;
