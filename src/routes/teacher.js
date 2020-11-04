@@ -17,6 +17,7 @@ const {
 // Importing Controllers
 const TeacherController = require('../controllers/teacherController');
 
+teacherRoutes.get('/', celebrate(teacherValidation), TeacherController.index);
 teacherRoutes.post('/create', celebrate(createTeacherValidation), TeacherController.create);
 teacherRoutes.get('/:id', celebrate(idValidation), TeacherController.read);
 teacherRoutes.put('/:id', celebrate(idValidation), celebrate(teacherValidation), TeacherController.update);
