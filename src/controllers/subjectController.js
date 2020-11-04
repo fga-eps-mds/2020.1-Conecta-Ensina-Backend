@@ -1,26 +1,50 @@
 const Subject = require('../models/Subject');
 
 module.exports = {
-  async create(request, response) {
-    const { id, grade, name } = request.body;
-
+  async index(request, response) {
     try {
-      const subject = await Subject.create({
-        id,
-        grade,
-        name
-      });
-
-      if (!subject) {
-        return response.status(200).json({
-          message: 'Erro ao criar matéria!'
-        });
-      }
+      const subject = await Subject.findAll({});
       return response.status(200).json({
         data: {
           subject
-        },
-        message: 'Matéria criada com sucesso!'
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      return response.status(400).json({
+        message: error
+      });
+    }
+  },
+
+  async create(request, response) {
+    const {
+      id, grade, name, agentRole
+    } = request.body;
+
+    try {
+      if (agentRole === 1) {
+        const subject = await Subject.create({
+          id,
+          grade,
+          name
+        });
+
+        if (!subject) {
+          return response.status(200).json({
+            message: 'Erro ao criar matéria!'
+          });
+        }
+        return response.status(200).json({
+          data: {
+            subject
+          },
+          message: 'Matéria criada com sucesso!'
+        });
+      }
+
+      return response.status(401).json({
+        message: 'O usuário não possui permissão para a ação'
       });
     } catch (error) {
       console.log(error);
@@ -56,25 +80,31 @@ module.exports = {
 
   async update(request, response) {
     const { id } = request.params;
-    const { grade, name } = request.body;
+    const { grade, name, agentRole } = request.body;
 
     try {
-      const subject = await Subject.update({
-        grade,
-        name
-      }, {
-        where: {
-          id
+      if (agentRole === 1) {
+        const subject = await Subject.update({
+          grade,
+          name
+        }, {
+          where: {
+            id
+          }
+        });
+        if (subject[0] === 0) {
+          return response.status(200).json({
+            message: 'Matéria não encontrada!'
+          });
         }
-      });
-      if (subject[0] === 0) {
         return response.status(200).json({
-          message: 'Matéria não encontrada!'
+          data: subject[0],
+          message: 'Atualizado com sucesso'
         });
       }
-      return response.status(200).json({
-        data: subject[0],
-        message: 'Atualizado com sucesso'
+
+      return response.status(401).json({
+        message: 'O usuário não possui permissão para a ação'
       });
     } catch (error) {
       console.log(error);
@@ -86,21 +116,28 @@ module.exports = {
 
   async delete(request, response) {
     const { id } = request.params;
+    const { agentRole } = request.body;
 
     try {
-      const subject = await Subject.destroy({
-        where: {
-          id
-        },
-      });
-      if (subject === 0) {
+      if (agentRole === 1) {
+        const subject = await Subject.destroy({
+          where: {
+            id
+          },
+        });
+        if (subject === 0) {
+          return response.status(200).json({
+            message: 'Matéria não encontrada!'
+          });
+        }
         return response.status(200).json({
-          message: 'Matéria não encontrada!'
+          data: subject,
+          message: 'Apagado com sucesso'
         });
       }
-      return response.status(200).json({
-        data: subject,
-        message: 'Apagado com sucesso'
+
+      return response.status(401).json({
+        message: 'O usuário não possui permissão para a ação'
       });
     } catch (error) {
       console.log(error);
