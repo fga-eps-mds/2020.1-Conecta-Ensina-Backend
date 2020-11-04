@@ -21,5 +21,7 @@ classroomRoutes.post('/create', celebrate(createValidation), ClassroomController
 classroomRoutes.get('/:id', celebrate(idValidation), ClassroomController.read);
 classroomRoutes.put('/:id', celebrate(createValidation), celebrate(idValidation), ClassroomController.update);
 classroomRoutes.delete('/:id', celebrate(idValidation), ClassroomController.delete);
+classroomRoutes.post('/', ClassroomController.index);
+classroomRoutes.put('/status/:id', celebrate(idValidation), ClassroomController.statusUpdate);
 
 module.exports = classroomRoutes;
