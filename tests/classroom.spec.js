@@ -168,7 +168,7 @@ describe(('Classroom tests'), ()=>{
 
   it(('should delete classroom'), async (done)=>{
     const response = await request(app)
-    .delete('/api/classroom/81be8201-4ea5-4c0a-b1e0-302787ed5f25');
+    .delete('/api/classroom/a30d2c7c-042d-40bd-96ab-0712ee33b5c1');
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe("Apagado com sucesso");
