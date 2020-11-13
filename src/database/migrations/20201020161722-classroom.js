@@ -89,7 +89,8 @@ module.exports = {
              * 1 - acepted
              * 2 - pending started
              * 3 - started
-             * 4 - finished
+             * 4 - pending finished
+             * 5 - finished
              */
         allowNull: false,
         type: Sequelize.INTEGER

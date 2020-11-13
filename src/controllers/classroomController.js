@@ -228,29 +228,53 @@ module.exports = {
 
   async index(request, response) {
     const {
+      student,
       teacher,
       status,
     } = request.body;
 
-    try {
-      const classroom = await Classroom.findAll({
-        where: {
-          teacher,
-          status,
-        },
-      });
-      return response.status(200).json({
-        data: {
-          classroom
-        },
-        classrooms: classroom.length,
-        message: 'Aula encontrada com sucesso'
-      });
-    } catch (error) {
-      console.log(error);
-      return response.status(200).json({
-        message: error
-      });
+    if (!student){
+      try {
+        const classroom = await Classroom.findAll({
+          where: {
+            teacher,
+            status,
+          },
+        });
+        return response.status(200).json({
+          data: {
+            classroom
+          },
+          classrooms: classroom.length,
+          message: 'Aula encontrada com sucesso'
+        });
+      } catch (error) {
+        console.log(error);
+        return response.status(200).json({
+          message: error
+        });
+      }
+    }else {
+      try {
+        const classroom = await Classroom.findAll({
+          where: {
+            student,
+            status,
+          },
+        });
+        return response.status(200).json({
+          data: {
+            classroom
+          },
+          classrooms: classroom.length,
+          message: 'Aula encontrada com sucesso'
+        });
+      } catch (error) {
+        console.log(error);
+        return response.status(200).json({
+          message: error
+        });
+      }
     }
   },
 
