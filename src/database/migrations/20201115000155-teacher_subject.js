@@ -1,7 +1,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('teacher_subjects', {
-      id_teacher: {
+      teacher_id: {
         allowNull: false,
         type: Sequelize.STRING,
         references: {
@@ -11,12 +11,12 @@ module.exports = {
           key: 'id'
         }
       },
-      id_subject: {
+      subject_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: 'subject'
+            tableName: 'subjects'
           },
           key: 'id'
         }

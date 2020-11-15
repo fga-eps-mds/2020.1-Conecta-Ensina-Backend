@@ -6,17 +6,21 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const Student = require('../models/Student');
 const Teacher = require('../models/Teacher');
+const Subject = require('../models/Subject');
 
 module.exports = {
 
   async index(request, response) {
     try {
-      const user = await User.findAll({
-        where: { role: 2 }
+      const teacher = await Teacher.findAll({
+        include: [
+          { model: Student, required: true, where: { status: 1 } },
+          { model: Subject, required: true }
+        ],
       });
       return response.status(200).json({
         data: {
-          user
+          teacher
         }
       });
     } catch (error) {
@@ -128,7 +132,9 @@ module.exports = {
     const { id } = request.params;
 
     try {
-      const teacher = await Teacher.findByPk(id);
+      const teacher = await Teacher.findByPk(id, {
+        include: [{ model: Student, required: true }, { model: Subject, required: true }]
+      });
       if (!teacher) {
         return response.status(200).json({
           message: 'Professor não encontrado!'
