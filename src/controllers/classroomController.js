@@ -4,6 +4,37 @@ const Classroom = require('../models/Classroom');
 
 module.exports = {
 
+  async statusClass(request, response) {
+    const { id } = request.params;
+    const { status } = request.params;
+
+    //    const { sysDate } = new Date();
+    try {
+      const classroom = await Classroom.findAll({
+        where: {
+          [Op.or]: [{ student: id }, { teacher: id }],
+          status
+        }
+      });
+      if (classroom.length === 0) {
+        return response.status(404).json({
+          message: 'Aula não encontrada!'
+        });
+      }
+      return response.status(200).json({
+        data: {
+          classroom
+        },
+        message: 'Aula encontrada com sucesso'
+      });
+    } catch (error) {
+      console.log(error);
+      return response.status(200).json({
+        message: error
+      });
+    }
+  },
+
   async nextClass(request, response) {
     const { student } = request.params;
     //    const { sysDate } = new Date();

@@ -16,6 +16,7 @@ const {
 // Importing Controllers
 const ClassroomController = require('../controllers/classroomController');
 
+classroomRoutes.get('/statusClass/:id/:status', ClassroomController.statusClass);
 classroomRoutes.get('/nextClass/:student', ClassroomController.nextClass);
 classroomRoutes.get('/userClasses/:id', ClassroomController.userClasses);
 classroomRoutes.post('/create', celebrate(createValidation), ClassroomController.create);

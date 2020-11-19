@@ -240,4 +240,22 @@ describe(('Classroom tests'), ()=>{
     done();
   });
   
+  it(('it should read user classroom based on status'), async (done)=>{
+    const response = await request(app)
+    .get('/api/classroom/statusClass/12c06dd6-187a-4a50-927f-5d08b367ee89/4');
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe("Aula encontrada com sucesso");
+    done();
+  });
+
+  it(('it should not read user classroom based on status'), async (done)=>{
+    const response = await request(app)
+    .get('/api/classroom/statusClass/12c06dd6-187a-4a50-927f-5d08b367ee89wrong/4');
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe("Aula não encontrada!");
+    done();
+  })
+  
 })
