@@ -1,22 +1,26 @@
-const Complain = require('../models/Complain');
+/* eslint-disable camelcase */
 const { v4: uuidv4 } = require('uuid');
+const Complain = require('../models/Complain');
+const Student = require('../models/Student');
 
 module.exports = {
 
   async create(request, response) {
     const id = uuidv4();
-    const { 
-      accused, reported_by,details
+    const {
+      accused, reported_by, details
     } = request.body;
 
     try {
-      
       const complain = await Complain.create({
         id,
         accused,
         reported_by,
         details,
       });
+
+      let student = await Student.update({ status: 2 }, { where: { id: accused } });
+      student = await Student.findByPk(accused);
 
       if (!complain) {
         return response.status(400).json({
@@ -27,9 +31,9 @@ module.exports = {
         data: {
           complain
         },
+        student,
         message: 'Denúncia criada com sucesso!'
       });
-     
     } catch (error) {
       console.log(error);
       return response.status(400).json({
@@ -37,7 +41,7 @@ module.exports = {
       });
     }
   },
-  
+
   async read(request, response) {
     const { id } = request.params;
     try {
@@ -60,7 +64,7 @@ module.exports = {
       });
     }
   },
-  async update(request,response){
+  async update(request, response) {
     const { id } = request.params;
     const {
       accused,
@@ -68,7 +72,7 @@ module.exports = {
       reported_by
     } = request.body;
 
-    try{
+    try {
       const complain = await Complain.update({
         accused,
         details,
@@ -88,7 +92,7 @@ module.exports = {
         data: complain[0],
         message: 'Atualizado com sucesso'
       });
-    } catch (error){
+    } catch (error) {
       return response.status(400).json({
         message: error
       });
@@ -121,6 +125,5 @@ module.exports = {
       });
     }
   }
-  
-  
+
 };
