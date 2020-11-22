@@ -35,7 +35,7 @@ jobs:
 
     - stage: "Push docker image homolog"
       name: "Push docker image homolog"
-      if: branch = feature/103-deploy-backend
+      if: branch = devel
       script:
         # build docker image
         - docker build -t "$DOCKER_USERNAME"/conecta-ensina-backend:homolog .
