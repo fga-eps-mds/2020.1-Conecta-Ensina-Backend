@@ -83,7 +83,7 @@ module.exports = {
         }
       });
 
-      if (Complain[0] === 0) {
+      if (complain[0] === 0) {
         return response.status(404).json({
           message: 'Denúncia não encontrada!'
         });
