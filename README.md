@@ -7,7 +7,7 @@
 
 [![Build Status](https://travis-ci.com/fga-eps-mds/2020.1-Conecta-Ensina-Backend.svg?branch=master)](https://travis-ci.com/fga-eps-mds/2020.1-Conecta-Ensina-Backend)
 
-[![codecov](https://codecov.io/gh/fga-eps-mds/2020.1-Conecta-Ensina-Backend/branch/master/graph/badge.svg?token=XI7IB0NUIO)](undefined)
+[![codecov](https://codecov.io/gh/fga-eps-mds/2020.1-Conecta-Ensina-Backend/branch/master/graph/badge.svg?token=XI7IB0NUIO)](https://codecov.io/gh/fga-eps-mds/2020.1-Conecta-Ensina-Backend)
 
 O Conecta Ensina ultiliza a plataforma [Docker](https://www.docker.com/what-docker) para a configuração de ambiente, afim de evitar problemas de compatibilidade de sistema. Os passos abaixo podem ser seguidos para executar a aplicação usando a plataforma:
 

@@ -17,6 +17,7 @@ const {
 const ClassroomController = require('../controllers/classroomController');
 
 classroomRoutes.get('/nextClass/:student', ClassroomController.nextClass);
+classroomRoutes.get('/userClasses/:id', ClassroomController.userClasses);
 classroomRoutes.post('/create', celebrate(createValidation), ClassroomController.create);
 classroomRoutes.get('/:id', celebrate(idValidation), ClassroomController.read);
 classroomRoutes.put('/:id', celebrate(createValidation), celebrate(idValidation), ClassroomController.update);

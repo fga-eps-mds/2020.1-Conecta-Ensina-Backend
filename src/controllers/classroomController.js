@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
-// const { Op } = require('sequelize');
+const { Op } = require('sequelize');
 const Classroom = require('../models/Classroom');
 
 module.exports = {
@@ -13,6 +13,34 @@ module.exports = {
           student/* ,
         [Op.gte]: [{dtclass : sysDate}]
         */ }
+      });
+      if (!classroom) {
+        return response.status(404).json({
+          message: 'Aula não encontrada!'
+        });
+      }
+      return response.status(200).json({
+        data: {
+          classroom
+        },
+        message: 'Aula encontrada com sucesso'
+      });
+    } catch (error) {
+      console.log(error);
+      return response.status(200).json({
+        message: error
+      });
+    }
+  },
+
+  async userClasses(request, response) {
+    const { id } = request.params;
+    //    const { sysDate } = new Date();
+    try {
+      const classroom = await Classroom.findAll({
+        where: {
+          [Op.or]: [{ student: id }, { teacher: id }],
+        }
       });
       if (!classroom) {
         return response.status(404).json({
