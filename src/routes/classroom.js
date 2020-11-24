@@ -12,7 +12,6 @@ const {
 const {
   createValidation
 } = require('../validations/classroomValidations');
-
 // Importing Controllers
 const ClassroomController = require('../controllers/classroomController');
 

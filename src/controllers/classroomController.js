@@ -70,7 +70,7 @@ module.exports = {
     try {
       const classroom = await Classroom.findAll({
         where: {
-        [Op.or]: [{student : id}, {teacher: id}],
+          [Op.or]: [{ student: id }, { teacher: id }],
         }
       });
       if (!classroom) {
