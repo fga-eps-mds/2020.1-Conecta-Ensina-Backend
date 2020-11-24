@@ -9,8 +9,6 @@ module.exports = {
     const { status } = request.params;
     //    const { sysDate } = new Date();
     try {
-      if(!id) throw "Id inváilido";
-      if(!status) throw "Status inváilido";
       const classroom = await Classroom.findAll({
         where: {
           [Op.or]: [{ student: id }, { teacher: id }],
