@@ -142,7 +142,9 @@ module.exports = {
       }
       return response.status(200).json({
         data: {
-          teacher
+          teacher,
+          student,
+          user
         },
         message: 'Professor encontrado com sucesso'
       });
@@ -198,7 +200,7 @@ module.exports = {
       });
     } catch (error) {
       // console.log(error);
-      return response.status(404).json({
+      return response.status(400).json({
         message: error
       });
     }

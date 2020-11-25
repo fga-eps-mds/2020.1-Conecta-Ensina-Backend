@@ -163,6 +163,7 @@ module.exports = {
 
     try {
       const student = await Student.findByPk(id);
+      const user = await User.findByPk(id);
 
       if (!student) {
         return response.status(200).json({
@@ -171,7 +172,8 @@ module.exports = {
       }
       return response.status(200).json({
         data: {
-          student
+          student,
+          user
         },
         message: 'Estudante encontrado com sucesso'
       });
@@ -251,7 +253,7 @@ module.exports = {
         });
 
         if (student === 0) {
-          return response.status(200).json({
+          return response.status(404).json({
             message: 'Estudante não encontrado!'
           });
         }
@@ -266,7 +268,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
-      return response.status(200).json({
+      return response.status(400).json({
         message: error
       });
     }
