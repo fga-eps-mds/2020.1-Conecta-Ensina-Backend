@@ -32,7 +32,7 @@ payload = {
 headers = {'content-type': 'application/json'}
 
 # Upgrade the service with payload
-r = requests.post(os.environ['RANCHER_URL'] + service['id'] +'?action=upgrade',
+r = requests.post(os.environ['RANCHER_URL'] + '/' + service['id'] +'?action=upgrade',
                   data=json.dumps(payload), headers=headers,
                   auth=(os.environ['RANCHER_ACCESS_KEY'], os.environ['RANCHER_SECRET_KEY']))
 
@@ -44,7 +44,7 @@ retry = 10
 while (state != 'upgraded'):
     print("service: " + service['name'] + " [upgrading]")
     time.sleep(sleep)
-    r = requests.get(os.environ['RANCHER_URL'] + service['id'],
+    r = requests.get(os.environ['RANCHER_URL'] + '/' + service['id'],
                      auth=(os.environ['RANCHER_ACCESS_KEY'], os.environ['RANCHER_SECRET_KEY']))
     state = r.json()['state']
     retry -= 1
@@ -53,5 +53,5 @@ while (state != 'upgraded'):
 print("service: " + service['name'] + " [upgraded]")
 
 # Finish Upgrade
-r = requests.post(os.environ['RANCHER_URL'] + service['id'] + '/?action=finishupgrade',
+r = requests.post(os.environ['RANCHER_URL'] + '/' + service['id'] + '/?action=finishupgrade',
                   headers=headers, auth=(os.environ['RANCHER_ACCESS_KEY'], os.environ['RANCHER_SECRET_KEY']))

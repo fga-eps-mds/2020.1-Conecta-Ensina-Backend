@@ -57,5 +57,5 @@ jobs:
 
     - stage: 'Upgrade rancher service'
       name: 'Upgrade rancher service'
-      if: branch = devel || branch = master
+      if: branch = devel || branch = master || branch = feature/103-deploy-backend
       script: python ./scripts/upgrade_service.py
