@@ -271,6 +271,9 @@ module.exports = {
             status,
           },
         });
+        classroom.sort(function(a,b) {
+          return a.dtclass < b.dtclass ? -1 : a.dtclass > b.dtclass ? 1 : 0;
+        });
         return response.status(200).json({
           data: {
             classroom
@@ -291,6 +294,9 @@ module.exports = {
             student,
             status,
           },
+        });
+        classroom.sort(function(a,b) {
+          return a.dtclass < b.dtclass ? -1 : a.dtclass > b.dtclass ? 1 : 0;
         });
         return response.status(200).json({
           data: {
