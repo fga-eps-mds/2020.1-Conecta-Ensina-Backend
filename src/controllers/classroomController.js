@@ -262,60 +262,41 @@ module.exports = {
       teacher,
       status,
     } = request.body;
-
-    if (!student) {
-      try {
-        const classroom = await Classroom.findAll({
+    let classroom;
+    try {
+      if (!student) {
+        classroom = await Classroom.findAll({
           where: {
             teacher,
             status,
           },
         });
-        classroom.sort((a, b) => {
-          if (a.dtclass < b.dtclass) return -1;
-          if (a.dtclass > b.dtclass) return 1;
-          return 0;
-        });
-        return response.status(200).json({
-          data: {
-            classroom
-          },
-          classrooms: classroom.length,
-          message: 'Aula encontrada com sucesso'
-        });
-      } catch (error) {
-        console.log(error);
-        return response.status(200).json({
-          message: error
-        });
-      }
-    } else {
-      try {
-        const classroom = await Classroom.findAll({
+      } else {
+        classroom = await Classroom.findAll({
           where: {
             student,
             status,
           },
         });
-        classroom.sort((a, b) => {
-          if (a.dtclass < b.dtclass) return -1;
-          if (a.dtclass > b.dtclass) return 1;
-          return 0;
-        });
-        return response.status(200).json({
-          data: {
-            classroom
-          },
-          classrooms: classroom.length,
-          message: 'Aula encontrada com sucesso'
-        });
-      } catch (error) {
-        console.log(error);
-        return response.status(200).json({
-          message: error
-        });
       }
+    } catch (error) {
+      console.log(error);
+      return response.status(200).json({
+        message: error
+      });
     }
+    classroom.sort((a, b) => {
+      if (a.dtclass < b.dtclass) return -1;
+      if (a.dtclass > b.dtclass) return 1;
+      return 0;
+    });
+    return response.status(200).json({
+      data: {
+        classroom
+      },
+      classrooms: classroom.length,
+      message: 'Aula encontrada com sucesso'
+    });
   },
 
   async statusUpdate(request, response) {
