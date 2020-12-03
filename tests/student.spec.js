@@ -194,8 +194,18 @@ describe('Student tests', () => {
       .delete('/api/student/dfd29066-cd25-485c-8722-b429291d0ea3wrong')
       .send({agentRole: 1});
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(404);
     expect(response.body.message).toBe('Estudante não encontrado!');
     done();
   });
+  it('It should not have permission to delete', async (done) => {
+    const response = await request(app)
+      .delete('/api/student/dfd29066-cd25-485c-8722-b429291d0ea3')
+      .send({agentRole: 2});
+
+    expect(response.status).toBe(401);
+    expect(response.body.message).toBe('O usuário não possui permissão para a ação');
+    done();
+  });
+
 });
