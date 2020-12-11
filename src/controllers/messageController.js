@@ -53,7 +53,7 @@ module.exports = {
       const mensagem = await Mensagem.findByPk(id);
 
       if (!mensagem) {
-        return response.status(200).json({
+        return response.status(404).json({
           message: 'Mensagem não encontrada!'
         });
       }

@@ -1,8 +1,3 @@
-const bcrypt = require('bcrypt');
-
-const saltRounds = Number(process.env.SALT_ROUNDS);
-const salt = bcrypt.genSaltSync(saltRounds);
-
 module.exports = {
   up: async (queryInterface) => {
     await queryInterface.bulkInsert('messages', [
