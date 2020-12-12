@@ -7,6 +7,7 @@ const User = require('../models/User');
 const Student = require('../models/Student');
 const Teacher = require('../models/Teacher');
 const Subject = require('../models/Subject');
+const TeacherSubject = require('../models/TeacherSubject');
 
 module.exports = {
 
@@ -14,8 +15,14 @@ module.exports = {
     try {
       const teacher = await Teacher.findAll({
         include: [
-          { model: Student, required: true, where: { status: 1 } },
-          { model: Subject, required: true }
+          {
+            model: Student,
+            required: true,
+            where: { status: 1 },
+            include: [
+              { model: User, required: true }]
+          },
+          { model: Subject, required: true },
         ],
       });
       return response.status(200).json({
@@ -25,6 +32,26 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
+      return response.status(400).json({
+        message: error
+      });
+    }
+  },
+
+  async teachersForSubject(request, response) {
+    const { id } = request.params;
+    try {
+      const teacher = await Teacher.findAll({
+        include: [{ model: Subject, required: true, where: { id } },
+          { model: Student, required: true, include: [{ model: User, required: true }] }]
+      });
+
+      return response.status(200).json({
+        data: {
+          teacher
+        }
+      });
+    } catch (error) {
       return response.status(400).json({
         message: error
       });
@@ -58,7 +85,8 @@ module.exports = {
       degree,
       bank,
       agency,
-      account
+      account,
+      subjects,
     } = request.body;
 
     const salt = bcrypt.genSaltSync(saltRounds);
@@ -101,10 +129,22 @@ module.exports = {
       });
 
       if (!teacher) {
-        return response.status(200).json({
+        return response.status(400).json({
           message: 'Erro ao criar professor!'
         });
       }
+
+      const teacherSubject = [];
+
+      // eslint-disable-next-line no-plusplus
+      for (let index = 0; index < subjects.length; index++) {
+        // eslint-disable-next-line no-await-in-loop
+        teacherSubject.push(await TeacherSubject.create({
+          teacher_id: user.id,
+          subject_id: subjects[index],
+        }));
+      }
+
       return response.status(200).json({
         data: {
           user: {
@@ -116,7 +156,8 @@ module.exports = {
             role: user.role
           },
           student,
-          teacher
+          teacher,
+          teacherSubject,
         },
         message: 'Professor criado com sucesso!'
       });
@@ -133,8 +174,10 @@ module.exports = {
 
     try {
       const teacher = await Teacher.findByPk(id, {
-        include: [{ model: Student, required: true }, { model: Subject, required: true }]
+        include: [{ model: Subject, required: true }]
       });
+      const student = await Student.findByPk(id);
+      const user = await User.findByPk(id);
       if (!teacher) {
         return response.status(200).json({
           message: 'Professor não encontrado!'
@@ -144,7 +187,7 @@ module.exports = {
         data: {
           teacher,
           student,
-          user
+          user,
         },
         message: 'Professor encontrado com sucesso'
       });

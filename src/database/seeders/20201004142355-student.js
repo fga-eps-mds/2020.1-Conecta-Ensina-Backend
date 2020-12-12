@@ -58,6 +58,20 @@ module.exports = {
         status: 1,
         created_at: new Date(),
         updated_at: new Date(),
+      }, {
+        id: '841de1bf-f49c-455b-9f30-ce79fb8f2306',
+        cpf: '12345678901',
+        birthdate: '2020-11-20T16:23:53.367Z',
+        institution: 'Universidade de Brasília',
+        grade: 15,
+        cep: '72123456',
+        number: 12,
+        details: 'Apartamento 1213',
+        description: 'Professor Pendent',
+        special: false,
+        status: 0,
+        created_at: new Date(),
+        updated_at: new Date(),
       }
     ], {});
   },
