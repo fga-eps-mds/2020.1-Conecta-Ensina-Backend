@@ -8,7 +8,8 @@
     "pretest": "DB_DIALECT=sqlite sequelize db:migrate:undo:all && DB_DIALECT=sqlite sequelize db:migrate && DB_DIALECT=sqlite sequelize db:seed:all",
     "test": "DB_DIALECT=sqlite jest --detectOpenHandles --forceExit --silent --coverage",
     "posttest": "DB_DIALECT=sqlite sequelize db:migrate:undo:all",
-    "lint": "eslint --ext .js --ext .jsx --fix src/"
+    "lint": "eslint --ext .js --ext .jsx --fix src/",
+    "build": "sucrase ./src -d ./dist --transforms imports"
   },
   "repository": {
     "type": "git",
