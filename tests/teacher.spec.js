@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const request = require('supertest');
 const app = require('../src/app');
 
@@ -160,6 +161,15 @@ describe('Teacher tests', () => {
   it('Should return all teachers', async (done) => {
     const response = await request(app)
       .get('/api/teacher');
+    expect(response.status).toBe(200);
+    expect(response.body.data).toHaveProperty('teacher');
+    done();
+  });
+
+  it('Should return all teacher for a subject', async (done) => {
+    const response = await request(app)
+      .get('/api/teacher/subject/1');
+
     expect(response.status).toBe(200);
     expect(response.body.data).toHaveProperty('teacher');
     done();

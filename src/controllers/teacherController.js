@@ -31,7 +31,6 @@ module.exports = {
         }
       });
     } catch (error) {
-      console.log(error);
       return response.status(400).json({
         message: error
       });
@@ -116,8 +115,7 @@ module.exports = {
 
       const teacherSubject = [];
 
-      // eslint-disable-next-line no-plusplus
-      for (let index = 0; index < subjects.length; index++) {
+      for (let index = 0; index < subjects.length; index += 1) {
         // eslint-disable-next-line no-await-in-loop
         teacherSubject.push(await TeacherSubject.create({
           teacher_id: user.id,
@@ -142,7 +140,6 @@ module.exports = {
         message: 'Professor criado com sucesso!'
       });
     } catch (error) {
-      console.log(error);
       return response.status(400).json({
         message: error
       });
@@ -154,7 +151,10 @@ module.exports = {
 
     try {
       const teacher = await Teacher.findByPk(id, {
-        include: [{ model: Subject, required: true }]
+        include: [
+          { model: Subject, required: true },
+          { model: Student, required: true, include: [{ model: User, required: true }] }
+        ]
       });
       if (!teacher) {
         return response.status(200).json({
@@ -163,14 +163,11 @@ module.exports = {
       }
       return response.status(200).json({
         data: {
-          teacher,
-          student,
-          user,
+          teacher
         },
         message: 'Professor encontrado com sucesso'
       });
     } catch (error) {
-      console.log(error);
       return response.status(200).json({
         message: error
       });
@@ -220,7 +217,6 @@ module.exports = {
         message: 'O usuário não possui permissão para a ação'
       });
     } catch (error) {
-      // console.log(error);
       return response.status(400).json({
         message: error
       });
@@ -247,7 +243,6 @@ module.exports = {
         message: 'Apagado com sucesso'
       });
     } catch (error) {
-      console.log(error);
       return response.status(400).json({
         message: error
       });

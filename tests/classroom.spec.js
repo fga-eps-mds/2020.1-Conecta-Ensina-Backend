@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const request = require('supertest');
 const app = require('../src/app');
 
@@ -141,7 +142,7 @@ describe(('Classroom tests'), () => {
       });
 
     expect(response.status).toBe(404);
-    expect(response.body.message).toBe("Aula não encontrada!");
+    expect(response.body.message).toBe('Aula não encontrada!');
     done();
   });
 
@@ -181,7 +182,7 @@ describe(('Classroom tests'), () => {
       .send({ agentRole: 2 });
 
     expect(response.status).toBe(404);
-    expect(response.body.message).toBe("Aula não encontrada!");
+    expect(response.body.message).toBe('Aula não encontrada!');
     done();
   });
 
@@ -201,11 +202,24 @@ describe(('Classroom tests'), () => {
     done();
   });
 
-  it(('should read all classrooms'), async (done) => {
+  it(('should read all classrooms of a teacher'), async (done) => {
     const response = await request(app)
       .post('/api/classroom/')
       .send({
         teacher: '12c06dd6-187a-4a50-927f-5d08b367ee89',
+        status: 0
+      });
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Aula encontrada com sucesso');
+    done();
+  });
+
+  it(('should read all classrooms of a teacher'), async (done) => {
+    const response = await request(app)
+      .post('/api/classroom/')
+      .send({
+        student: '3bd7c190-ce64-4827-8c0c-58cfef45ad9f',
         status: 0
       });
 
@@ -239,41 +253,40 @@ describe(('Classroom tests'), () => {
     expect(response.body.message).toBe('Aula não encontrada!');
     done();
   });
-  
-  it(('it should read user classroom based on status'), async (done)=>{
+
+  it(('it should read user classroom based on status'), async (done) => {
     const response = await request(app)
-    .get('/api/classroom/statusClass/12c06dd6-187a-4a50-927f-5d08b367ee89/4');
+      .get('/api/classroom/statusClass/12c06dd6-187a-4a50-927f-5d08b367ee89/4');
 
     expect(response.status).toBe(200);
-    expect(response.body.message).toBe("Aula encontrada com sucesso");
+    expect(response.body.message).toBe('Aula encontrada com sucesso');
     done();
   });
 
-  it(('it should not find user classroom based on status'), async (done)=>{
+  it(('it should not find user classroom based on status'), async (done) => {
     const response = await request(app)
-    .get('/api/classroom/statusClass/12c06dd6-187a-4a50-927f-5d08b367ee89wrong/4');
+      .get('/api/classroom/statusClass/12c06dd6-187a-4a50-927f-5d08b367ee89wrong/4');
 
     expect(response.status).toBe(404);
-    expect(response.body.message).toBe("Aula não encontrada!");
+    expect(response.body.message).toBe('Aula não encontrada!');
     done();
   });
 
-  it(('it should find user classrooms'), async (done)=>{
+  it(('it should find user classrooms'), async (done) => {
     const response = await request(app)
-    .get('/api/classroom/userClasses/12c06dd6-187a-4a50-927f-5d08b367ee89');
+      .get('/api/classroom/userClasses/12c06dd6-187a-4a50-927f-5d08b367ee89');
 
     expect(response.status).toBe(200);
-    expect(response.body.message).toBe("Aula encontrada com sucesso");
+    expect(response.body.message).toBe('Aula encontrada com sucesso');
     done();
   });
-  it(('it should not find user classrooms'), async (done)=>{
+  it(('it should not find user classrooms'), async (done) => {
     const response = await request(app)
-    .get('/api/classroom/userClasses/12c06dd6-187a-4a50-927f-5d08b367ee89error');
+      .get('/api/classroom/userClasses/12c06dd6-187a-4a50-927f-5d08b367ee89error');
 
-    expect(response.body.message).toBe("Aula não encontrada!");
+    expect(response.body.message).toBe('Aula não encontrada!');
     expect(response.status).toBe(404);
-    
+
     done();
   });
-  
-})
+});

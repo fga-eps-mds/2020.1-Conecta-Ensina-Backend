@@ -7,78 +7,7 @@ const User = require('../models/User');
 const Student = require('../models/Student');
 
 module.exports = {
-  async updateStatus(request, response) {
-    const { id } = request.params;
-    const { status, agentRole } = request.body;
 
-    try {
-      if (agentRole === 1) {
-        const student = await Student.update({
-          status
-        }, {
-          where: {
-            id
-          }
-        });
-        if (student[0] === 0) {
-          return response.status(400).json(
-            {
-              message: 'Professor não encontrado!',
-            }
-          );
-        }
-        return response.status(200).json(
-          {
-            data: student[0],
-            message: 'Atualizado com sucesso',
-          }
-        );
-      }
-
-      return response.status(401).json({
-        message: 'O usuário não possui permissão para a ação'
-      });
-    } catch (error) {
-      console.log(error);
-      return response.status(400).json(
-        {
-          message: error,
-        }
-      );
-    }
-  },
-
-  async status(request, response) {
-    const { status } = request.params;
-    try {
-      const student = await Student.findAll({
-        where: { status }
-      });
-
-      if (student.length === 0) {
-        return response.status(200).json(
-          {
-            message: 'Nenhum professor pendente',
-          }
-        );
-      }
-      return response.status(200).json(
-        {
-          data: {
-            student,
-          },
-          message: 'Professor encontrado',
-        }
-      );
-    } catch (error) {
-      console.log(error);
-      return response.status(400).json(
-        {
-          message: error,
-        }
-      );
-    }
-  },
   async create(request, response) {
     const saltRounds = Number(process.env.SALT_ROUNDS);
 
@@ -151,7 +80,6 @@ module.exports = {
         message: 'Estudante criado com sucesso!'
       });
     } catch (error) {
-      console.log(error);
       return response.status(400).json({
         message: error
       });
@@ -162,8 +90,9 @@ module.exports = {
     const { id } = request.params;
 
     try {
-      const student = await Student.findByPk(id);
-      const user = await User.findByPk(id);
+      const student = await Student.findByPk(id, {
+        include: [{ model: User, required: true }]
+      });
 
       if (!student) {
         return response.status(200).json({
@@ -172,13 +101,11 @@ module.exports = {
       }
       return response.status(200).json({
         data: {
-          student,
-          user
+          student
         },
         message: 'Estudante encontrado com sucesso'
       });
     } catch (error) {
-      console.log(error);
       return response.status(200).json({
         message: error
       });
@@ -267,10 +194,81 @@ module.exports = {
         message: 'O usuário não possui permissão para a ação'
       });
     } catch (error) {
-      console.log(error);
       return response.status(400).json({
         message: error
       });
     }
-  }
+  },
+
+  async updateStatus(request, response) {
+    const { id } = request.params;
+    const { status, agentRole } = request.body;
+
+    try {
+      if (agentRole === 1) {
+        const student = await Student.update({
+          status
+        }, {
+          where: {
+            id
+          }
+        });
+        if (student[0] === 0) {
+          return response.status(400).json(
+            {
+              message: 'Professor não encontrado!',
+            }
+          );
+        }
+        return response.status(200).json(
+          {
+            data: student[0],
+            message: 'Atualizado com sucesso',
+          }
+        );
+      }
+
+      return response.status(401).json({
+        message: 'O usuário não possui permissão para a ação'
+      });
+    } catch (error) {
+      return response.status(400).json(
+        {
+          message: error,
+        }
+      );
+    }
+  },
+
+  async status(request, response) {
+    const { status } = request.params;
+    try {
+      const student = await Student.findAll({
+        where: { status }
+      });
+
+      if (student.length === 0) {
+        return response.status(200).json(
+          {
+            message: 'Nenhum professor pendente',
+          }
+        );
+      }
+      return response.status(200).json(
+        {
+          data: {
+            student,
+          },
+          message: 'Professor encontrado',
+        }
+      );
+    } catch (error) {
+      return response.status(400).json(
+        {
+          message: error,
+        }
+      );
+    }
+  },
+
 };
