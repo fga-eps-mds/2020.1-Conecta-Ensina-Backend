@@ -25,7 +25,8 @@ describe('Teacher tests', () => {
         degree: 'diploma.pdf',
         bank: 'Santander',
         agency: '1778-7',
-        account: '50043-5'
+        account: '50043-5',
+        subjects: [1],
       });
 
     expect(response.status).toBe(200);
@@ -55,7 +56,8 @@ describe('Teacher tests', () => {
         degree: 'diploma.pdf',
         bank: 'Santander',
         agency: '1778-7',
-        account: '50043-5'
+        account: '50043-5',
+        subjects: [1],
       });
 
     expect(response.status).toBe(400);
@@ -159,8 +161,7 @@ describe('Teacher tests', () => {
     const response = await request(app)
       .get('/api/teacher');
     expect(response.status).toBe(200);
-    expect(response.body.data).toHaveProperty('user');
+    expect(response.body.data).toHaveProperty('teacher');
     done();
   });
-
 });

@@ -11,7 +11,8 @@ const {
 
 const {
   createTeacherValidation,
-  teacherValidation
+  teacherValidation,
+  subjectValidation
 } = require('../validations/teacherValidations');
 
 // Importing Controllers
@@ -22,5 +23,6 @@ teacherRoutes.post('/create', celebrate(createTeacherValidation), TeacherControl
 teacherRoutes.get('/:id', celebrate(idValidation), TeacherController.read);
 teacherRoutes.put('/:id', celebrate(idValidation), celebrate(teacherValidation), TeacherController.update);
 teacherRoutes.delete('/:id', celebrate(idValidation), TeacherController.delete);
+teacherRoutes.get('/subject/:id', celebrate(subjectValidation), TeacherController.teachersForSubject);
 
 module.exports = teacherRoutes;
