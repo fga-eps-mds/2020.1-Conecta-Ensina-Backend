@@ -2,9 +2,13 @@ sudo: required
 
 language:
   - node_js
+  - python
 
 node_js:
-  - "12.18.1"
+  - '12.18.1'
+
+python:
+  - '3.6'
 
 services:
   - docker
@@ -12,18 +16,52 @@ services:
 stages:
   - Lint
   - Tests
+  - Testing build
+  - Push docker image homolog
+  - Push docker image prod
+  - Upgrade rancher service
 
 before_install:
   - yarn install
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 jobs:
   include:
-    - stage: "Lint"
-      name: "Lint"
+    - stage: 'Lint'
+      name: 'Lint'
       script:
         - yarn lint
-    - stage: "Tests"
-      name: "Tests"
+
+    - stage: 'Tests'
+      name: 'Tests'
       script:
         - yarn test --coverage
         - ./node_modules/.bin/codecov -t ${CODECOV_TOKEN}
+
+    - stage: 'Testing build'
+      name: 'Testing build'
+      script:
+        - yarn build
+
+    - stage: 'Push docker image homolog'
+      name: 'Push docker image homolog'
+      if: (NOT type IN (pull_request)) AND branch = devel
+      script:
+        # build docker image
+        - docker build -t "$DOCKER_USERNAME"/conecta-ensina-backend:homolog .
+        # push image to Docker Hub
+        - docker push "$DOCKER_USERNAME"/conecta-ensina-backend:homolog
+
+    - stage: 'Push docker image prod'
+      name: 'Push docker image prod'
+      if: (NOT type IN (pull_request)) AND branch = master
+      script:
+        # build docker image
+        - docker build -t "$DOCKER_USERNAME"/conecta-ensina-backend:prod .
+        # push image to Docker Hub
+        - docker push "$DOCKER_USERNAME"/conecta-ensina-backend:prod
+
+    - stage: 'Upgrade rancher service'
+      name: 'Upgrade rancher service'
+      if: (NOT type IN (pull_request)) AND (branch = master || branch = devel)
+      script: python ./scripts/upgrade_service.py

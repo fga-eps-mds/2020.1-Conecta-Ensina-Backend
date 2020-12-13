@@ -4,6 +4,36 @@ const Classroom = require('../models/Classroom');
 
 module.exports = {
 
+  async statusClass(request, response) {
+    const { id } = request.params;
+    const { status } = request.params;
+    //    const { sysDate } = new Date();
+    try {
+      const classroom = await Classroom.findAll({
+        where: {
+          [Op.or]: [{ student: id }, { teacher: id }],
+          status
+        }
+      });
+      if (classroom.length === 0) {
+        return response.status(404).json({
+          message: 'Aula não encontrada!'
+        });
+      }
+      return response.status(200).json({
+        data: {
+          classroom
+        },
+        message: 'Aula encontrada com sucesso'
+      });
+    } catch (error) {
+      console.log(error);
+      return response.status(400).json({
+        message: error
+      });
+    }
+  },
+
   async nextClass(request, response) {
     const { student } = request.params;
     //    const { sysDate } = new Date();
@@ -39,10 +69,10 @@ module.exports = {
     try {
       const classroom = await Classroom.findAll({
         where: {
-        [Op.or]: [{student : id}, {teacher: id}],
+          [Op.or]: [{ student: id }, { teacher: id }],
         }
       });
-      if (!classroom) {
+      if (classroom.length < 1) {
         return response.status(404).json({
           message: 'Aula não encontrada!'
         });
@@ -55,7 +85,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
-      return response.status(200).json({
+      return response.status(400).json({
         message: error
       });
     }
@@ -124,7 +154,7 @@ module.exports = {
       const classroom = await Classroom.findByPk(id);
 
       if (!classroom) {
-        return response.status(200).json({
+        return response.status(404).json({
           message: 'Aula não encontrada!'
         });
       }
@@ -136,7 +166,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
-      return response.status(200).json({
+      return response.status(400).json({
         message: error
       });
     }
@@ -178,7 +208,7 @@ module.exports = {
         });
 
         if (classroom[0] === 0) {
-          return response.status(200).json({
+          return response.status(404).json({
             message: 'Aula não encontrada!'
           });
         }
@@ -193,7 +223,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
-      return response.status(200).json({
+      return response.status(400).json({
         message: error
       });
     }
@@ -210,7 +240,7 @@ module.exports = {
       });
 
       if (classroom === 0) {
-        return response.status(200).json({
+        return response.status(404).json({
           message: 'Aula não encontrada!'
         });
       }
@@ -228,30 +258,45 @@ module.exports = {
 
   async index(request, response) {
     const {
+      student,
       teacher,
       status,
     } = request.body;
-
+    let classroom;
     try {
-      const classroom = await Classroom.findAll({
-        where: {
-          teacher,
-          status,
-        },
-      });
-      return response.status(200).json({
-        data: {
-          classroom
-        },
-        classrooms: classroom.length,
-        message: 'Aula encontrada com sucesso'
-      });
+      if (!student) {
+        classroom = await Classroom.findAll({
+          where: {
+            teacher,
+            status,
+          },
+        });
+      } else {
+        classroom = await Classroom.findAll({
+          where: {
+            student,
+            status,
+          },
+        });
+      }
     } catch (error) {
       console.log(error);
       return response.status(200).json({
         message: error
       });
     }
+    classroom.sort((a, b) => {
+      if (a.dtclass < b.dtclass) return -1;
+      if (a.dtclass > b.dtclass) return 1;
+      return 0;
+    });
+    return response.status(200).json({
+      data: {
+        classroom
+      },
+      classrooms: classroom.length,
+      message: 'Aula encontrada com sucesso'
+    });
   },
 
   async statusUpdate(request, response) {
@@ -270,7 +315,7 @@ module.exports = {
       });
 
       if (classroom[0] === 0) {
-        return response.status(200).json({
+        return response.status(404).json({
           message: 'Aula não encontrada!'
         });
       }
