@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
 module.exports = {
+
   async create(request, response) {
     const saltRounds = Number(process.env.SALT_ROUNDS);
 
@@ -49,7 +50,6 @@ module.exports = {
         message: 'Usuário criado com sucesso!'
       });
     } catch (error) {
-      console.log(error);
       return response.status(200).json({
         message: error
       });
@@ -80,7 +80,6 @@ module.exports = {
         message: 'Usuário encontrado com sucesso'
       });
     } catch (error) {
-      console.log(error);
       return response.status(200).json({
         message: error
       });
@@ -111,17 +110,18 @@ module.exports = {
           id
         }
       });
+
       if (user[0] === 0) {
         return response.status(200).json({
           message: 'Usuário não encontrado!'
         });
       }
+
       return response.status(200).json({
         data: user[0],
         message: 'Atualizado com sucesso'
       });
     } catch (error) {
-      console.log(error);
       return response.status(200).json({
         message: error
       });
@@ -147,7 +147,6 @@ module.exports = {
         message: 'Apagado com sucesso'
       });
     } catch (error) {
-      console.log(error);
       return response.status(200).json({
         message: error
       });

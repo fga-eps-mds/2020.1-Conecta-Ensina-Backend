@@ -6,21 +6,31 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const Student = require('../models/Student');
 const Teacher = require('../models/Teacher');
+const Subject = require('../models/Subject');
+const TeacherSubject = require('../models/TeacherSubject');
 
 module.exports = {
 
   async index(request, response) {
     try {
-      const user = await User.findAll({
-        where: { role: 2 }
+      const teacher = await Teacher.findAll({
+        include: [
+          {
+            model: Student,
+            required: true,
+            where: { status: 1 },
+            include: [
+              { model: User, required: true }]
+          },
+          { model: Subject, required: true },
+        ],
       });
       return response.status(200).json({
         data: {
-          user
+          teacher
         }
       });
     } catch (error) {
-      console.log(error);
       return response.status(400).json({
         message: error
       });
@@ -28,11 +38,11 @@ module.exports = {
   },
 
   async create(request, response) {
+    const id = uuidv4();
     const saltRounds = Number(process.env.SALT_ROUNDS);
     const role = 2;
     const status = 0;
 
-    const id = uuidv4();
     const {
       firstName,
       lastName,
@@ -54,7 +64,8 @@ module.exports = {
       degree,
       bank,
       agency,
-      account
+      account,
+      subjects,
     } = request.body;
 
     const salt = bcrypt.genSaltSync(saltRounds);
@@ -97,10 +108,21 @@ module.exports = {
       });
 
       if (!teacher) {
-        return response.status(200).json({
+        return response.status(400).json({
           message: 'Erro ao criar professor!'
         });
       }
+
+      const teacherSubject = [];
+
+      for (let index = 0; index < subjects.length; index += 1) {
+        // eslint-disable-next-line no-await-in-loop
+        teacherSubject.push(await TeacherSubject.create({
+          teacher_id: user.id,
+          subject_id: subjects[index],
+        }));
+      }
+
       return response.status(200).json({
         data: {
           user: {
@@ -112,12 +134,12 @@ module.exports = {
             role: user.role
           },
           student,
-          teacher
+          teacher,
+          teacherSubject,
         },
         message: 'Professor criado com sucesso!'
       });
     } catch (error) {
-      console.log(error);
       return response.status(400).json({
         message: error
       });
@@ -128,9 +150,12 @@ module.exports = {
     const { id } = request.params;
 
     try {
-      const teacher = await Teacher.findByPk(id);
-      const student = await Student.findByPk(id);
-      const user = await User.findByPk(id);
+      const teacher = await Teacher.findByPk(id, {
+        include: [
+          { model: Subject, required: true },
+          { model: Student, required: true, include: [{ model: User, required: true }] }
+        ]
+      });
       if (!teacher) {
         return response.status(200).json({
           message: 'Professor não encontrado!'
@@ -138,14 +163,11 @@ module.exports = {
       }
       return response.status(200).json({
         data: {
-          teacher,
-          student,
-          user
+          teacher
         },
         message: 'Professor encontrado com sucesso'
       });
     } catch (error) {
-      console.log(error);
       return response.status(200).json({
         message: error
       });
@@ -195,7 +217,6 @@ module.exports = {
         message: 'O usuário não possui permissão para a ação'
       });
     } catch (error) {
-      // console.log(error);
       return response.status(400).json({
         message: error
       });
@@ -222,7 +243,26 @@ module.exports = {
         message: 'Apagado com sucesso'
       });
     } catch (error) {
-      console.log(error);
+      return response.status(400).json({
+        message: error
+      });
+    }
+  },
+
+  async teachersForSubject(request, response) {
+    const { id } = request.params;
+    try {
+      const teacher = await Teacher.findAll({
+        include: [{ model: Subject, required: true, where: { id } },
+          { model: Student, required: true, include: [{ model: User, required: true }] }]
+      });
+
+      return response.status(200).json({
+        data: {
+          teacher
+        }
+      });
+    } catch (error) {
       return response.status(400).json({
         message: error
       });

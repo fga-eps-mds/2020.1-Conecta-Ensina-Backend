@@ -1,5 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const config = require('../config/database');
+const Student = require('./Student');
+const Subject = require('./Subject');
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
@@ -15,4 +17,8 @@ const Teacher = sequelize.define('Teacher', {
   sequelize,
   paranoid: true,
 });
+
+Teacher.belongsTo(Student, { foreignKey: 'id' });
+Teacher.belongsToMany(Subject, { through: 'teacher_subjects' });
+
 module.exports = Teacher;

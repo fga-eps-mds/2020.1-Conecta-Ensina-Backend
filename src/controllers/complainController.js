@@ -35,7 +35,6 @@ module.exports = {
         message: 'Denúncia criada com sucesso!'
       });
     } catch (error) {
-      console.log(error);
       return response.status(400).json({
         message: error
       });
@@ -58,12 +57,12 @@ module.exports = {
         message: 'Denúncia encontrada com sucesso'
       });
     } catch (error) {
-      console.log(error);
       return response.status(400).json({
         message: error
       });
     }
   },
+
   async update(request, response) {
     const { id } = request.params;
     const {
@@ -119,7 +118,6 @@ module.exports = {
         message: 'Apagada com sucesso'
       });
     } catch (error) {
-      console.log(error);
       return response.status(400).json({
         message: error
       });

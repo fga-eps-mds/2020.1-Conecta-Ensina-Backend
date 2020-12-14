@@ -10,7 +10,6 @@ module.exports = {
         }
       });
     } catch (error) {
-      console.log(error);
       return response.status(400).json({
         message: error
       });
@@ -47,7 +46,6 @@ module.exports = {
         message: 'O usuário não possui permissão para a ação'
       });
     } catch (error) {
-      console.log(error);
       return response.status(400).json({
         message: error
       });
@@ -71,7 +69,6 @@ module.exports = {
         message: 'Matéria encontrada com sucesso'
       });
     } catch (error) {
-      console.log(error);
       return response.status(200).json({
         message: error
       });
@@ -107,7 +104,6 @@ module.exports = {
         message: 'O usuário não possui permissão para a ação'
       });
     } catch (error) {
-      console.log(error);
       return response.status(200).json({
         message: error
       });
@@ -140,7 +136,6 @@ module.exports = {
         message: 'O usuário não possui permissão para a ação'
       });
     } catch (error) {
-      console.log(error);
       return response.status(200).json({
         message: error
       });
