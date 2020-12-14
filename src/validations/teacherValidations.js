@@ -26,6 +26,7 @@ const createTeacherValidation = {
     bank: Joi.string().required(),
     agency: Joi.string().required(),
     account: Joi.string().required(),
+    subjects: Joi.array().required(),
   })
 };
 
@@ -42,7 +43,14 @@ const teacherValidation = {
   })
 };
 
+const subjectValidation = {
+  [Segments.PARAMS]: Joi.object().keys({
+    id: Joi.string().required()
+  }),
+};
+
 module.exports = {
   createTeacherValidation,
-  teacherValidation
+  teacherValidation,
+  subjectValidation
 };

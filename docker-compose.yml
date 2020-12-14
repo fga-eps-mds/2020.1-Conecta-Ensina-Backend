@@ -20,7 +20,7 @@ services:
     image: ensina_conecta_api
     depends_on:
       - db
-    command: bash -c "yarn sequelize db:migrate && yarn sequelize db:seed:undo:all && yarn sequelize db:seed:all && yarn start"
+    command: bash -c "yarn sequelize db:migrate:undo:all && yarn sequelize db:migrate && yarn sequelize db:seed:all && yarn start"
     build: ./
     volumes:
       - .:/app

@@ -71,6 +71,16 @@ module.exports = {
         role: 3,
         created_at: new Date(),
         updated_at: new Date(),
+      }, {
+        id: '841de1bf-f49c-455b-9f30-ce79fb8f2306',
+        first_name: 'Teacher',
+        last_name: 'Pendente',
+        cellphone: '61999999999',
+        email: 'teacher123@fixo.com',
+        password: bcrypt.hashSync('teacherpendente123', salt),
+        role: 2,
+        created_at: new Date(),
+        updated_at: new Date(),
       }
     ], {});
   },
