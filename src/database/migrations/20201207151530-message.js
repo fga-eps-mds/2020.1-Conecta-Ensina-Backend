@@ -64,7 +64,7 @@ module.exports = {
       });
     },
     down: async (queryInterface) => {
-      await queryInterface.dropTable('message');
+      await queryInterface.dropTable('messages');
     }
   };
   
