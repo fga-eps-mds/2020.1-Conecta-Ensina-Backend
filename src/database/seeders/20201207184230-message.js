@@ -30,7 +30,7 @@ module.exports = {
             classroom_id: "f00c1ee9-078b-4b61-8e3f-a23d68da4312",
             student_id: "3bd7c190-ce64-4827-8c0c-58cfef45ad9f",
             teacher_id: "12c06dd6-187a-4a50-927f-5d08b367ee89",
-            create_by: "dfd29066-cd25-485c-8722-b429291d0ea3",
+            create_by: "3bd7c190-ce64-4827-8c0c-58cfef45ad9f",
             created_at: "2020-12-07T21:19:44.103Z",
             updated_at: "2020-12-07T21:19:44.103Z",
             deleted_at: null

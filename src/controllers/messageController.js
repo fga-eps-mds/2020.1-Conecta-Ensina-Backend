@@ -28,7 +28,7 @@ module.exports = {
       });
 
       if (!mensagem) {
-        return response.status(200).json({
+        return response.status(400).json({
           message: 'Erro ao criar mensagem!'
         });
       }
