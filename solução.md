@@ -11,7 +11,7 @@ Para o controle de versão do código é utilizado o Gitub e é onde define-se o
 Docker é uma ferramenta que permite empacotar (container) a aplicação em de forma padronizada, para assim funcionar em qualquer lugar. Um Container é a forma de empacotar sua aplicação e suas dependências (bibliotecas) de forma padronizada. 
 
 #### Qualidade de Código
-A qualidade e saúde do código é analisada através da ferramenta Code SonarCloud, que analisa aspectos como complexidade, tamanho de métodos, trechos duplicados e "mau cheiro" (code smells) no código.
+A qualidade e saúde do código é analisada através da ferramenta SonarCloud, que analisa aspectos como complexidade, tamanho de métodos, bugs, code smells, código duplicado, vulnerabilidade, entre outros.
 
 ### Continuos Integration
 #### Build e Testes
@@ -26,4 +26,4 @@ Após construida a imagem da API essa ser enviada para o Docker Hub, alguns coma
 
 ## Ilustração
 
-[![Devops](.github/img/deploy.jpg)](.github/img/deploy.jpg)
+[![Devops](.github/img/deploy.png)](.github/img/deploy.png)
