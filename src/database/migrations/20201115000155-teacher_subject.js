@@ -1,38 +1,25 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('teachers', {
-      id: {
+    await queryInterface.createTable('teacher_subjects', {
+      teacher_id: {
         allowNull: false,
-        primaryKey: true,
         type: Sequelize.STRING,
         references: {
           model: {
-            tableName: 'students'
+            tableName: 'teachers'
           },
           key: 'id'
         }
       },
-      photo: {
+      subject_id: {
         allowNull: false,
-        type: Sequelize.BLOB,
-      },
-      video: {
-        type: Sequelize.STRING
-      },
-      graduation_area: {
-        type: Sequelize.STRING
-      },
-      degree: {
-        type: Sequelize.STRING
-      },
-      bank: {
-        type: Sequelize.STRING
-      },
-      agency: {
-        type: Sequelize.STRING
-      },
-      account: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'subjects'
+          },
+          key: 'id'
+        }
       },
       created_at: {
         allowNull: false,
@@ -48,7 +35,7 @@ module.exports = {
     });
   },
   down: async (queryInterface) => {
-    await queryInterface.dropTable('teachers', {
+    await queryInterface.dropTable('teacher_subjects', {
       cascade: true,
     });
   }

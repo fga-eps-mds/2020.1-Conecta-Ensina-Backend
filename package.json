@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/server.js",
-    "pretest": "DB_DIALECT=sqlite sequelize db:migrate && DB_DIALECT=sqlite sequelize db:seed:undo:all && DB_DIALECT=sqlite sequelize db:seed:all",
+    "pretest": "DB_DIALECT=sqlite sequelize db:migrate:undo:all && DB_DIALECT=sqlite sequelize db:migrate && DB_DIALECT=sqlite sequelize db:seed:all",
     "test": "DB_DIALECT=sqlite jest --detectOpenHandles --forceExit --silent --coverage",
     "posttest": "DB_DIALECT=sqlite sequelize db:migrate:undo:all",
     "lint": "eslint --ext .js --ext .jsx --fix src/",

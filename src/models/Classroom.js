@@ -1,5 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const config = require('../config/database');
+const Student = require('./Student');
+const Teacher = require('./Teacher');
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
@@ -19,5 +21,8 @@ const Classroom = sequelize.define('Classroom', {
   sequelize,
   paranoid: true,
 });
+
+Classroom.belongsTo(Teacher, { foreignKey: 'teacher' });
+Classroom.belongsTo(Student, { foreignKey: 'student' });
 
 module.exports = Classroom;

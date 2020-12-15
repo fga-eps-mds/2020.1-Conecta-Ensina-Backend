@@ -7,6 +7,7 @@ const subjectRoutes = require('./routes/subject');
 const classroomRoutes = require('./routes/classroom');
 const rateRoutes = require('./routes/rate');
 const complainRoutes = require('./routes/complain');
+const messageRoutes = require('./routes/message');
 
 const application = express();
 
@@ -24,5 +25,6 @@ application.use('/api/subject', subjectRoutes);
 application.use('/api/classroom', classroomRoutes);
 application.use('/api/rate', rateRoutes);
 application.use('/api/complain', complainRoutes);
+application.use('/api/message', messageRoutes);
 
 module.exports = application;

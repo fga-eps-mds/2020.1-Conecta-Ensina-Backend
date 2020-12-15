@@ -26,6 +26,18 @@ module.exports = {
         account: '50043-5',
         created_at: new Date(),
         updated_at: new Date(),
+      },
+      {
+        id: '841de1bf-f49c-455b-9f30-ce79fb8f2306',
+        photo: 'photo.jpg',
+        video: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        graduation_area: 'Matemática',
+        degree: 'diploma.pdf',
+        bank: 'Banco do Brasil',
+        agency: '1778-7',
+        account: '50043-5',
+        created_at: new Date(),
+        updated_at: new Date(),
       }
     ], {});
   },
