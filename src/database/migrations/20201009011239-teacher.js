@@ -48,8 +48,8 @@ module.exports = {
     });
   },
   down: async (queryInterface) => {
-    await queryInterface.dropTable('teachers',{
+    await queryInterface.dropTable('teachers', {
       cascade: true,
-    })
+    });
   }
 };

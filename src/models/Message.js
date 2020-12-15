@@ -10,7 +10,7 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 const Message = sequelize.define('Message', {
   text: DataTypes.STRING,
   classroom_id: DataTypes.STRING,
-  student_id: DataTypes.STRING,  
+  student_id: DataTypes.STRING,
   teacher_id: DataTypes.STRING,
   create_by: DataTypes.STRING,
 }, {

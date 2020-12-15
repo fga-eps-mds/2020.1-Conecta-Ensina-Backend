@@ -1,20 +1,20 @@
 require('dotenv/config');
 
 const { v4: uuidv4 } = require('uuid');
-const bcrypt = require('bcrypt');
 
-const Mensagem = require('../models/Message')
+const Mensagem = require('../models/Message');
 
 module.exports = {
 
   async create(request, response) {
     const id = uuidv4();
+    /* eslint-disable camelcase */
     const {
       text,
       classroom_id,
       student_id,
-      teacher_id, 
-      create_by 
+      teacher_id,
+      create_by,
     } = request.body;
 
     try {
@@ -23,7 +23,7 @@ module.exports = {
         text,
         classroom_id,
         student_id,
-        teacher_id, 
+        teacher_id,
         create_by
       });
 
@@ -73,7 +73,7 @@ module.exports = {
 
   async chat(request, response) {
     const { classroom_id } = request.params;
-    try {   
+    try {
       const mensagem = await Mensagem.findAll({
         where: { classroom_id }
       });
